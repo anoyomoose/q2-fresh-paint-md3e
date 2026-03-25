@@ -24,12 +24,26 @@ This is an attempt to (partially) provide a Material Design 3 Expressive theme t
 - **FABs**: TODO needs review
 - **Toolbars, headers and footers**: Now use MD3E specification mandated palette entries
 
-30+ Quasar built-in components have received styling changes, so this summary is by no means exhaustive. This is still
-a work-in-progress and likely several components will need further tweaking.
+30+ Quasar built-in components have received styling changes, so this summary is by no means exhaustive. This is still a work-in-progress and likely several components will need further tweaking.
+
+While the theme is *mostly* drop-in, in an existing project you will no doubt have to adjust many things to make it fit.
+
+## Playground
+
+A version of Quasar's UI Playground with this theme loaded is available [on GitHub pages](https://anoyomoose.github.io/q2-fresh-paint-md3e/), with the default settings as described further below.
+
+Some pages of particular interest:
+- [Md3eBtns](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-btn-test)
+- [Toggles](https://anoyomoose.github.io/q2-fresh-paint-md3e/form/toggle)
+- [Cards](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/card)
+- [Inputs](https://anoyomoose.github.io/q2-fresh-paint-md3e/form/input) (see the outlined section)
+
+Note that the UI Playground hardcodes colors in many (many!) places, which fights the theme. No effort was taken to counter this, so it may not always be a good representation of how the theme would look when applied properly.
 
 ## Installation & Quick Start
 
 ```bash
+# or equivalent for your package manager
 pnpm add @anoyomoose/q2-fresh-paint-core @anoyomoose/q2-fresh-paint-md3e
 ```
 
