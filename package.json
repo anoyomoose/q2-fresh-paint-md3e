@@ -1,6 +1,6 @@
 {
   "name": "@anoyomoose/q2-fresh-paint-md3e",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MD3 Expressive theme for Quasar Framework",
   "license": "MIT",
   "type": "module",
@@ -32,7 +32,7 @@
     "@material/material-color-utilities": "^0.4.0"
   },
   "peerDependencies": {
-    "@anoyomoose/q2-fresh-paint-core": "^0.1.1",
+    "@anoyomoose/q2-fresh-paint-core": "^0.1.2",
     "quasar": "^2.0.0",
     "vue": "^3.0.0"
   },
