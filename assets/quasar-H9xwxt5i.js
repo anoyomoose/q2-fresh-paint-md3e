@@ -1,0 +1,1 @@
+var e=`/q2-fresh-paint-md3e/assets/quasar-DFC55Ty-.jpg`;export{e as t};

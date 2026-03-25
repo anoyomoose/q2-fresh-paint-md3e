@@ -1,0 +1,1 @@
+var e=`/q2-fresh-paint-md3e/assets/donuts-VBCGl-4R.png`;export{e as t};
