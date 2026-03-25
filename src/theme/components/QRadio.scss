@@ -1,0 +1,63 @@
+// MD3 Expressive QRadio Overrides
+// Appended after Quasar's QRadio.sass — source order wins.
+//
+// MD3E radio: 20dp icon, on-surface-variant unselected ring,
+// primary selected (both rings). State layers: 8% hover, 10% focus/pressed.
+// Disabled: color-based, not opacity.
+
+// === Unselected Color ===
+.q-radio__inner {
+  color: var(--md3-on-surface-variant); // replaces stock rgba(0,0,0,.54)
+}
+
+// === Selected Color ===
+.q-radio__inner--truthy {
+  color: var(--md3-primary); // replaces stock var(--q-primary)
+}
+
+// === Transition ===
+.q-radio__check {
+  transition: transform 0.2s $md3-easing-emphasized;
+}
+
+// === State Layers ===
+// Hover: 8% (currentColor auto-adapts per selection state)
+body.desktop .q-radio:not(.disabled) .q-radio__inner:before {
+  opacity: 0.08;
+  transition: transform 0.2s $md3-easing-emphasized;
+}
+
+// Focus: 10% (MD3E spec, was 12% in MD3)
+body.desktop .q-radio:not(.disabled) .q-focusable:focus > .q-radio__inner:before {
+  opacity: 0.10;
+}
+
+// Hover on unselected: icon color shifts to on-surface
+body.desktop .q-radio:not(.disabled):hover .q-radio__inner:not(.q-radio__inner--truthy) {
+  color: var(--md3-on-surface);
+}
+
+// === Disabled ===
+// Remove global opacity, use per-element colors
+.q-radio.disabled {
+  opacity: 1 !important;
+}
+
+// Disabled color: on-surface at 38% (both selected and unselected)
+.q-radio.disabled .q-radio__inner {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+.q-radio.disabled .q-radio__inner--truthy {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+// Light-mode overrides above already replace the base colors; stock Quasar's
+// own dark values apply correctly when --dark is set.
+.q-radio--dark .q-radio__inner {
+  &:before {
+    opacity: 0.08 !important;
+  }
+}

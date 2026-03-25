@@ -1,0 +1,53 @@
+// MD3 Expressive QCard Overrides
+// Appended after Quasar's QCard.sass — source order wins.
+//
+// MD3E card variants map to Quasar props:
+//   default (no props) → Elevated card
+//   flat               → Filled card
+//   bordered           → Outlined card
+//
+// Border-radius is already 12px via $generic-border-radius override in variables.scss.
+
+// === Elevated Card (default) ===
+// Surface-container-low background; Level 1 shadow (subtle, tonal difference is primary signal)
+.q-card {
+  background: var(--md3-surface-container-low);
+  // Text color inherits var(--md3-on-surface) from .q-layout — no explicit override
+  // needed. This preserves Quasar's --dark { color: #fff } rules.
+  // Level 1 shadow (1dp) — lighter than Quasar's default $shadow-2
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+// === Filled Card (flat prop) ===
+// Surface-container-highest background, no shadow (level 0)
+.q-card--flat {
+  background: var(--md3-surface-container-highest);
+}
+
+// === Outlined Card (bordered prop) ===
+// Surface background, outline-variant 1dp border, no shadow (level 0)
+.q-card--bordered {
+  background: var(--md3-surface);
+  border-color: var(--md3-outline-variant);
+  box-shadow: none;
+}
+
+// === Dark Mode ===
+// CSS custom properties handle the color switch automatically.
+// Remove white-tinted shadows Quasar adds in dark mode; MD3E relies on tonal difference.
+.q-card--dark {
+  border-color: var(--md3-outline-variant);
+  // Override Quasar's $dark-shadow-2 (white-tinted) with a dark-appropriate shadow
+  box-shadow: none;
+}
+
+// Keep subtle shadow on elevated (non-flat, non-bordered) dark cards
+.q-card--dark:not(.q-card--flat):not(.q-card--bordered):not(.no-shadow) {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+// === State Layers (interactive/clickable cards) ===
+// MD3E: hover 0.08, focus 0.12, pressed 0.12 with on-surface color.
+// The .q-focus-helper inside clickable cards inherits the global state layer
+// overrides from base.scss, so no additional rules needed here.
+// State layer color is on-surface (handled by default q-focus-helper color).

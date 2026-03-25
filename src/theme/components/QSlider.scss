@@ -1,0 +1,261 @@
+// MD3 Expressive QSlider Overrides
+// Appended after Quasar's QSlider.sass — source order wins.
+//
+// MD3E slider is a major visual redesign:
+// - Track: 16dp tall with 8dp corner radius (pill-shaped ends)
+// - Handle: thin vertical bar (4dp wide, 44dp tall) instead of circular thumb
+// - Active track: primary, inactive: secondary-container
+// - Focus ring replaced by handle width changes (4dp -> 2dp on focus/pressed)
+// - Stop indicators: 4dp circular dots (CSS limitations apply)
+// - Value indicator: inverse-surface with inverse-on-surface text
+//
+// DOM structure reference (from QSlider.sass):
+//   .q-slider
+//     .q-slider__track-container (padding provides vertical space around track)
+//       .q-slider__track (background, contains inner + selection)
+//         .q-slider__inner (inactive portion)
+//         .q-slider__selection (active portion)
+//         .q-slider__markers (tick marks)
+//     .q-slider__thumb (positioned handle)
+//       .q-slider__thumb-shape (SVG circle — we hide this)
+//       .q-slider__focus-ring (we hide this too)
+//       .q-slider__pin (value popup)
+//         .q-slider__text-container
+//           .q-slider__text
+
+// ============================================================
+// TRACK
+// ============================================================
+
+// Track container: provide space for 44dp handle around 16dp track
+.q-slider__track-container--h {
+  padding: 14px 0; // (44 - 16) / 2 = 14dp
+}
+
+.q-slider__track-container--v {
+  padding: 0 14px;
+}
+
+// Track and inner: 16dp tall with pill-shaped ends
+.q-slider__track {
+  background: transparent; // Track itself is just a container now
+  border-radius: 8px;
+  height: 16px;
+}
+
+// Inactive track: secondary-container
+.q-slider__inner {
+  background: var(--md3-secondary-container);
+  border-radius: inherit;
+  height: 100%;
+}
+
+// Active track selection: primary (via currentColor which is var(--q-primary))
+.q-slider__selection {
+  border-radius: inherit;
+}
+
+// ============================================================
+// HANDLE — thin vertical bar replacing circular SVG thumb
+// ============================================================
+
+// Hide the SVG circular thumb shape
+.q-slider__thumb-shape {
+  display: none;
+}
+
+// Hide the old focus ring (handle width changes serve as focus indicator)
+.q-slider__focus-ring {
+  display: none;
+}
+
+// Style thumb container as a vertical bar
+.q-slider__thumb {
+  color: var(--q-primary);
+  transition: transform 0.2s $md3-easing-emphasized;
+
+  // The visible handle bar
+  &:before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 44px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: currentColor;
+    border-radius: 2px;
+    transition: width $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+                height $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+  }
+}
+
+// Focus/pressed: handle becomes thinner (2dp wide)
+.q-slider--focus .q-slider__thumb:before {
+  width: 2px;
+}
+
+// Active (dragging): handle thinner
+.q-slider--active .q-slider__thumb:before {
+  width: 2px;
+}
+
+// Override Quasar's 1.5x scale on active thumb-shape (already hidden, but be safe)
+.q-slider--active .q-slider__thumb-shape {
+  transform: scale(1);
+}
+
+// Override focus-ring based hover effects — we handle this differently now
+.q-slider--focus .q-slider__focus-ring,
+body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__focus-ring {
+  display: none;
+}
+
+// ============================================================
+// STATE LAYER ON HANDLE
+// ============================================================
+// Use an :after pseudo on the thumb for the state layer
+
+.q-slider__thumb:after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale3d(0, 0, 1);
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transition: transform $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+  pointer-events: none;
+}
+
+// Hover: 8% state layer
+.q-slider--focus .q-slider__thumb:after,
+body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__thumb:after {
+  transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  opacity: 0.08;
+}
+
+// Focus: 12% state layer
+.q-slider--focus .q-slider__thumb:after {
+  opacity: 0.12;
+}
+
+// ============================================================
+// MARKERS (Discrete/Tick Marks)
+// ============================================================
+// MD3E uses 4dp circular stop indicators. CSS limitations prevent
+// perfect reproduction (spacing is dynamic), but we can improve
+// the visual appearance.
+
+.q-slider__markers {
+  color: var(--md3-on-secondary-container); // replaces stock rgba(0,0,0,.3)
+}
+
+// ============================================================
+// VALUE INDICATOR (Pin/Popup)
+// ============================================================
+
+.q-slider__text-container {
+  background: var(--md3-inverse-surface);
+  border-radius: $md3-corner-full;
+  min-height: 44px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.q-slider__text {
+  color: var(--md3-inverse-on-surface); // replaces stock color: #fff
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.00625rem;
+}
+
+// Pin transition: MD3E easing
+.q-slider__pin {
+  transition: opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+}
+
+// ============================================================
+// DISABLED
+// ============================================================
+
+// Disabled active track: on-surface at 38%
+.q-slider:not(.q-slider--enabled) .q-slider__selection {
+  background: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled inactive track: on-surface at 12%
+.q-slider:not(.q-slider--enabled) .q-slider__inner {
+  background: rgba(var(--md3-on-surface-rgb), 0.12);
+}
+
+// Disabled handle: on-surface at 38%
+.q-slider:not(.q-slider--enabled) .q-slider__thumb:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// ============================================================
+// DARK MODE
+// ============================================================
+// CSS custom properties auto-flip. Override Quasar's hardcoded dark values.
+
+.q-slider--dark .q-slider__track {
+  background: transparent;
+}
+
+.q-slider--dark .q-slider__inner {
+  background: var(--md3-secondary-container);
+}
+
+// color: on dark markers removed — token doesn't flip for per-component dark mode.
+// Stock rgba(#fff,.3) applies correctly when --dark is set.
+
+// ============================================================
+// DENSE MODE
+// ============================================================
+
+.q-slider--dense .q-slider__track-container--h {
+  padding: 8px 0; // Tighter vertical space
+}
+
+.q-slider--dense .q-slider__track-container--v {
+  padding: 0 8px;
+}
+
+// Dense handle: slightly shorter
+.q-slider--dense .q-slider__thumb:before {
+  height: 32px;
+  width: 4px;
+}
+
+// ============================================================
+// VERTICAL SLIDER ADJUSTMENTS
+// ============================================================
+
+.q-slider--v .q-slider__track {
+  width: 16px;
+  height: inherit;
+}
+
+.q-slider--v .q-slider__inner {
+  width: 100%;
+}
+
+// Vertical handle: rotated bar (horizontal instead of vertical)
+.q-slider--v .q-slider__thumb:before {
+  width: 44px;
+  height: 4px;
+}
+
+.q-slider--v.q-slider--focus .q-slider__thumb:before,
+.q-slider--v.q-slider--active .q-slider__thumb:before {
+  height: 2px;
+  width: 44px;
+}

@@ -1,0 +1,130 @@
+// MD3 Expressive Theme Variables
+// Maps auto-generated MD3 palette tokens to Quasar's Sass variable system.
+// All values use !default so user overrides always win.
+//
+// The $md3-* variables are defined in the auto-generated file (.quasar/theme.md3e.scss)
+// which is injected before this file.
+
+// === Brand Colors ===
+// Map MD3 scheme colors to Quasar's brand colors
+$primary: $md3-primary !default;
+$secondary: $md3-secondary !default;
+$accent: $md3-tertiary !default;
+$negative: $md3-error !default;
+$dark-page: $md3-dark-background !default;
+$dark: $md3-dark-surface-container !default;
+
+// === Shape Tokens ===
+// MD3E shape scale (corner radii) — 10-level scale
+$md3-corner-none: 0px !default;
+$md3-corner-extra-small: 4px !default;
+$md3-corner-small: 8px !default;
+$md3-corner-medium: 12px !default;
+$md3-corner-large: 16px !default;
+$md3-corner-large-increased: 20px !default;       // NEW in MD3E
+$md3-corner-extra-large: 28px !default;
+$md3-corner-extra-large-increased: 32px !default;  // NEW in MD3E
+$md3-corner-extra-extra-large: 48px !default;      // NEW in MD3E
+$md3-corner-full: 9999px !default;
+
+// Map MD3 shape tokens to Quasar variables
+$generic-border-radius: $md3-corner-medium !default;
+$button-border-radius: $md3-corner-full !default;
+$button-rounded-border-radius: $md3-corner-full !default;
+$button-push-border-radius: $md3-corner-large !default;
+
+// === Button Variables ===
+$button-shadow: none !default;
+$button-shadow-active: none !default;
+$button-padding: 6px 16px !default;  // MD3E: 16dp horizontal, 6px vertical for 40px height
+
+// === Motion Tokens ===
+// Legacy easing curves (CSS fallbacks for spring physics)
+$md3-easing-emphasized: cubic-bezier(0.2, 0, 0, 1) !default;
+$md3-easing-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1) !default;
+$md3-easing-emphasized-accel: cubic-bezier(0.3, 0, 0.8, 0.15) !default;
+$md3-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
+$md3-easing-standard-decel: cubic-bezier(0, 0, 0, 1) !default;
+$md3-easing-standard-accel: cubic-bezier(0.3, 0, 1, 1) !default;
+
+// MD3E Spring-based motion — CSS cubic-bezier approximations
+// Expressive spatial (bouncy, overshoot — Y values > 1)
+$md3-spring-expressive-spatial-fast: cubic-bezier(0.42, 1.67, 0.21, 0.90) !default;
+$md3-spring-expressive-spatial-default: cubic-bezier(0.38, 1.21, 0.22, 1.00) !default;
+$md3-spring-expressive-spatial-slow: cubic-bezier(0.39, 1.29, 0.35, 0.98) !default;
+// Expressive effects (smooth, no overshoot)
+$md3-spring-expressive-effects-fast: cubic-bezier(0.31, 0.94, 0.34, 1.00) !default;
+$md3-spring-expressive-effects-default: cubic-bezier(0.34, 0.80, 0.34, 1.00) !default;
+$md3-spring-expressive-effects-slow: cubic-bezier(0.34, 0.88, 0.34, 1.00) !default;
+// Spring durations paired with curves above
+$md3-spring-spatial-fast-duration: 350ms !default;
+$md3-spring-spatial-default-duration: 500ms !default;
+$md3-spring-spatial-slow-duration: 650ms !default;
+$md3-spring-effects-fast-duration: 150ms !default;
+$md3-spring-effects-default-duration: 200ms !default;
+$md3-spring-effects-slow-duration: 300ms !default;
+
+// Shape morphing spring (per MD3E spec: damping 0.9, stiffness 1400)
+$md3-shape-morph-curve: cubic-bezier(0.42, 1.67, 0.21, 0.90) !default;
+$md3-shape-morph-duration: 350ms !default;
+
+// Quasar transition variable overrides
+$generic-hover-transition: .3s $md3-easing-emphasized !default;
+$button-transition: .3s $md3-easing-emphasized !default;
+$shadow-transition: box-shadow .28s $md3-easing-emphasized !default;
+$option-focus-transition: .2s $md3-easing-emphasized !default;
+
+// === Separator ===
+$separator-color: $md3-outline-variant !default;
+$separator-dark-color: $md3-dark-outline-variant !default;
+
+// === Input/Field Variables ===
+$input-font-size: 16px !default;
+$input-text-color: $md3-on-surface !default;
+$input-label-color: $md3-on-surface-variant !default;
+
+// === Tooltip Variables ===
+$tooltip-background: $md3-inverse-surface !default;
+$tooltip-color: $md3-inverse-on-surface !default;
+$tooltip-fontsize: 12px !default;
+$tooltip-border-radius: $md3-corner-extra-small !default;
+$tooltip-padding: 4px 8px !default;
+
+// === Menu Variables ===
+$menu-background: $md3-surface-container !default;
+$menu-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px rgba(0,0,0,.14), 0 1px 14px rgba(0,0,0,.12) !default;
+
+// === Dialog Variables ===
+$dialog-title-font-size: 1.5rem !default;
+$dialog-title-line-height: 2rem !default;
+$dialog-title-letter-spacing: 0 !default;
+
+// === Toolbar Variables ===
+$toolbar-min-height: 64px !default;
+$toolbar-title-font-size: 22px !default;
+$toolbar-title-font-weight: 400 !default;
+$toolbar-title-letter-spacing: 0 !default;
+
+// === Table Variables ===
+$table-box-shadow: none !default;
+$table-box-shadow-dark: none !default;
+$table-hover-background: rgba(0, 0, 0, 0.08) !default;
+
+// === Typography Variables ===
+// MD3E type scale mapped to Quasar heading variables
+// h1-h6 = display-large through headline-small (all tracking 0 in MD3E)
+$h1: (size: 3.5625rem, line-height: 4rem, letter-spacing: 0, weight: 400) !default;
+$h2: (size: 2.8125rem, line-height: 3.25rem, letter-spacing: 0, weight: 400) !default;
+$h3: (size: 2.25rem, line-height: 2.75rem, letter-spacing: 0, weight: 400) !default;
+$h4: (size: 2rem, line-height: 2.5rem, letter-spacing: 0, weight: 400) !default;
+$h5: (size: 1.75rem, line-height: 2.25rem, letter-spacing: 0, weight: 400) !default;
+$h6: (size: 1.5rem, line-height: 2rem, letter-spacing: 0, weight: 400) !default;
+// subtitle = title-medium/small (tracking 0 in MD3E)
+$subtitle1: (size: 1rem, line-height: 1.5rem, letter-spacing: 0, weight: 500) !default;
+$subtitle2: (size: .875rem, line-height: 1.25rem, letter-spacing: 0, weight: 500) !default;
+// body = body-large/medium (tracking 0 in MD3E)
+$body1: (size: 1rem, line-height: 1.5rem, letter-spacing: 0, weight: 400) !default;
+$body2: (size: .875rem, line-height: 1.25rem, letter-spacing: 0, weight: 400) !default;
+// overline = label-small, caption = body-small (0.1pt tracking = 0.00625rem)
+$overline: (size: .6875rem, line-height: 1rem, letter-spacing: .00625rem, weight: 500) !default;
+$caption: (size: .75rem, line-height: 1rem, letter-spacing: .00625rem, weight: 400) !default;

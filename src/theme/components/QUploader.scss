@@ -1,0 +1,72 @@
+// MD3 Expressive QUploader Overrides
+// Appended after Quasar's QUploader.sass — source order wins.
+//
+// MD3E maps QUploader to a surface-container component with an outline border
+// and on-surface text. The primary-colored header from Quasar's default is
+// replaced with a surface-container-high header for consistency with MD3E
+// pickers and other action surfaces.
+//
+// Key changes:
+//   • Container: surface-container bg, no shadow (box-shadow handled by variable)
+//   • Header: surface-container-high bg / on-surface text (not solid primary)
+//   • File items: outline-variant border
+//   • Border: outline color
+//   • DnD overlay: surface-based with on-surface foreground
+
+// === Container ===
+.q-uploader {
+  background: var(--md3-surface-container);
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+  border-color: var(--md3-outline);
+  border-radius: $md3-corner-medium; // 12px — generic-border-radius
+  box-shadow: none;
+}
+
+// === Header ===
+// MD3E: use surface-container-high instead of solid primary.
+// This matches the QDate/QTime header treatment.
+.q-uploader__header {
+  background-color: var(--md3-surface-container-high);
+  color: var(--md3-on-surface); // replaces stock color: #fff
+  border-radius: $md3-corner-medium $md3-corner-medium 0 0; // inherit container top corners
+}
+
+// === File List Items ===
+.q-uploader__file {
+  border-color: var(--md3-outline-variant);
+  border-radius: $md3-corner-small; // 8px
+}
+
+// === Drag-and-Drop Overlay ===
+.q-uploader__dnd {
+  outline-color: var(--md3-primary);
+  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.04);
+}
+
+// === Upload Overlay (progress) ===
+.q-uploader__overlay {
+  color: var(--md3-on-surface); // replaces stock color: #000
+  background-color: rgba(var(--md3-surface-rgb, 255, 255, 255), 0.7);
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+// Stock Quasar's own dark values (#fff etc.) apply correctly when --dark is set.
+.q-uploader--dark {
+  background: var(--md3-surface-container);
+  border-color: var(--md3-outline);
+  box-shadow: none;
+}
+
+.q-uploader--dark .q-uploader__header {
+  background-color: var(--md3-surface-container-high);
+}
+
+.q-uploader--dark .q-uploader__file {
+  border-color: var(--md3-outline-variant);
+}
+
+.q-uploader--dark .q-uploader__dnd,
+.q-uploader--dark .q-uploader__overlay {
+  background: rgba(var(--md3-on-surface-rgb, 255, 255, 255), 0.08);
+}

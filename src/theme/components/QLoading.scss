@@ -1,0 +1,33 @@
+// MD3 Expressive QLoading Overrides
+// Appended after Quasar's Loading.sass — source order wins.
+//
+// MD3E maps QLoading to the "contained" Loading Indicator variant:
+//   - The box (.__box) = contained container (primary-container bg, on-primary-container text)
+//   - The backdrop (.__backdrop) = scrim at 32% opacity (MD3 modal overlay value)
+// The spinner inside the box inherits on-primary-container via color: inherit.
+
+// === Backdrop / Scrim ===
+// MD3 modal scrim: neutral-0 (#000) at 32% opacity.
+// Quasar default is black at 50% — MD3 is lighter.
+.q-loading__backdrop {
+  background-color: var(--md3-scrim, #000000);
+  opacity: 0.32;
+}
+
+// === Container Box ===
+// Uses the "contained" loading indicator color pairing from MD3E:
+//   container.color = primary-container
+//   active-indicator.color = on-primary-container (spinner inherits via color)
+// Corner: extra-large (28px) — appropriate for a floating overlay container.
+.q-loading__box {
+  background: var(--md3-primary-container);
+  color: var(--md3-on-primary-container); // replaces stock color: #fff
+  border-radius: $md3-corner-extra-large; // 28px
+}
+
+// === Spinner inside the box ===
+// color: inherits from .q-loading__box (on-primary-container) — redundant
+
+// === Message text ===
+// Inherits color from .q-loading__box (on-primary-container) — consistent.
+// No separate override needed unless the message needs distinct styling.

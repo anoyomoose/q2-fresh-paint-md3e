@@ -1,0 +1,499 @@
+// MD3 Expressive QField Overrides
+// Appended after Quasar's QField.sass — source order wins.
+//
+// Key MD3E changes from MD3:
+// - 3dp focus indicator (was 2dp)
+// - Color-based disabled states (not opacity)
+// - on-surface-variant for labels, icons, helper text
+// - Error state colors on label, icons, border
+// - Caret color: primary (error on error)
+// - MD3E motion tokens
+
+// === Typography ===
+// MD3 Body Large: 16px (MD2 was 14px), tracking 0.5pt (0.03125em)
+// font-size override needed because Quasar's compiled CSS bakes in 14px
+// from $input-font-size — our Sass variable override only affects app-level
+// Sass, not the pre-built quasar.css.
+.q-field {
+  font-size: 16px;
+}
+
+.q-field__native,
+.q-field__prefix,
+.q-field__suffix,
+.q-field__input {
+  letter-spacing: 0.03125em;
+}
+
+// Fix 2: MD3E input text line-height is always 24dp (Quasar defaults to 28px on .q-field__native)
+.q-field__native,
+.q-field__input {
+  line-height: 1.5rem; // 24px
+}
+
+// === Marginal (prepend/append icons) ===
+.q-field__marginal {
+  color: var(--md3-on-surface-variant); // replaces stock rgba(0,0,0,.54)
+}
+
+// === Label ===
+.q-field__label {
+  color: var(--md3-on-surface-variant); // replaces stock $input-label-color
+}
+
+// Floated label: MD3E spec says 8dp from top.
+// Quasar uses translateY(-40%) which gives -8px (40% of 20px line-height) → 10px from top.
+// -50% gives -10px → 8px from top, matching spec.
+.q-field--float .q-field__label {
+  transform: translateY(-50%) scale(0.75);
+}
+
+// === Bottom (helper text / counter) ===
+.q-field__bottom {
+  color: var(--md3-on-surface-variant); // replaces stock rgba(0,0,0,.54)
+  padding-top: 4px; // Fix 3: MD3E supporting text top padding is 4dp (Quasar defaults to 8px)
+  letter-spacing: 0.033em; // Fix 7: MD3E 0.4pt tracking at 12px ≈ 0.033em
+}
+
+// === Placeholder Color ===
+// Fix 4: MD3E placeholder should be on-surface-variant
+.q-field__native,
+.q-field__input {
+  &::placeholder {
+    color: var(--md3-on-surface-variant);
+    opacity: 1;
+  }
+}
+
+// === Prefix/Suffix Color ===
+// Fix 5: MD3E prefix/suffix should be on-surface-variant
+.q-field__prefix,
+.q-field__suffix {
+  color: var(--md3-on-surface-variant);
+}
+
+// === Caret Color ===
+.q-field__native,
+.q-field__input {
+  caret-color: var(--md3-primary);
+}
+
+// === Transitions ===
+// MD3E fast effects for state changes
+.q-field__control:before,
+.q-field__control:after {
+  transition-timing-function: $md3-spring-expressive-effects-fast;
+  transition-duration: $md3-spring-effects-fast-duration;
+}
+
+// === Icon Padding (Fix 6) ===
+// MD3E: 12dp container padding when icons present, 16dp icon-to-text gap
+// Quasar's .q-field__prepend has padding-right: 12px, .q-field__append has padding-left: 12px
+// Increase icon-to-text gap to 16dp
+.q-field__prepend {
+  padding-right: 16px;
+}
+.q-field__append {
+  padding-left: 16px;
+}
+
+// When prepend icons exist, reduce left control padding from 16dp to 12dp
+// When append icons exist, reduce right control padding from 16dp to 12dp
+.q-field--filled,
+.q-field--outlined,
+.q-field--standard {
+  .q-field__control:has(.q-field__prepend) {
+    padding-left: 12px;
+  }
+  .q-field__control:has(.q-field__append) {
+    padding-right: 12px;
+  }
+}
+
+// ============================================================
+// FILLED VARIANT
+// ============================================================
+
+.q-field--filled .q-field__control {
+  background: var(--md3-surface-container-highest);
+  padding: 0 16px;
+  border-radius: $md3-corner-extra-small $md3-corner-extra-small 0 0;
+}
+
+// Active indicator (bottom line): on-surface-variant, 1dp
+// No background overlay in enabled state (hover overlay is on :hover only)
+.q-field--filled .q-field__control:before {
+  background: transparent;
+  border-bottom: 1px solid var(--md3-on-surface-variant);
+}
+
+// Hover: 8% state layer + border becomes on-surface
+.q-field--filled:not(.q-field--highlighted) .q-field__control:hover:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.08);
+  border-bottom-color: var(--md3-on-surface);
+}
+
+// Focused: 3dp active indicator (MD3E increased from 2dp)
+.q-field--highlighted.q-field--filled .q-field__control:after {
+  height: 3px;
+}
+
+// Focused: 12% state layer
+.q-field--highlighted.q-field--filled .q-field__control:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.12);
+}
+
+// ============================================================
+// STANDARD VARIANT — restyled to look like MD3E filled
+// ============================================================
+// This avoids the boot file prop conflict where filled=true would
+// override explicitly-set outlined/standout props.
+
+.q-field--standard .q-field__control {
+  background: var(--md3-surface-container-highest);
+  border-radius: $md3-corner-extra-small $md3-corner-extra-small 0 0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+// Active indicator color
+.q-field--standard .q-field__control:before {
+  border-bottom-color: var(--md3-on-surface-variant);
+}
+
+// Hover: border becomes on-surface
+.q-field--standard:not(.q-field--highlighted) .q-field__control:hover:before {
+  border-color: var(--md3-on-surface);
+}
+
+// Focused: 3dp active indicator
+.q-field--highlighted.q-field--standard .q-field__control:after {
+  height: 3px;
+}
+
+// ============================================================
+// OUTLINED VARIANT
+// ============================================================
+
+// Extra-small corners (4dp) — not generic-border-radius (12px in MD3)
+.q-field--outlined .q-field__control {
+  border-radius: $md3-corner-extra-small;
+  padding: 0 16px;
+}
+
+// Outline: 1dp, outline color
+.q-field--outlined .q-field__control:before {
+  border: 1px solid var(--md3-outline);
+}
+
+// Hover: on-surface
+.q-field--outlined:not(.q-field--highlighted) .q-field__control:hover:before {
+  border-color: var(--md3-on-surface);
+}
+
+// Focus: 3dp primary border (MD3E increased from 2dp)
+.q-field--highlighted.q-field--outlined .q-field__control:after {
+  border-width: 3px;
+  border-color: currentColor;
+}
+
+// Prevent hover outline showing through focused border
+.q-field--highlighted.q-field--outlined .q-field__control:hover:before {
+  border-color: transparent;
+}
+
+// --- Outlined floated label: sits ON the top border ---
+// Label moves from inside (top: 18px) to the border (top: 0).
+// Quasar uses transform-origin: left top, so scale(0.75) pins to the top edge.
+// With origin at (0,0): visual center = height*0.75/2 + translateY = 7.5 + tY.
+// -30% gives tY=-6px, center=1.5px — visually centered on cap-height/baseline
+// midpoint rather than the geometric center (which includes descenders).
+// Left position is set by JS to align with the icon/content start.
+//
+// All outlined notch rules are gated on :not(.no-notch) so users can opt out
+// by adding .no-notch to the field or <body>. Uses body:not(.no-notch) as
+// ancestor gate + :not(.no-notch) on the field itself.
+// Notch selector: data-notch attribute is set by JS (boot.ts) on outlined fields
+// that are not inside a .no-input-notch ancestor. This keeps CSS simple and
+// lets JS handle the ancestor check via closest('.no-input-notch').
+$_notch: '.q-field--outlined[data-notch]';
+
+#{$_notch}.q-field--float .q-field__label {
+  top: 0;
+  padding: 0 4px; // 4dp gap spacing per MD3E spec
+  transform: translateY(-30%) scale(0.75);
+}
+
+// Dense notch: adjust unfloated label top to align with input text center.
+// Quasar's dense default is top:10px (center at 18.75px), but our dense native
+// padding (8px/8px with 24px line-height) puts text center at 20px.
+// top:11px → center at 19.75px, closely matching the input.
+#{$_notch}.q-field--dense:not(.q-field--float) .q-field__label {
+  top: 11px;
+}
+
+// Smooth transition for top/left/transform/padding when label floats.
+// Padding must be included because the floated label gets padding: 0 4px
+// (for notch gap spacing) which would otherwise snap instantly, causing a
+// visible horizontal jump while left/transform animate smoothly.
+#{$_notch} .q-field__label {
+  transition: transform 0.36s cubic-bezier(.4,0,.2,1),
+              top 0.36s cubic-bezier(.4,0,.2,1),
+              left 0.36s cubic-bezier(.4,0,.2,1),
+              padding 0.36s cubic-bezier(.4,0,.2,1),
+              max-width 0.396s cubic-bezier(.4,0,.2,1);
+}
+
+// Input text vertically centered in notch fields.
+// The padding is the same in both unfloated and floated states so that:
+//   1. The unfloated label (at top:18px) aligns with where input text appears
+//   2. No padding change on focus → no cursor-rise animation
+//
+// Non-dense: 56px control, (56 - 24px line-height) / 2 = 16px each side.
+// Excludes auto-height (.q-field__input only) to prevent stacking in use-input selects.
+#{$_notch}:not(.q-field--dense):not(.q-field--auto-height) .q-field__native,
+#{$_notch}:not(.q-field--dense):not(.q-field--auto-height) .q-field__input {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+// Auto-height (use-input selects): only pad the native div, not the inner input.
+// Use minimal padding since the field sizes to content.
+#{$_notch}:not(.q-field--dense).q-field--auto-height .q-field__native {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+// Dense: 40px control, (40 - 24px line-height) / 2 = 8px each side.
+#{$_notch}.q-field--dense:not(.q-field--auto-height) .q-field__native,
+#{$_notch}.q-field--dense:not(.q-field--auto-height) .q-field__input {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#{$_notch}.q-field--dense.q-field--auto-height .q-field__native {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+// Notch: remove the container padding-top that Quasar adds to make room for the
+// floated label inside the field. With the notch, the label is on the border
+// (outside), so this padding isn't needed. Applies to all notch fields — dense,
+// non-dense, auto-height, regular — because the notch always moves the label out.
+// Uses !important to beat Quasar's high-specificity selectors like
+// .q-field--auto-height.q-field--dense.q-field--labeled .q-field__control-container
+#{$_notch} .q-field__control-container {
+  padding-top: 0 !important;
+}
+
+// --- Notch: CSS mask cuts a gap in the border where the label sits ---
+// Registered custom properties enable CSS transitions on the notch dimensions.
+// Mask uses three opaque strips: left of notch, right of notch, below notch.
+// --notch-left and --notch-width are set/animated by JS (boot.ts).
+@property --notch-left {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+@property --notch-width {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+// Mask applied on ALL outlined fields (not just float) so closing animation works.
+// When --notch-width is 0, the mask covers everything (no visible gap).
+#{$_notch} .q-field__control:before,
+#{$_notch} .q-field__control:after {
+  --_nl: var(--notch-left, 0px);
+  --_nw: var(--notch-width, 0px);
+
+  -webkit-mask-image:
+    linear-gradient(#000, #000),
+    linear-gradient(#000, #000),
+    linear-gradient(#000, #000);
+  // Right strip and bottom strip each get +1px to prevent sub-pixel rounding
+  // gaps at strip junctions — at non-100% zoom levels, mask-size and
+  // mask-position can round independently, causing 1px gaps in the border.
+  // The extra 1px creates harmless overlap between adjacent strips.
+  -webkit-mask-size:
+    var(--_nl) 100%,
+    calc(100% - var(--_nl) - var(--_nw) + 1px) 100%,
+    calc(var(--_nw) + 2px) calc(100% - 4px);
+  -webkit-mask-position:
+    0 0,
+    calc(var(--_nl) + var(--_nw)) 0,
+    calc(var(--_nl) - 1px) 4px;
+  -webkit-mask-repeat: no-repeat;
+
+  mask-image:
+    linear-gradient(#000, #000),
+    linear-gradient(#000, #000),
+    linear-gradient(#000, #000);
+  mask-size:
+    var(--_nl) 100%,
+    calc(100% - var(--_nl) - var(--_nw) + 1px) 100%,
+    calc(var(--_nw) + 2px) calc(100% - 4px);
+  mask-position:
+    0 0,
+    calc(var(--_nl) + var(--_nw)) 0,
+    calc(var(--_nl) - 1px) 4px;
+  mask-repeat: no-repeat;
+}
+
+// Notch transitions: opening = fast, no delay; closing = fast, slightly delayed.
+// Label slide is 0.36s. Notch opens in first half, closes starting at 90ms.
+#{$_notch}.q-field--float .q-field__control {
+  transition: --notch-left 0.18s cubic-bezier(.4,0,.2,1),
+              --notch-width 0.18s cubic-bezier(.4,0,.2,1);
+}
+
+#{$_notch}:not(.q-field--float) .q-field__control {
+  transition: --notch-left 0.18s cubic-bezier(.4,0,.2,1) 0.09s,
+              --notch-width 0.18s cubic-bezier(.4,0,.2,1) 0.09s;
+}
+
+
+// ============================================================
+// HIGHLIGHTED (FOCUSED) STATE
+// ============================================================
+
+// Label becomes primary when focused (handled by Quasar's currentColor)
+// but we reinforce the highlight label color for non-primary variants
+.q-field--highlighted .q-field__label {
+  color: currentColor;
+}
+
+// ============================================================
+// DARK MODE
+// ============================================================
+// CSS custom properties auto-flip, but we must override Quasar's
+// hardcoded rgba(white) values.
+
+.q-field--dark .q-field__control:before {
+  border-color: var(--md3-outline);
+}
+
+.q-field--dark:not(.q-field--highlighted) .q-field__control:hover:before {
+  border-color: var(--md3-on-surface);
+}
+
+// color: overrides on dark native/prefix/suffix/input removed — tokens don't flip
+// for per-component dark mode. Stock Quasar's color: #fff / rgba(255,255,255,.7)
+// apply correctly when --dark is set.
+
+// Filled dark mode background
+.q-field--dark.q-field--filled .q-field__control {
+  background: var(--md3-surface-container-highest);
+}
+
+.q-field--dark.q-field--filled .q-field__control:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.08);
+}
+
+// Standard dark mode (same as filled in MD3E)
+.q-field--dark.q-field--standard .q-field__control {
+  background: var(--md3-surface-container-highest);
+}
+
+// ============================================================
+// ERROR STATE
+// ============================================================
+
+// Error label
+.q-field--error .q-field__label {
+  color: var(--md3-error); // replaces stock negative color (via animation)
+}
+
+// Error bottom / helper text
+.q-field--error .q-field__bottom {
+  color: var(--md3-error); // replaces stock var(--q-negative)
+}
+
+// Error caret
+.q-field--error .q-field__native,
+.q-field--error .q-field__input {
+  caret-color: var(--md3-error);
+}
+
+// Error trailing icon
+.q-field--error .q-field__append {
+  color: var(--md3-error);
+}
+
+// Error active indicator (filled/standard)
+.q-field--error.q-field--filled .q-field__control:before,
+.q-field--error.q-field--standard .q-field__control:before {
+  border-bottom-color: var(--md3-error);
+}
+
+// Error outlined border
+.q-field--error.q-field--outlined .q-field__control:before {
+  border-color: var(--md3-error);
+}
+
+// Error focus: 3dp error border
+.q-field--error.q-field--highlighted.q-field--outlined .q-field__control:after {
+  border-color: var(--md3-error);
+}
+
+// ============================================================
+// DISABLED STATE — color-based, not opacity
+// ============================================================
+
+// Remove Quasar's global opacity approach
+.q-field--disabled .q-field__control > div {
+  opacity: 1 !important;
+}
+
+// Disabled input text
+.q-field--disabled .q-field__native,
+.q-field--disabled .q-field__prefix,
+.q-field--disabled .q-field__suffix,
+.q-field--disabled .q-field__input {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled label
+.q-field--disabled .q-field__label {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled helper text
+.q-field--disabled .q-field__bottom {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled icons
+.q-field--disabled .q-field__marginal {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled filled/standard container: on-surface at 4%
+.q-field--disabled.q-field--filled .q-field__control,
+.q-field--disabled.q-field--standard .q-field__control {
+  background: rgba(var(--md3-on-surface-rgb), 0.04);
+}
+
+// Disabled active indicator
+.q-field--disabled.q-field--filled .q-field__control:before,
+.q-field--disabled.q-field--standard .q-field__control:before {
+  border-bottom-color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled outlined border: on-surface at 12%
+.q-field--disabled.q-field--outlined .q-field__control:before {
+  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+}
+
+// ============================================================
+// READONLY
+// ============================================================
+
+// Readonly dashed border uses token colors
+.q-field--readonly.q-field--filled .q-field__control:before,
+.q-field--readonly.q-field--standard .q-field__control:before {
+  border-bottom-color: var(--md3-on-surface-variant);
+}
+
+.q-field--readonly.q-field--outlined .q-field__control:before {
+  border-color: var(--md3-outline);
+}

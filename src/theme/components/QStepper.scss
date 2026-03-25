@@ -1,0 +1,114 @@
+// MD3 Expressive QStepper Overrides
+// Appended after Quasar's QStepper.sass — source order wins.
+//
+// MD3E has no direct Stepper equivalent. We style consistently with
+// the MD3E design language:
+//   • Container: surface bg (no shadow when flat; variables handle shadow=none)
+//   • Active/done tab: primary color, primary dot bg
+//   • Inactive tab: on-surface-variant
+//   • Connector lines: outline-variant
+//   • Step title: title-medium (14pt / weight 500 / 0.1pt tracking)
+//   • Disabled dot: on-surface at 12% opacity
+//   • Error state: error color
+
+// === Container ===
+.q-stepper {
+  background: var(--md3-surface);
+}
+
+// === Step Tabs — Inactive ===
+.q-stepper__tab {
+  color: var(--md3-on-surface-variant); // replaces stock color: $grey
+}
+
+// === Step Tabs — Active / Done ===
+// Active dot uses primary bg (inherits from currentColor on .q-stepper__dot)
+.q-stepper__tab--active,
+.q-stepper__tab--done {
+  color: var(--md3-primary); // replaces stock var(--q-primary)
+}
+
+// === Step Dot Number Text ===
+// Dot bg = currentColor (primary when active), text needs contrast
+.q-stepper__dot span {
+  color: var(--md3-on-primary); // replaces stock color: #fff
+}
+
+// Dark mode: dot span text is on-primary in both light and dark
+// (token flips automatically)
+
+// === Disabled Step ===
+.q-stepper__tab--disabled .q-stepper__dot {
+  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.12);
+}
+
+.q-stepper__tab--disabled .q-stepper__label {
+  color: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.38); // replaces stock rgba(0,0,0,.32)
+}
+
+// === Error Step ===
+.q-stepper__tab--error {
+  color: var(--md3-error); // replaces stock var(--q-negative)
+}
+
+// === Step Title ===
+// MD3E title-medium: 14pt / weight 500 / 0.1pt tracking
+.q-stepper__title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.00714em;
+  color: currentColor; // inherits tab color (primary when active, variant when inactive)
+}
+
+// === Connector Lines — Horizontal ===
+// Quasar renders connector lines as pseudo-elements on .q-stepper__line
+.q-stepper--horizontal .q-stepper__line::before,
+.q-stepper--horizontal .q-stepper__line::after {
+  background: var(--md3-outline-variant);
+}
+
+// === Connector Lines — Vertical ===
+// Vertical connectors are pseudo-elements on the dot itself
+.q-stepper--vertical .q-stepper__dot::before,
+.q-stepper--vertical .q-stepper__dot::after {
+  background: var(--md3-outline-variant);
+}
+
+// === Header Divider ===
+.q-stepper__header--border {
+  border-bottom-color: var(--md3-outline-variant);
+}
+
+// === Bordered Variant ===
+.q-stepper--bordered {
+  border-color: var(--md3-outline-variant);
+}
+
+// === Dark Mode ===
+.q-stepper--dark {
+  background: var(--md3-surface);
+
+  &.q-stepper--bordered,
+  .q-stepper__header--border {
+    border-color: var(--md3-outline-variant);
+  }
+
+  &.q-stepper--horizontal .q-stepper__line::before,
+  &.q-stepper--horizontal .q-stepper__line::after {
+    background: var(--md3-outline-variant);
+  }
+
+  &.q-stepper--vertical .q-stepper__dot::before,
+  &.q-stepper--vertical .q-stepper__dot::after {
+    background: var(--md3-outline-variant);
+  }
+
+  // color: on disabled label removed — token doesn't flip for per-component dark mode.
+  // Stock rgba(255,255,255,.54) applies correctly when --dark is set.
+  .q-stepper__tab--disabled {
+    .q-stepper__dot {
+      background: var(--md3-outline-variant);
+    }
+  }
+}

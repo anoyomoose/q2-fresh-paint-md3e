@@ -1,0 +1,78 @@
+// MD3 Expressive QBottomSheet Overrides
+// Appended after Quasar's BottomSheetComponent.sass — source order wins.
+//
+// Quasar's BottomSheet is a QDialog with position="bottom" containing a QCard.
+// The QCard gets bottom corners stripped by Quasar's dialog corner-stripping logic.
+
+// === Container Shape & Color ===
+// MD3E: extra-large top corners (28dp), 0 bottom, surface-container-low
+.q-bottom-sheet {
+  border-radius: $md3-corner-extra-large $md3-corner-extra-large 0 0;
+  background: var(--md3-surface-container-low);
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+  padding-bottom: 8px;
+}
+
+// The card wrapper inside the bottom sheet
+.q-bottom-sheet.q-card {
+  border-radius: $md3-corner-extra-large $md3-corner-extra-large 0 0;
+  background: var(--md3-surface-container-low);
+  // Level 1 shadow (optional — scrim provides separation for modal variant)
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+// === Max Width ===
+// MD3E: max 640dp (Quasar defaults: 400px list, 700px grid)
+.q-bottom-sheet--list {
+  max-width: 640px;
+  width: 640px;
+}
+
+.q-bottom-sheet--grid {
+  max-width: 640px;
+  width: 640px;
+}
+
+// === Drag Handle (pseudo-element) ===
+// MD3E: 32dp wide x 4dp tall, on-surface-variant, centered
+// 22dp top/bottom padding, accessible 48dp touch target
+.q-bottom-sheet::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 4px;
+  border-radius: $md3-corner-full;
+  background: var(--md3-on-surface-variant);
+  margin: 22px auto;
+  opacity: 0.4;
+}
+
+// === List Variant Background ===
+.q-bottom-sheet--list {
+  background: var(--md3-surface-container-low);
+}
+
+// === Grid Variant Background ===
+.q-bottom-sheet--grid {
+  background: var(--md3-surface-container-low);
+}
+
+// === Scrim ===
+// Handled by QDialog backdrop override (32% in QDialog.scss).
+// Bottom sheets inherit the dialog scrim since they are QDialogs.
+
+// === Dark Mode ===
+// CSS custom properties handle the color switch automatically.
+// Remove shadow in dark mode — scrim + tonal difference provide separation.
+body.body--dark .q-bottom-sheet.q-card {
+  box-shadow: none;
+}
+
+// === Responsive: Large Screens ===
+// MD3E: 56dp side margins when window > 640dp
+@media (min-width: 640px) {
+  .q-bottom-sheet {
+    margin-left: 56px;
+    margin-right: 56px;
+  }
+}

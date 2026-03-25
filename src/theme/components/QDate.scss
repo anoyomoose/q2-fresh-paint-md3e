@@ -1,0 +1,151 @@
+// MD3 Expressive QDate Overrides
+// Appended after Quasar's QDate.sass — source order wins.
+//
+// Key departures from Quasar defaults:
+//   • Container: surface-container-high bg, extra-large corner (28px), no shadow
+//   • Header: surface-container-high (NOT primary), on-surface-variant text
+//   • Headline: headline-large (32px / 2rem)
+//   • Day cells: 40×40px state layer, full circle
+//   • Outside-month: 38% opacity (Quasar uses 18%)
+//   • Weekday labels: full on-surface opacity (Quasar dims to 38%)
+//   • Today: 1dp primary outline ring + primary text
+//   • Selected: primary fill / on-primary text
+//   • Range bg: secondary-container (Quasar uses currentColor at 30%)
+//   • Navigation arrows: on-surface-variant
+
+// === Container ===
+.q-date {
+  background: var(--md3-surface-container-high);
+  border-radius: $md3-corner-extra-large;
+  box-shadow: none; // picker is used inside a dialog that supplies elevation
+}
+
+// === Header ===
+// MD3E modal/docked picker header uses surface-container-high, NOT primary
+.q-date__header {
+  background: var(--md3-surface-container-high);
+  color: var(--md3-on-surface-variant); // replaces stock color: #fff
+}
+
+// === Header Subtitle (year label) ===
+// title-small: 14pt / weight 500 / 0.1pt tracking
+.q-date__header-subtitle {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.00714em; // 0.1pt / 14sp
+  // color: inherits from header (on-surface-variant) — redundant
+}
+
+// === Header Headline (selected date) ===
+// MD3E: headline-large — 32pt / weight 400 / tracking 0
+.q-date__header-title-label {
+  font-size: 2rem;       // 32pt
+  line-height: 2.5rem;   // 40pt
+  font-weight: 400;
+  letter-spacing: 0;
+  // color: inherits from header (on-surface-variant) — redundant
+}
+
+// Active link state inside header (selected segment in range or year mode)
+.q-date__header-link--active {
+  color: var(--md3-on-surface); // intentional: differentiate active link from header's on-surface-variant
+  opacity: 1;
+}
+
+// === Weekday Labels ===
+// MD3E: on-surface at full opacity, body-large (16pt)
+// Quasar defaults to opacity: 0.38 — we override to 1
+.q-date__calendar-weekdays > div {
+  opacity: 1;
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+  font-size: 1rem;     // 16pt = body-large
+  font-weight: 400;
+}
+
+// === Day Cell Buttons / Divs ===
+// MD3E state-layer size = 40dp circle
+// Quasar defaults: 30×30px — we upsize to 40px
+.q-date__calendar-item > button,
+.q-date__calendar-item > div {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: $md3-corner-full;
+}
+
+// Day text: inherits from QLayout (on-surface) — no stock override to replace
+
+// === Outside-Month Dates ===
+// MD3E: 38% opacity (Quasar default: 18%)
+.q-date__calendar-item--out {
+  opacity: 0.38;
+}
+
+// === Today Indicator ===
+// MD3E: 1dp primary outline ring + primary text; no fill
+.q-date__today .q-btn {
+  box-shadow: inset 0 0 0 1px var(--md3-primary);
+  color: var(--md3-primary); // intentional: today gets primary text per MD3E spec
+}
+
+// === Selected Date ===
+// MD3E: primary fill, on-primary text, no shadow
+.q-date__calendar-item--active .q-btn {
+  background: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important; // replaces JS-set primary color with on-primary for contrast
+  box-shadow: none;
+}
+
+// === Range Selection ===
+// MD3E: secondary-container bg, opacity: 1 (remove Quasar's 0.3 alpha hack)
+.q-date__range::before,
+.q-date__range-from::before,
+.q-date__range-to::before {
+  background-color: var(--md3-secondary-container);
+  opacity: 1;
+}
+
+// In-range text: on-secondary-container (needs to match secondary-container bg above)
+.q-date__range .q-btn,
+.q-date__range-from .q-btn,
+.q-date__range-to .q-btn {
+  color: var(--md3-on-secondary-container);
+}
+
+// === Year / Month Picker — Selected State ===
+// MD3E: primary fill pill for selected year/month
+.q-date__years-item .q-btn--active,
+.q-date__months-item .q-btn--active {
+  background: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
+  border-radius: $md3-corner-full;
+}
+
+// Unselected year/month labels: intentional on-surface-variant differentiation
+.q-date__years-item .q-btn,
+.q-date__months-item .q-btn {
+  color: var(--md3-on-surface-variant);
+}
+
+// === Navigation Arrows ===
+// intentional: on-surface-variant for nav icons per MD3E
+.q-date__navigation .q-btn {
+  color: var(--md3-on-surface-variant);
+}
+
+// === Event Dot ===
+.q-date__event {
+  background: var(--md3-primary);
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+.q-date--dark {
+  background: var(--md3-surface-container-high);
+  box-shadow: none;
+}
+
+.q-date--dark .q-date__header {
+  background: var(--md3-surface-container-high);
+}

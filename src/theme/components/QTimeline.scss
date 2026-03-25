@@ -1,0 +1,53 @@
+// MD3 Expressive QTimeline Overrides
+// Appended after Quasar's QTimeline.sass — source order wins.
+//
+// MD3E does not define a Timeline component, but the closest analog is
+// an activity feed or vertical stepper. We style consistently with MD3E:
+//   • Dot: primary color
+//   • Connecting line: outline-variant (Quasar uses currentColor at 40% opacity)
+//   • Subtitle: on-surface-variant, no uppercase transform, normal opacity
+//   • Content text: on-surface
+//   • Heading title: on-surface
+
+// === Timeline Dot ===
+// Dot ::before is the filled circle; ::after is the connecting line
+.q-timeline__dot {
+  color: var(--md3-primary);
+}
+
+// Connecting line: override the 40% opacity on ::after with explicit color
+.q-timeline__dot::after {
+  background: var(--md3-outline-variant);
+  opacity: 1; // remove the 0.4 opacity Quasar applies
+}
+
+// === Subtitle ===
+// MD3E: on-surface-variant, no uppercase, no opacity dimming
+.q-timeline__subtitle {
+  opacity: 1;
+  text-transform: none;
+  color: var(--md3-on-surface-variant); // intentional: differentiate subtitle from body text (on-surface-variant vs inherited on-surface)
+  // Remove font-weight: 700 and letter-spacing overemphasis from Quasar
+  font-weight: 400;
+  letter-spacing: 0.03125em; // body-small tracking
+}
+
+// === Content Body ===
+// color: inherits from QLayout (on-surface) — no stock override to replace
+
+// === Heading Title ===
+// color: inherits from QLayout (on-surface) — no stock override to replace
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+// Stock Quasar's color: #fff on .q-timeline--dark applies correctly when --dark is set.
+.q-timeline--dark {
+  .q-timeline__subtitle {
+    opacity: 1;
+  }
+
+  .q-timeline__dot::after {
+    background: var(--md3-outline-variant);
+    opacity: 1;
+  }
+}

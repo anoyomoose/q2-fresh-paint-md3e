@@ -1,0 +1,45 @@
+// MD3 Expressive QTabs Overrides
+// Appended after Quasar's QTabs.sass — source order wins.
+
+// === Text Transform ===
+// MD3E uses sentence case, not uppercase
+.q-tab {
+  text-transform: none;
+}
+
+// === Tab Indicator (Horizontal) ===
+// MD3E primary tabs: 3dp height, rounded top corners (3px 3px 0 0)
+.q-tab__indicator {
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+}
+
+// === Tab Indicator (Vertical) ===
+// 3px width with rounded outside corners (trailing edge)
+.q-tabs--vertical .q-tab__indicator {
+  width: 3px;
+  height: unset;
+  border-radius: 0 3px 3px 0;
+}
+
+// === Inactive Tabs ===
+// Opacity-based approach for universal compatibility on colored backgrounds.
+// Color-based (on-surface-variant) only works on light/neutral surfaces, but
+// tabs are often placed on colored toolbars (bg-primary) where that text
+// would be invisible. Opacity works everywhere.
+.q-tab--inactive {
+  opacity: 0.7;
+}
+
+// === Tab Transition ===
+// MD3E easing for color/background transitions
+.q-tab {
+  transition: color 0.2s $md3-spring-expressive-effects-default,
+              background-color 0.2s $md3-spring-expressive-effects-default;
+}
+
+// === Icon+Text Tab Height ===
+// MD3E specifies 64dp for icon+text tabs (Quasar default is 72px)
+.q-tab--full {
+  min-height: 64px;
+}

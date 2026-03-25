@@ -1,0 +1,87 @@
+// MD3 Expressive QCheckbox Overrides
+// Appended after Quasar's QCheckbox.sass — source order wins.
+//
+// MD3E checkbox: 18dp container, 2dp rounded corners (already matches Quasar),
+// on-surface-variant unchecked, primary checked, on-primary checkmark.
+// State layers: 8% hover, 10% focus/pressed.
+// Disabled: color-based, not opacity.
+
+// === Unchecked Color ===
+.q-checkbox__inner {
+  color: var(--md3-on-surface-variant); // replaces stock rgba(0,0,0,.54)
+}
+
+// === Selected Color ===
+.q-checkbox__inner--truthy,
+.q-checkbox__inner--indet {
+  color: var(--md3-primary); // replaces stock var(--q-primary)
+}
+
+// === Checkmark SVG Color ===
+.q-checkbox__svg {
+  color: var(--md3-on-primary); // replaces stock color: #fff
+}
+
+// === Transition ===
+.q-checkbox__bg {
+  transition: background 0.2s $md3-easing-emphasized;
+}
+
+.q-checkbox__truthy {
+  transition: stroke-dashoffset 0.18s $md3-easing-emphasized;
+}
+
+.q-checkbox__indet {
+  transition: transform 0.22s $md3-easing-emphasized;
+}
+
+// === State Layers ===
+// Hover: 8% (using currentColor which auto-adapts: on-surface-variant
+// when unchecked, primary when checked)
+body.desktop .q-checkbox:not(.disabled) .q-checkbox__inner:before {
+  opacity: 0.08;
+  transition: transform 0.2s $md3-easing-emphasized;
+}
+
+// Focus: 10% (MD3E spec)
+body.desktop .q-checkbox:not(.disabled) .q-focusable:focus > .q-checkbox__inner:before {
+  opacity: 0.10;
+}
+
+// Hover on unchecked: icon color shifts to on-surface (MD3E spec enhancement)
+body.desktop .q-checkbox:not(.disabled):hover .q-checkbox__inner:not(.q-checkbox__inner--truthy):not(.q-checkbox__inner--indet) {
+  color: var(--md3-on-surface);
+}
+
+// === Disabled ===
+// Remove global opacity, use per-element colors
+.q-checkbox.disabled {
+  opacity: 1 !important;
+}
+
+// Disabled unchecked: on-surface at 38%
+.q-checkbox.disabled .q-checkbox__inner {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled selected container: on-surface at 38%
+.q-checkbox.disabled .q-checkbox__inner--truthy .q-checkbox__bg,
+.q-checkbox.disabled .q-checkbox__inner--indet .q-checkbox__bg {
+  background: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled selected checkmark: surface color (not on-primary)
+.q-checkbox.disabled .q-checkbox__inner--truthy .q-checkbox__svg,
+.q-checkbox.disabled .q-checkbox__inner--indet .q-checkbox__svg {
+  color: var(--md3-surface);
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+// Light-mode overrides above already replace the base colors; stock Quasar's
+// own dark values apply correctly when --dark is set.
+.q-checkbox--dark .q-checkbox__inner {
+  &:before {
+    opacity: 0.08 !important;
+  }
+}

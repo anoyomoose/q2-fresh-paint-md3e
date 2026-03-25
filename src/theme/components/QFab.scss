@@ -1,0 +1,129 @@
+// MD3 Expressive QFab Overrides
+// Appended to QFab.sass via the Sass importer.
+//
+// Covers: FAB container shape, colors, elevation, icon transitions,
+// actions animation, and shape morphing.
+
+// =============================================================================
+// 1. FORM SHAPE
+// =============================================================================
+
+// MD3E FABs use extra-large corners (28px), not large (16px).
+// Both "rounded" and "square" form variants use the same 28px corner in MD3E.
+.q-fab--form-rounded {
+  border-radius: $md3-corner-extra-large; // 28px
+}
+
+.q-fab--form-square {
+  border-radius: $md3-corner-extra-large; // 28px -- MD3E does not have a truly square FAB
+}
+
+// =============================================================================
+// 2. FAB BUTTON COLORS
+// =============================================================================
+
+// Default FAB color: primary-container bg, on-primary-container text/icon.
+// Uses !important because Quasar's color prop sets inline background-color.
+.q-fab > .q-btn--fab,
+.q-fab > .q-btn--fab-mini {
+  background-color: var(--md3-primary-container) !important;
+  color: var(--md3-on-primary-container) !important;
+}
+
+// =============================================================================
+// 3. FAB ELEVATION
+// =============================================================================
+
+// FAB resting elevation: Level 3 (6dp)
+// The shadow lives on the :before pseudo of the inner .q-btn
+.q-fab > .q-btn--fab:before,
+.q-fab > .q-btn--fab-mini:before {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+// Hover: Level 3 -> Level 4 (desktop only)
+body.desktop {
+  .q-fab > .q-btn--fab.q-btn--actionable:hover:before,
+  .q-fab > .q-btn--fab-mini.q-btn--actionable:hover:before {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Pressed: back to Level 3
+.q-fab > .q-btn--fab.q-btn--actionable:active:before,
+.q-fab > .q-btn--fab.q-btn--actionable.q-btn--active:before,
+.q-fab > .q-btn--fab-mini.q-btn--actionable:active:before,
+.q-fab > .q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+
+// =============================================================================
+// 4. ICON TRANSITIONS
+// =============================================================================
+
+// MD3E uses expressive spatial spring for icon rotation (bouncy overshoot).
+// These elements use `absolute-full` (position: absolute, inset: 0) and
+// `display: block`, which causes an inline-flex icon child to sit on the
+// text baseline — pushing it ~1.3px below vertical center. Adding flex
+// centering fixes icon/label misalignment in labelled FABs.
+.q-fab__icon,
+.q-fab__active-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast,
+              transform $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+// =============================================================================
+// 5. ACTIONS CONTAINER ANIMATION
+// =============================================================================
+
+// MD3E uses emphasized easing for the actions expand/collapse
+.q-fab__actions {
+  transition: transform 0.3s $md3-easing-emphasized, opacity 0.3s $md3-easing-emphasized;
+}
+
+// =============================================================================
+// 6. EXTERNAL LABEL TRANSITION
+// =============================================================================
+
+.q-fab__label--external {
+  transition: opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+}
+
+// =============================================================================
+// 7. INTERNAL LABEL TRANSITION
+// =============================================================================
+
+.q-fab__label--internal {
+  transition: font-size $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              max-height $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              opacity $md3-spring-effects-fast-duration $md3-spring-expressive-effects-fast;
+}
+
+// =============================================================================
+// 8. ACTIONS CHILD BUTTON STYLING
+// =============================================================================
+
+// Action buttons in the FAB menu inherit smaller sizing
+.q-fab__actions .q-btn {
+  margin: 4px;
+}
+
+// =============================================================================
+// 9. DISABLED STATE
+// =============================================================================
+
+// Disabled FAB: no shadow, muted colors
+.q-fab > .q-btn.disabled {
+  &.q-btn--fab:before,
+  &.q-btn--fab-mini:before {
+    box-shadow: none !important;
+  }
+
+  // Override the forced colors with disabled treatment
+  background-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
+  color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+}

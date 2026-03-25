@@ -1,0 +1,114 @@
+// MD3 Expressive QLayout Overrides
+// Appended after Quasar's QLayout.sass — source order wins.
+// Covers: QHeader, QFooter, QDrawer, and layout-level styles.
+
+// ============================================================
+// QHeader & QFooter
+// ============================================================
+
+// === Header/Footer Section Color ===
+// MD3E: app bars use surface background with on-surface text (not primary)
+.q-layout__section--marginal {
+  background-color: var(--md3-surface);
+  color: var(--md3-on-surface);
+}
+
+// === Header: No Shadow by Default ===
+// MD3E top app bar: level 0 elevation at rest; shadow appears only on scroll.
+// Quasar uses a separate .q-layout__shadow element for the shadow effect,
+// controlled via JS (elevated prop / scroll behavior), so we don't need
+// to remove it here — it's only added when explicitly requested.
+
+// === Header Border Color ===
+.q-header--bordered {
+  border-bottom-color: var(--md3-outline-variant);
+}
+
+// === Footer Border Color ===
+.q-footer--bordered {
+  border-top-color: var(--md3-outline-variant);
+}
+
+// ============================================================
+// QDrawer
+// ============================================================
+
+// === Standard Drawer (docked, desktop) ===
+// MD3E standard side sheet: surface background, no shadow, no border-radius
+.q-drawer {
+  background: var(--md3-surface);
+}
+
+// === Modal Drawer (mobile / overlay) ===
+// MD3E modal side sheet: surface-container-low background
+.q-drawer--mobile {
+  background: var(--md3-surface-container-low);
+}
+
+// === Modal Drawer Corner Radius ===
+// MD3E modal side sheet: 16dp corners on the non-attached (free) edge
+// Left drawer: right edge is free → round top-right and bottom-right
+.q-drawer--left.q-drawer--mobile {
+  border-top-right-radius: $md3-corner-large;
+  border-bottom-right-radius: $md3-corner-large;
+}
+
+// Right drawer: left edge is free → round top-left and bottom-left
+.q-drawer--right.q-drawer--mobile {
+  border-top-left-radius: $md3-corner-large;
+  border-bottom-left-radius: $md3-corner-large;
+}
+
+// === Drawer Border Color ===
+.q-drawer--left.q-drawer--bordered {
+  border-right-color: var(--md3-outline-variant);
+}
+
+.q-drawer--right.q-drawer--bordered {
+  border-left-color: var(--md3-outline-variant);
+}
+
+// === Drawer Backdrop (Scrim) ===
+// MD3E nav drawer spec token: scrim at 40% opacity (md.comp.navigation-drawer.scrim.opacity: 0.4).
+// This matches Quasar's default, so no override is needed.
+// Note: the general MD3E scrim spec says 32%, but the navigation drawer component
+// token explicitly specifies 40%. We follow the component-specific token.
+
+// === Layout Shadow ===
+// MD3E: use standard shadow color (no white-tinted shadows in dark mode)
+body.body--dark .q-layout__shadow:after {
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3), 0 4px 5px rgba(0, 0, 0, 0.2), 0 1px 10px rgba(0, 0, 0, 0.15);
+}
+
+// ============================================================
+// Dark Mode
+// ============================================================
+
+// Border colors in dark mode — CSS custom properties handle the switch
+body.body--dark .q-header,
+body.body--dark .q-footer,
+body.body--dark .q-drawer {
+  border-color: var(--md3-outline-variant);
+}
+
+// ============================================================
+// Motion
+// ============================================================
+
+// MD3E emphasized easing for layout transitions
+.q-body--layout-animate {
+  .q-drawer__backdrop {
+    transition: background-color 0.3s $md3-easing-emphasized !important;
+  }
+
+  .q-drawer {
+    transition: transform 0.3s $md3-easing-emphasized, width 0.3s $md3-easing-emphasized,
+                top 0.12s, bottom 0.12s !important;
+  }
+
+  .q-layout__section--marginal {
+    transition: transform 0.3s $md3-easing-emphasized,
+                left 0.3s $md3-easing-emphasized,
+                right 0.3s $md3-easing-emphasized !important;
+  }
+}

@@ -1,0 +1,199 @@
+# MD3E Color System
+
+The MD3E theme generates a full Material Design 3 color palette from a single `sourceColor` and makes it available through four access methods, depending on context.
+
+## Quick Reference
+
+| Context | Syntax | Example |
+|---|---|---|
+| Vue template (Quasar props) | `color="token"` / `text-color="token"` | `<q-btn color="primary-container" />` |
+| Vue template (classes) | `class="bg-token text-token"` | `<div class="bg-surface-container text-on-surface">` |
+| CSS / `<style>` blocks | `var(--md3-token)` | `background: var(--md3-primary-container);` |
+| Sass / SCSS | `$md3-token` | `background: $md3-primary-container;` |
+
+## Available Tokens
+
+All tokens are generated in both light and dark variants. The CSS custom properties (`var(--md3-*)`) switch automatically between light and dark based on Quasar's `body.body--light` / `body.body--dark` classes. The Sass variables (`$md3-*`) are compile-time values for the light scheme; dark variants are available as `$md3-dark-*`.
+
+### Token List
+
+**Primary:** `primary`, `on-primary`, `primary-container`, `on-primary-container`
+
+**Secondary:** `secondary`, `on-secondary`, `secondary-container`, `on-secondary-container`
+
+**Tertiary:** `tertiary`, `on-tertiary`, `tertiary-container`, `on-tertiary-container`
+
+**Error:** `error`, `on-error`, `error-container`, `on-error-container`
+
+**Surface:** `surface`, `on-surface`, `surface-variant`, `on-surface-variant`
+
+**Surface containers:** `surface-dim`, `surface-bright`, `surface-container-lowest`, `surface-container-low`, `surface-container`, `surface-container-high`, `surface-container-highest`
+
+**Background:** `background`, `on-background`
+
+**Outline:** `outline`, `outline-variant`
+
+**Inverse:** `inverse-surface`, `inverse-on-surface`, `inverse-primary`
+
+**Utility:** `shadow`, `scrim`
+
+## Using Colors in Vue Templates
+
+### Quasar `color` and `text-color` Props
+
+Most Quasar components accept `color` and `text-color` props. The MD3E theme registers CSS classes for all tokens, so they work directly:
+
+```vue
+<q-btn color="primary-container" label="Container Button" />
+<q-chip color="tertiary-container" text-color="on-tertiary-container" label="Chip" />
+<q-card color="surface-container-high">...</q-card>
+```
+
+### Automatic Text Color
+
+Every `bg-*` class sets both a background color AND the correct `on-*` text color automatically. This means `color="primary-container"` gives you the right text contrast without needing to specify `text-color`:
+
+```vue
+<!-- These are equivalent: -->
+<q-btn color="primary-container" label="Auto text" />
+<q-btn color="primary-container" text-color="on-primary-container" label="Explicit text" />
+```
+
+If you want a different text color, set `text-color` explicitly — it overrides the automatic pairing:
+
+```vue
+<q-btn color="primary-container" text-color="on-surface" label="Custom text" />
+```
+
+### Brand Color Mapping
+
+Quasar's brand colors are mapped to MD3 roles by the theme:
+
+| Quasar brand | MD3 role | Notes |
+|---|---|---|
+| `primary` | primary | |
+| `secondary` | secondary | |
+| `accent` | tertiary | `tertiary` also works as an alias |
+| `negative` | error | |
+
+These work with all Quasar components that accept a color prop. The theme also patches Quasar's automatic `text-white` / `text-black` on brand-colored elements to use the correct MD3 `on-*` token instead, so dark mode works correctly.
+
+### CSS Utility Classes
+
+All tokens are available as utility classes for direct use in templates:
+
+```vue
+<div class="bg-surface-container text-on-surface">
+  Content on a surface container
+</div>
+
+<span class="text-primary">Primary colored text</span>
+
+<div class="bg-error-container text-on-error-container">
+  Error message
+</div>
+```
+
+## Using Colors in CSS
+
+### CSS Custom Properties
+
+All tokens are available as CSS custom properties that switch automatically between light and dark mode:
+
+```css
+.my-component {
+  background: var(--md3-surface-container);
+  color: var(--md3-on-surface);
+  border: 1px solid var(--md3-outline-variant);
+}
+
+.my-highlight {
+  background: var(--md3-primary-container);
+  color: var(--md3-on-primary-container);
+}
+```
+
+RGB triplets are available for use with `rgba()`:
+
+```css
+.my-overlay {
+  background: rgba(var(--md3-primary-rgb), 0.12);
+}
+```
+
+Available RGB triplets: `--md3-primary-rgb`, `--md3-on-surface-rgb`, `--md3-on-primary-rgb`, `--md3-error-rgb`.
+
+### Sass Variables
+
+In SCSS/Sass files and `<style lang="scss">` blocks, use the `$md3-*` variables directly. These are compile-time values resolved from the generated palette:
+
+```scss
+.my-component {
+  background: $md3-surface-container;
+  color: $md3-on-surface;
+  border-radius: $md3-corner-medium;
+}
+```
+
+Note: Sass variables are compile-time constants for the light scheme. For runtime light/dark switching, use CSS custom properties (`var(--md3-*)`) instead. The theme's `base.scss` sets up the `var(--md3-*)` properties with both light and dark values.
+
+## How It Works
+
+The color system has three layers:
+
+### 1. Palette Generation (build time)
+
+The `sourceColor` option is fed to `@material/material-color-utilities` which generates the full MD3 palette — all 30+ tokens in both light and dark variants. These are written as Sass variables (`$md3-primary`, `$md3-dark-primary`, etc.) to `.quasar/theme.md3e.scss` on every dev server start or build.
+
+### 2. Variable Mapping (Sass compilation)
+
+The theme's `variables.scss` maps generated palette tokens to Quasar's variable system:
+
+```scss
+$primary: $md3-primary !default;
+$secondary: $md3-secondary !default;
+$accent: $md3-tertiary !default;
+```
+
+This is where Quasar brand colors, shape tokens, typography, and component variables are all connected to the MD3 palette.
+
+### 3. CSS Custom Properties (runtime)
+
+The theme's `base.scss` creates CSS custom properties for all tokens, with light values on `:root` / `body.body--light` and dark values on `body.body--dark`:
+
+```scss
+:root, body.body--light {
+  --md3-primary: #{$md3-primary};
+  --md3-on-primary: #{$md3-on-primary};
+  // ...
+}
+
+body.body--dark {
+  --md3-primary: #{$md3-dark-primary};
+  --md3-on-primary: #{$md3-dark-on-primary};
+  // ...
+}
+```
+
+This same file defines the `bg-*` and `text-*` utility classes that enable Quasar's `color` prop to work with MD3 tokens.
+
+### Auto Text Color Pairing
+
+Each `bg-*` class sets both `background-color` and `color` (the matching `on-*` token). This serves two purposes:
+
+1. When used as CSS utility classes (`class="bg-primary-container"`), the text color is correct automatically.
+2. When used via Quasar's `color` prop (`color="primary-container"`), it overrides Quasar's default `text-white` — which would otherwise be applied as a hardcoded fallback for any color Quasar doesn't recognize.
+
+The `text-*` classes are defined after the `bg-*` classes in source order, so an explicit `text-color` prop always wins over the automatic pairing.
+
+### Brand Color Text Fix
+
+For Quasar's own brand colors (`primary`, `secondary`, `accent`/`tertiary`, `negative`), Quasar adds `text-white` or `text-black` based on a hardcoded luminosity check. This doesn't adapt to dark mode or MD3E's token pairing. The theme overrides this:
+
+```scss
+.bg-primary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled) {
+  color: var(--md3-on-primary) !important;
+}
+```
+
+The `:not()` exclusions preserve text color handling for elevated buttons (`.q-btn--standard`), tonal buttons (`.glossy`), and disabled buttons, which each have their own color logic.

@@ -1,0 +1,85 @@
+// MD3 Expressive QDialog Overrides
+// Appended after Quasar's QDialog.sass — source order wins.
+
+// === Dialog Container Shape ===
+// MD3E basic dialog: extra-large (28dp) corner radius
+.q-dialog__inner > div {
+  border-radius: $md3-corner-extra-large;
+}
+
+// Square modifier: explicitly override back to 0
+// (Quasar uses !important here, so we must match)
+.q-dialog__inner--square > div {
+  border-radius: 0 !important;
+}
+
+// === Dialog Card ===
+// Surface-container-high background, 28dp corners, Level 3 shadow (6dp)
+.q-dialog__inner > .q-card {
+  background: var(--md3-surface-container-high);
+  border-radius: $md3-corner-extra-large;
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+  // Level 3 shadow (6dp)
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  // MD3E min-width for basic dialogs
+  min-width: 280px;
+}
+
+// === Title: MD3E headline-small ===
+// 24px / 32px line-height / weight 400 / letter-spacing 0
+// (Also set via Sass variables in variables.scss, but reinforced here for specificity)
+.q-dialog__title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: 0;
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+}
+
+// === Supporting Text (message) ===
+// MD3E: body-medium — 14px / 20px / weight 400 / tracking 0.25px
+// Color: on-surface-variant
+.q-dialog__message {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0.015625rem;
+  color: var(--md3-on-surface-variant); // intentional: differentiate supporting text from heading (on-surface-variant vs inherited on-surface)
+}
+
+// === Dialog Action Buttons ===
+// MD3E: action label text is primary-colored
+.q-dialog__inner > .q-card > .q-card__actions .q-btn {
+  color: var(--md3-primary); // intentional MD3E styling for dialog action buttons
+}
+
+// === Scrim / Backdrop ===
+// MD3E spec: scrim at 32% opacity (Quasar default is 40%)
+.q-dialog__backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+// === Maximized (Full-Screen) Dialog ===
+// MD3E full-screen dialog: surface bg (not surface-container-high), 0 radius, level 0
+// Quasar already sets border-radius: 0 !important for maximized
+.q-dialog__inner--maximized > div {
+  border-radius: 0 !important;
+}
+
+.q-dialog__inner--maximized > .q-card {
+  background: var(--md3-surface);
+  box-shadow: none;
+}
+
+// === Dark Mode ===
+// CSS custom properties handle the color switch automatically.
+// Reduce shadow intensity in dark mode; MD3E relies on tonal differences.
+body.body--dark .q-dialog__inner > .q-card {
+  // Keep a subtle shadow for dark mode dialogs (they float above content)
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+
+// === Corner Stripping for Positioned Dialogs ===
+// Quasar already strips corners when a dialog touches a screen edge.
+// We override the base radius to 28px above, and Quasar's existing rules
+// set the appropriate corners to 0 — no additional overrides needed.

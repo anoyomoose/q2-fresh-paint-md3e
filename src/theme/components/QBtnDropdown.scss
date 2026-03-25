@@ -1,0 +1,55 @@
+// MD3 Expressive QBtnDropdown Overrides
+// Appended to QBtnDropdown.sass via the Sass importer.
+//
+// Covers: split button gap, separator removal, arrow transitions.
+
+// =============================================================================
+// 1. SPLIT BUTTON: REPLACE BORDER SEPARATOR WITH GAP
+// =============================================================================
+
+// MD3E split buttons use a 2dp gap between the leading and trailing sections
+// instead of a 1px border separator.
+.q-btn-dropdown--split .q-btn-dropdown__arrow-container {
+  padding: 0 8px; // Wider padding for the arrow section
+
+  // Remove the border separator (both outlined and non-outlined variants)
+  &.q-btn--outline {
+    border-left: none;
+    margin-left: 2px; // 2dp gap
+  }
+
+  &:not(.q-btn--outline) {
+    border-left: none;
+    margin-left: 2px; // 2dp gap
+  }
+}
+
+// =============================================================================
+// 2. SPLIT BUTTON: INNER CORNER RADII
+// =============================================================================
+
+// MD3E split buttons have asymmetric corners at the split junction.
+// The main button gets rounded outer edges but small inner corners at the split.
+// The arrow container gets small inner corners on the left, rounded on the right.
+// For S (default) size: inner corner = 4px.
+
+// Main button (leading part): flatten the right side where it meets the arrow
+.q-btn-dropdown--split > .q-btn:first-child {
+  border-top-right-radius: $md3-corner-extra-small; // 4px inner corner
+  border-bottom-right-radius: $md3-corner-extra-small;
+}
+
+// Arrow container (trailing part): flatten the left side where it meets the button
+.q-btn-dropdown--split .q-btn-dropdown__arrow-container {
+  border-top-left-radius: $md3-corner-extra-small; // 4px inner corner
+  border-bottom-left-radius: $md3-corner-extra-small;
+}
+
+// =============================================================================
+// 3. ARROW ICON TRANSITION
+// =============================================================================
+
+// MD3E uses expressive spatial spring for the dropdown arrow rotation
+.q-btn-dropdown__arrow {
+  transition: transform $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}

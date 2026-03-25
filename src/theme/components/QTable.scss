@@ -1,0 +1,93 @@
+// MD3 Expressive QTable Overrides
+// Appended after Quasar's QTable.sass — source order wins.
+//
+// Key points:
+//   • No shadow — handled via $table-box-shadow: none in variables.scss
+//   • Card wrapper: surface-container bg / on-surface text
+//   • Header cells: on-surface-variant, label-large (14pt / weight 500)
+//   • All borders / separators: outline-variant color
+//   • Hover state layer: on-surface at 8%
+//   • Selected row: secondary-container bg (MD3E; md3 base uses 12% on-surface)
+//   • Sort icon transition: emphasized easing
+
+// === Card Wrapper ===
+.q-table__card {
+  background: var(--md3-surface-container);
+  color: var(--md3-on-surface);
+  border-color: var(--md3-outline-variant);
+  // box-shadow is none via $table-box-shadow variable
+}
+
+// === Table Header Cells ===
+// MD3E label-large: 14pt / weight 500 / 0.1pt tracking
+.q-table thead th {
+  color: var(--md3-on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.00714em;
+}
+
+// === Separators / Borders ===
+.q-table thead,
+.q-table tr,
+.q-table th,
+.q-table td {
+  border-color: var(--md3-outline-variant);
+}
+
+// === Row Hover State Layer ===
+// MD3E: on-surface at 8% via ::before pseudo (Quasar already uses ::before for hover)
+// $table-hover-background: rgba(0, 0, 0, 0.08) is set in variables.scss.
+// Here we override with the token-based value so dark mode flips correctly.
+body.desktop .q-table > tbody > tr:not(.q-tr--no-hover):hover > td:not(.q-td--no-hover)::before {
+  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.08);
+}
+
+// === Selected Row ===
+// MD3E: secondary-container background via ::after pseudo
+.q-table tbody tr.selected td::after {
+  background: var(--md3-secondary-container);
+}
+
+// Selected row text contrast override — secondary-container requires on-secondary-container
+.q-table tbody tr.selected td {
+  color: var(--md3-on-secondary-container);
+}
+
+// === Sort Icon Transition ===
+// MD3E emphasized easing for sort direction flip
+.q-table__sort-icon {
+  transition: transform 0.3s $md3-easing-emphasized;
+}
+
+// === Bottom Toolbar (Pagination) ===
+.q-table__bottom {
+  border-top-color: var(--md3-outline-variant);
+}
+
+// Bottom no-data separator variant
+.q-table__bottom:not(.q-table__bottom--nodata) {
+  border-top-color: var(--md3-outline-variant);
+}
+
+// === Vertical/Cell Separator top border ===
+.q-table--vertical-separator .q-table__top,
+.q-table--cell-separator .q-table__top {
+  border-bottom-color: var(--md3-outline-variant);
+}
+
+// === Header Divider (vertical/cell separator) ===
+.q-table--vertical-separator thead tr:last-child th,
+.q-table--cell-separator thead tr:last-child th,
+.q-table--horizontal-separator thead th,
+.q-table--horizontal-separator tbody tr:not(:last-child) > td,
+.q-table--cell-separator thead th,
+.q-table--cell-separator tbody tr:not(:last-child) > td {
+  border-color: var(--md3-outline-variant);
+}
+
+// === Dark Mode ===
+// Per-component dark mode (q-table--dark) text color is handled by Quasar's
+// own --dark rules. Our token-based overrides above use var(--md3-*) which
+// auto-flip when body.body--dark is set. We don't re-declare colors here
+// to avoid overriding Quasar's color:#fff on per-component dark mode.

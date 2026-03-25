@@ -1,0 +1,512 @@
+// MD3 Expressive QBtn Overrides
+// Appended to QBtn.sass via the Sass importer.
+//
+// Covers: typography, dimensions, shape, disabled states, outlined border,
+// FAB shape, hover elevation, shape morphing on press, and icon sizing.
+
+// =============================================================================
+// 1. BASE TYPOGRAPHY & DIMENSIONS
+// =============================================================================
+
+// MD3E uses sentence case (text-transform: none) and zero letter-spacing
+// for label-large baseline. boot.ts sets noCaps=true, this is the CSS safety net.
+.q-btn {
+  text-transform: none;
+  letter-spacing: 0; // MD3E label-large baseline tracking is 0 (not 0.1px)
+  font-weight: 500;
+}
+
+// Standard (non-dense, non-fab) buttons: MD3E height is 40px at default (14px) size.
+// Uses em so Quasar's font-size-based size system (xs=8px, sm=10px, etc.) still scales properly.
+.q-btn:not(.q-btn--dense):not(.q-btn--fab):not(.q-btn--fab-mini) {
+  min-height: 2.857em; // 40px / 14px = 2.857em
+}
+
+// Icon size: Quasar's default 1.715em (24dp at 14px base) scales well with the
+// em-based size system. MD3E specifies 20dp for standard buttons at the native level,
+// but on web, keeping the em-based default produces better results across all sizes.
+
+// =============================================================================
+// 2. OUTLINED BUTTON
+// =============================================================================
+
+// MD3E outlined buttons use outline-variant token, not currentColor
+.q-btn--outline:before {
+  border: 1px solid var(--md3-outline-variant);
+}
+
+// =============================================================================
+// 3. SHAPE MORPHING ON PRESS
+// =============================================================================
+
+// Rounded (pill) buttons morph from pill -> small on press.
+// Uses the spatial curve (bouncy overshoot) + 350ms for a playful feel.
+//
+// Why 1.5em instead of 9999px or a fixed px value?
+// CSS interpolates border-radius linearly. With 9999px, ~95% of the animation
+// is perceptually identical. A fixed px value (like 48px) works for large buttons
+// but is disproportionate for small ones (xs at 8px font-size = 23px tall button).
+// Using 1.5em (~half of the 2.857em button height) produces a pill at any size
+// while keeping the transition range proportional to the button's actual dimensions.
+//
+// Pressed target is also em-based (0.571em = 8px at 14px default) so smaller
+// buttons get proportionally smaller pressed corners.
+//
+// Excludes buttons inside button groups (they have group-controlled radii).
+.q-btn--rounded:not(.q-btn--fab):not(.q-btn--fab-mini):not(.q-btn-group .q-btn) {
+  border-radius: 1.5em; // ~21px at 14px, ~12px at 8px — always a pill
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: 0.571em; // ~8px at 14px, ~4.6px at 8px — scales with size
+    }
+  }
+}
+
+// Rectangle buttons (non-rounded, non-square) also morph (outside groups).
+.q-btn--rectangle:not(.q-btn--rounded):not(.q-btn--square):not(.q-btn-group .q-btn) {
+  border-radius: 1.5em;
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: 0.571em;
+    }
+  }
+}
+
+// Square buttons: MD3E "square" option — moderate rounding (12dp at S/default size).
+// Quasar's --square sets border-radius:0, we override to $md3-corner-medium.
+// Pressed shape is the same as pill buttons (8dp) — spec: "both round and square
+// buttons should have the same pressed shape."
+.q-btn--square:not(.q-btn-group .q-btn) {
+  border-radius: $md3-corner-medium; // 12dp
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: $md3-corner-small; // 8dp pressed — same target as pill
+    }
+  }
+}
+
+// Round icon buttons morph from circle to rounded square on press.
+// MD3E spec: "While pressed, icon buttons can morph to become more square."
+// Uses 50% as resting radius (circle) — same approach as FABs.
+.q-btn--round:not(.q-btn-group .q-btn) {
+  border-radius: 50%;
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: 0.571em; // matches other buttons' pressed shape
+    }
+  }
+}
+
+// =============================================================================
+// 4. FAB SHAPE
+// =============================================================================
+
+// FAB standard (56px): MD3E uses extra-large (28px), NOT large (16px)
+.q-btn--fab {
+  border-radius: $md3-corner-extra-large; // 28px
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
+              box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+
+  // Shape morph: FAB press goes from 28px to medium (12px)
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: $md3-corner-medium; // 12px pressed
+    }
+  }
+}
+
+// FAB mini (40px): MD3E uses medium (12px).
+// Note: Small FAB is deprecated in MD3E but kept for compatibility.
+.q-btn--fab-mini {
+  border-radius: $md3-corner-medium; // 12px
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
+              box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+
+  // Shape morph: mini FAB press goes from 12px to small (8px)
+  &.q-btn--actionable {
+    &:active,
+    &.q-btn--active {
+      border-radius: $md3-corner-small; // 8px pressed
+    }
+  }
+}
+
+// =============================================================================
+// 5. FAB ELEVATION (SHADOWS)
+// =============================================================================
+
+// FABs have Level 3 resting shadow (6dp), Level 4 on hover (8dp).
+// boot.ts sets unelevated=true globally, so we need explicit shadows for FABs.
+// The :before pseudo-element carries the shadow in Quasar's architecture.
+
+.q-btn--fab:before,
+.q-btn--fab-mini:before {
+  // Level 3 (6dp) resting shadow
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+// Hover: elevate from Level 3 to Level 4 (desktop only)
+body.desktop {
+  .q-btn--fab.q-btn--actionable:hover:before,
+  .q-btn--fab-mini.q-btn--actionable:hover:before {
+    // Level 4 (8dp) shadow
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Pressed: return to Level 3
+.q-btn--fab.q-btn--actionable:active:before,
+.q-btn--fab.q-btn--actionable.q-btn--active:before,
+.q-btn--fab-mini.q-btn--actionable:active:before,
+.q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+
+// =============================================================================
+// 6. HOVER ELEVATION FOR FILLED / TONAL / STANDARD BUTTONS
+// =============================================================================
+
+// Filled buttons (non-flat, non-outline, non-fab) get +1 elevation on hover.
+// Resting state is Level 0 (no shadow, via unelevated default).
+// Hover adds Level 1 shadow. Desktop only.
+body.desktop {
+  .q-btn--actionable.q-btn--standard:not(.q-btn--flat):not(.q-btn--outline):not(.q-btn--fab):not(.q-btn--fab-mini) {
+    &:before {
+      transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+    }
+
+    &:hover:before {
+      // Level 1 (1dp) shadow
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Unelevated buttons also get hover lift (most buttons are unelevated via boot.ts)
+  .q-btn--actionable.q-btn--unelevated:not(.q-btn--flat):not(.q-btn--outline):not(.q-btn--fab):not(.q-btn--fab-mini) {
+    &:before {
+      transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+    }
+
+    &:hover:before {
+      // Level 1 (1dp) shadow
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Flat and outline buttons never get elevation lift (they stay at Level 0)
+
+// =============================================================================
+// 7. DISABLED STATE
+// =============================================================================
+
+// MD3E disabled: opacity stays at 1, uses color-based disabled treatment.
+// Container: on-surface at 12% opacity. Content: on-surface at 38% opacity.
+.q-btn.disabled {
+  opacity: 1 !important; // Override Quasar's .7 opacity
+
+  // Filled/tonal/elevated buttons: colored container + dimmed text
+  &:not(.q-btn--flat):not(.q-btn--outline) {
+    background-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
+    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+  }
+
+  // Flat/text buttons: just dim the text, no container color
+  &.q-btn--flat {
+    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+  }
+
+  // Outlined buttons: dim text and use reduced-opacity outline
+  &.q-btn--outline {
+    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+
+    &:before {
+      border-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
+    }
+  }
+
+  // Remove any shadow from disabled FABs (Level 0)
+  &.q-btn--fab:before,
+  &.q-btn--fab-mini:before {
+    box-shadow: none !important;
+  }
+
+  // Disable shape morph and hover effects on disabled buttons
+  &.q-btn--rounded,
+  &.q-btn--rectangle,
+  &.q-btn--fab,
+  &.q-btn--fab-mini {
+    transition: none;
+  }
+}
+
+// =============================================================================
+// 8. ROUND BUTTON (ICON BUTTONS) SIZING
+// =============================================================================
+
+// MD3E icon buttons: 40dp default at 14px base (same as standard buttons)
+.q-btn--round:not(.q-btn--dense) {
+  min-width: 2.857em; // 40px / 14px — scales with size prop
+  min-height: 2.857em;
+}
+
+// Icon buttons keep Quasar's default 1.715em (24dp at 14px base) — no override needed
+
+// =============================================================================
+// 9. DENSE BUTTONS
+// =============================================================================
+
+// Dense round buttons: slightly smaller touch target (em-based for scaling)
+.q-btn--dense.q-btn--round {
+  min-width: 2.286em; // ~32px at 14px base
+  min-height: 2.286em;
+}
+
+// =============================================================================
+// 10. ELEVATED BUTTON VARIANT (:unelevated="false")
+// =============================================================================
+
+// MD3E "elevated" button: surface-container-low bg, primary text, Level 1 shadow.
+// In Quasar, setting :unelevated="false" gives q-btn--standard (the non-unelevated state).
+// We restyle to match MD3E elevated spec.
+.q-btn--standard:not(.q-btn--push) {
+  background-color: var(--md3-surface-container-low) !important;
+  color: var(--md3-primary) !important;
+
+  &.q-btn--actionable {
+    // Level 1 resting shadow with spring transition
+    &:before {
+      transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+
+    // Pressed: stays at Level 1
+    &:active:before,
+    &.q-btn--active:before {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+body.desktop {
+  .q-btn--standard:not(.q-btn--push).q-btn--actionable:hover:before {
+    // Level 2 hover shadow for elevated buttons
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Disabled elevated buttons: no shadow, standard disabled colors
+.q-btn--standard:not(.q-btn--push).disabled:before {
+  box-shadow: none !important;
+}
+
+// =============================================================================
+// 11. TONAL BUTTON VARIANT (glossy remapped)
+// =============================================================================
+
+// MD3E "tonal" button: container bg with on-container text, no shadow.
+// Remapped from Quasar's `glossy` prop since glossy has no MD3E equivalent.
+//
+// Usage:
+//   <q-btn glossy />                    → secondary-container (default tonal)
+//   <q-btn glossy color="primary" />    → primary-container
+//   <q-btn glossy color="secondary" />  → secondary-container
+//   <q-btn glossy color="accent" />     → tertiary-container
+//   <q-btn glossy color="negative" />   → error-container
+.q-btn.glossy {
+  // Default tonal: secondary-container
+  background-color: var(--md3-secondary-container) !important;
+  color: var(--md3-on-secondary-container) !important;
+  background-image: none !important;
+
+  // Primary tonal
+  &.bg-primary {
+    background-color: var(--md3-primary-container) !important;
+    color: var(--md3-on-primary-container) !important;
+  }
+
+  // Secondary tonal (same as default, but explicit)
+  &.bg-secondary {
+    background-color: var(--md3-secondary-container) !important;
+    color: var(--md3-on-secondary-container) !important;
+  }
+
+  // Accent/tertiary tonal
+  &.bg-accent {
+    background-color: var(--md3-tertiary-container) !important;
+    color: var(--md3-on-tertiary-container) !important;
+  }
+
+  // Error tonal
+  &.bg-negative {
+    background-color: var(--md3-error-container) !important;
+    color: var(--md3-on-error-container) !important;
+  }
+}
+
+// =============================================================================
+// 12. PUSH BUTTON FIX
+// =============================================================================
+
+// Quasar's .q-btn--push sets `transition: transform …` which overrides the
+// border-radius transition from our shape morphing rules. We re-declare the
+// transition to include both transform (push-down effect) and border-radius
+// (shape morph). Without this, push-style FABs morph shape instantly.
+.q-btn--push.q-btn--actionable {
+  transition: transform $md3-shape-morph-duration $md3-shape-morph-curve,
+              border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+}
+
+// Push buttons that lack explicit elevation need their characteristic bottom border.
+// Quasar's QBtn.sass sets `border-bottom: 3px solid rgba(0,0,0,.15)` on :before
+// for push buttons. Our boot.ts sets unelevated=true, but push wins over unelevated
+// in the design priority check, so push buttons correctly get q-btn--push (not
+// q-btn--unelevated). The bottom border should be there from Quasar's own CSS.
+// If it's missing, it may be overridden by our shadow rules — ensure we don't
+// clobber :before on push buttons.
+
+// =============================================================================
+// 13. PROGRESS INDICATOR
+// =============================================================================
+
+// MD3E uses a more subtle progress overlay
+.q-btn--flat .q-btn__progress-indicator,
+.q-btn--outline .q-btn__progress-indicator {
+  opacity: 0.2;
+  background: currentColor;
+}
+
+// =============================================================================
+// 14. TOGGLE BUTTON STATES (.q-btn--toggle / .q-btn--selected)
+// =============================================================================
+//
+// These classes can be applied manually to any QBtn or via the Md3eBtn component.
+// .q-btn--toggle: button is in toggle mode (enables unselected styling)
+// .q-btn--selected: button is currently in the selected state
+//
+// Per MD3E spec: toggle buttons use subdued colors when unselected, gaining
+// emphasis when selected. Shape morphs from pill (unselected) to square (selected).
+
+// --- Toggle Unselected: Filled (unelevated) variant ---
+// Default filled is primary bg — toggle unselected gets surface-container.
+// Excludes disabled so the generic disabled styling (section 7) applies.
+.q-btn--toggle:not(.q-btn--selected):not(.disabled).q-btn--unelevated:not(.q-btn--flat):not(.q-btn--outline):not(.glossy) {
+  background-color: var(--md3-surface-container) !important;
+  color: var(--md3-on-surface-variant) !important;
+}
+
+// --- Toggle Unselected: Outlined variant ---
+// Same as default outlined (outline border, on-surface-variant text)
+// No additional override needed — default outlined styling is already correct
+
+// --- Toggle Unselected: Tonal (glossy) variant ---
+// Same as default tonal — no additional override needed
+
+// --- Toggle Unselected: Elevated (standard) variant ---
+// Same as default elevated — no additional override needed
+
+// --- Toggle Selected: Filled (unelevated) variant ---
+// Selected filled = primary bg, on-primary text (matches default non-toggle filled)
+.q-btn--selected:not(.disabled).q-btn--unelevated:not(.q-btn--flat):not(.q-btn--outline):not(.glossy) {
+  background-color: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
+
+  // Secondary color
+  &.bg-secondary {
+    background-color: var(--md3-secondary) !important;
+    color: var(--md3-on-secondary) !important;
+  }
+
+  // Accent/tertiary color
+  &.bg-accent {
+    background-color: var(--md3-tertiary) !important;
+    color: var(--md3-on-tertiary) !important;
+  }
+}
+
+// --- Toggle Selected: Elevated (standard) variant ---
+// Selected elevated = primary bg, on-primary text (gains the primary fill)
+.q-btn--selected:not(.disabled).q-btn--standard:not(.q-btn--push) {
+  background-color: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
+
+  &.bg-secondary {
+    background-color: var(--md3-secondary) !important;
+    color: var(--md3-on-secondary) !important;
+  }
+
+  &.bg-accent {
+    background-color: var(--md3-tertiary) !important;
+    color: var(--md3-on-tertiary) !important;
+  }
+}
+
+// --- Toggle Selected: Tonal (glossy) variant ---
+// Selected tonal = secondary, on-secondary (more emphasis than container)
+.q-btn--selected:not(.disabled).glossy {
+  background-color: var(--md3-secondary) !important;
+  color: var(--md3-on-secondary) !important;
+  background-image: none !important;
+
+  &.bg-primary {
+    background-color: var(--md3-primary) !important;
+    color: var(--md3-on-primary) !important;
+  }
+
+  &.bg-secondary {
+    background-color: var(--md3-secondary) !important;
+    color: var(--md3-on-secondary) !important;
+  }
+
+  &.bg-accent {
+    background-color: var(--md3-tertiary) !important;
+    color: var(--md3-on-tertiary) !important;
+  }
+}
+
+// --- Toggle Selected: Outlined variant ---
+// Selected outlined = inverse-surface bg, inverse-on-surface text
+.q-btn--selected:not(.disabled).q-btn--outline {
+  background-color: var(--md3-inverse-surface) !important;
+  color: var(--md3-inverse-on-surface) !important;
+
+  // Remove the outline border when filled with inverse-surface
+  &:before {
+    border-color: transparent !important;
+  }
+}
+
+// --- Shape morph: selected → square ---
+// Toggle buttons morph from pill (unselected) to square (selected)
+.q-btn--toggle {
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
+              background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+}
+
+.q-btn--selected:not(.q-btn-group .q-btn) {
+  border-radius: $md3-corner-medium !important; // 12dp square shape
+
+  // Press morph: selected buttons morph from 12dp to 8dp.
+  // Needs !important to beat the resting selected radius above.
+  &.q-btn--actionable:active,
+  &.q-btn--actionable.q-btn--active {
+    border-radius: $md3-corner-small !important; // 8dp pressed
+  }
+}
+
+// Selected inside button groups: handled in QBtnGroup.scss (source order matters)

@@ -1,0 +1,340 @@
+// MD3 Expressive QToggle (Switch) Overrides
+// Appended after Quasar's QToggle.sass — source order wins.
+//
+// MD3E switch dimensions (all em-based, relative to font-size on .q-toggle__inner):
+//   Track:  1.3em x 0.8em  (52x32 at 40px base)
+//   Handle: 0.4em OFF, 0.6em ON, 0.7em pressed  (16/24/28 dp)
+//   Border: 0.05em (2dp) on unselected track
+//   State layer: 1em (40dp)
+//   Icon:   0.4em (16dp)
+//
+// Positioning approach:
+//   Vertical: top:50% + transform:translateY(-50%) — auto-centers regardless of thumb size,
+//             eliminates vertical jitter during size transitions
+//   Horizontal: thumb center at 0.4em from nearest track edge (symmetric OFF/ON)
+//
+// DOM structure:
+//   .q-toggle
+//     .q-toggle__inner  (font-size set by size prop, default 40px; position: relative)
+//       .q-toggle__track  (static flow element, sized by padding)
+//       .q-toggle__thumb  (position: absolute; left/top for placement)
+//         :after   (the visible thumb circle)
+//         :before  (state layer, desktop only)
+//         .q-icon  (optional icon inside thumb)
+
+// ============================================================
+// TRACK
+// ============================================================
+
+.q-toggle__track {
+  height: 0.8em;    // 32dp
+  width: 1.3em;     // 52dp
+  border-radius: $md3-corner-full;
+  opacity: 1;       // Remove M2 opacity-based coloring
+  background: var(--md3-surface-container-highest);
+  border: 0.05em solid var(--md3-outline);
+  box-sizing: border-box;
+}
+
+// Selected track: primary fill, no visible border
+.q-toggle__inner--truthy .q-toggle__track {
+  background: var(--md3-primary);
+  border-color: var(--md3-primary);
+  opacity: 1;
+}
+
+// ============================================================
+// INNER CONTAINER
+// ============================================================
+
+.q-toggle__inner {
+  font-size: 40px;
+  // Track is 1.3em, state layer is 1em centered on thumb (at most 0.7em).
+  // State layer overhang beyond thumb: (1em - 0.7em)/2 = 0.15em per side.
+  // Thumb extends from ~0.175em to ~1.375em. State layer extends from ~0.025em to ~1.525em.
+  // We use 0.125em padding on each side to clip minimally while keeping reasonable width.
+  width: 1.55em;    // 62dp — room for 52dp track + state layer overflow
+  min-width: 1.55em;
+  height: 1em;      // 40dp
+  padding: 0.1em 0.125em; // Centers the 0.8em track vertically and 1.3em track horizontally
+}
+
+// ============================================================
+// THUMB
+// ============================================================
+// Thumb center positions (from inner left edge):
+//   OFF center:  padding(0.125) + 0.4em from track left = 0.525em
+//   ON center:   padding(0.125) + trackWidth(1.3) - 0.4em from track right = 1.025em
+//   INDET center: midpoint = (0.525 + 1.025) / 2 = 0.775em
+//
+// left = center - halfWidth
+//   OFF:   0.525 - 0.2 = 0.325em
+//   ON:    1.025 - 0.3 = 0.725em
+//   INDET: 0.775 - 0.2 = 0.575em
+
+// OFF state: 16dp handle
+.q-toggle__thumb {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.325em;
+  width: 0.4em;     // 16dp
+  height: 0.4em;
+  transition: left $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default,
+              width $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default,
+              height $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default;
+}
+
+// Thumb visible circle — unselected handle uses outline color per MD3E spec
+.q-toggle__thumb:after {
+  border-radius: 50%;
+  background: var(--md3-outline);
+  box-shadow: none; // MD3 removes M2 thumb shadow
+}
+
+// ON state: 24dp handle, on-primary color, moved right
+.q-toggle__inner--truthy .q-toggle__thumb {
+  left: 0.725em;
+  width: 0.6em;     // 24dp
+  height: 0.6em;
+
+  &:after {
+    background: var(--md3-on-primary);
+  }
+}
+
+// Indeterminate: center position
+.q-toggle__inner--indet .q-toggle__thumb {
+  left: 0.575em;
+}
+
+// ============================================================
+// HANDLE PRESS GROWTH — key MD3 behavior
+// ============================================================
+// Handle expands to 28dp (0.7em) on press.
+// Vertical centering is handled by transform:translateY(-50%) — no top change needed.
+// Horizontal: recalculate left from same center point.
+//   OFF pressed:  center 0.525 - 0.35 = 0.175em
+//   ON pressed:   center 1.025 - 0.35 = 0.675em
+
+// Unselected pressed
+.q-toggle__inner:active .q-toggle__thumb {
+  width: 0.7em;     // 28dp
+  height: 0.7em;
+}
+
+// Selected pressed — adjust left for larger handle, keep same center
+.q-toggle__inner--truthy:active .q-toggle__thumb {
+  width: 0.7em;
+  height: 0.7em;
+  left: 0.675em;
+}
+
+// Unselected pressed — shift left to maintain center
+.q-toggle__inner:not(.q-toggle__inner--truthy):active .q-toggle__thumb {
+  left: 0.175em;
+}
+
+// ============================================================
+// HOVER/FOCUS HANDLE COLOR CHANGES
+// ============================================================
+// MD3E: selected hover/focus handle becomes primary-container
+
+body.desktop .q-toggle:not(.disabled):hover .q-toggle__inner--truthy .q-toggle__thumb:after,
+body.desktop .q-toggle:not(.disabled):focus .q-toggle__inner--truthy .q-toggle__thumb:after {
+  background: var(--md3-primary-container);
+}
+
+// Unselected hover: handle stays on-surface-variant (no visible change)
+
+// ============================================================
+// ICONS
+// ============================================================
+// Icons must use em-based sizing to scale with the toggle's font-size
+
+.q-toggle__thumb .q-icon {
+  font-size: 0.28em;  // ~11dp at 40px — fits inside 16dp OFF thumb with padding
+  min-width: 1em;
+  color: var(--md3-surface-container-highest);
+  opacity: 1;
+  transition: font-size $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default;
+}
+
+// Selected icon: larger to fill the 24dp ON thumb
+.q-toggle__inner--truthy .q-toggle__thumb .q-icon {
+  font-size: 0.4em;   // 16dp at 40px — standard MD3E icon size in ON state
+  color: var(--md3-on-primary-container);
+  opacity: 1;
+}
+
+// ============================================================
+// STATE LAYER
+// ============================================================
+// :before pseudo on .q-toggle__thumb, triggered by hover/focus on .q-toggle
+// MD3 spec: state layer is 40dp = 1em, centered on thumb.
+// Original Quasar: :before inherits thumb size (top:0/right:0/bottom:0/left:0)
+// then scales to 2x on hover. At 40px base with 0.5em thumb = 20px, 2x = 40px = correct.
+// Our thumb is 0.4em (16px), so 2x = 32px ≠ 40dp.
+// Fix: size :before to 1em explicitly, scale to 1 on hover.
+
+body.desktop .q-toggle:not(.disabled) .q-toggle__thumb:before {
+  // Center on thumb using absolute positioning
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 1em;       // 40dp state layer
+  height: 1em;
+  transform: translate(-50%, -50%) scale3d(0, 0, 1);
+  opacity: 0.08;
+  transition: transform $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default,
+              opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+}
+
+// Hover: show state layer (scale to 1, not 2 — it's already 1em = 40dp)
+body.desktop .q-toggle:not(.disabled):hover .q-toggle__thumb:before {
+  transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  opacity: 0.08;
+}
+
+// Focus: 10% (MD3E spec)
+body.desktop .q-toggle:not(.disabled):focus .q-toggle__thumb:before {
+  transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  opacity: 0.10;
+}
+
+// ============================================================
+// DISABLED — color-based, not opacity
+// ============================================================
+
+.q-toggle.disabled {
+  opacity: 1 !important;
+}
+
+// Disabled unselected track: on-surface at 12%
+.q-toggle.disabled .q-toggle__track {
+  background: rgba(var(--md3-on-surface-rgb), 0.12);
+  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+}
+
+// Disabled selected track: on-surface at 12%, no border
+.q-toggle.disabled .q-toggle__inner--truthy .q-toggle__track {
+  background: rgba(var(--md3-on-surface-rgb), 0.12);
+  border-color: transparent;
+}
+
+// Disabled unselected handle: on-surface at 38%
+.q-toggle.disabled .q-toggle__thumb:after {
+  background: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// Disabled selected handle: surface (white) at 100%
+.q-toggle.disabled .q-toggle__inner--truthy .q-toggle__thumb:after {
+  background: var(--md3-surface);
+  opacity: 1;
+}
+
+// Disabled icon
+.q-toggle.disabled .q-toggle__thumb .q-icon {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// ============================================================
+// DENSE MODE — proportionally scaled
+// ============================================================
+// Dense uses the same proportions as normal, just at smaller em values.
+// Dense track: 0.65em x 0.4em (half of normal track dimensions)
+// Dense handle: 0.2em OFF, 0.3em ON, 0.35em pressed
+// Dense padding: 0.05em vertical, 0.0625em horizontal
+// Dense inner: 0.775em wide, 0.5em tall
+//
+// Thumb center positions (dense, from inner left edge):
+//   Track left from inner: 0.0625em (padding)
+//   OFF center:  0.0625 + 0.2em from track left = 0.2625em
+//   ON center:   0.0625 + 0.65 - 0.2 = 0.5125em
+//   INDET:       (0.2625 + 0.5125) / 2 = 0.3875em
+//
+// left = center - halfWidth
+//   OFF:   0.2625 - 0.1 = 0.1625em
+//   ON:    0.5125 - 0.15 = 0.3625em
+//   INDET: 0.3875 - 0.1 = 0.2875em
+//   OFF pressed:  0.2625 - 0.175 = 0.0875em
+//   ON pressed:   0.5125 - 0.175 = 0.3375em
+
+.q-toggle--dense .q-toggle__inner {
+  width: 0.775em;
+  min-width: 0.775em;
+  height: 0.5em;
+  padding: 0.05em 0.0625em;
+}
+
+.q-toggle--dense .q-toggle__track {
+  height: 0.4em;
+  width: 0.65em;
+}
+
+.q-toggle--dense .q-toggle__thumb {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.1625em;
+  width: 0.2em;
+  height: 0.2em;
+}
+
+.q-toggle--dense .q-toggle__inner--truthy .q-toggle__thumb {
+  left: 0.3625em;
+  width: 0.3em;
+  height: 0.3em;
+}
+
+.q-toggle--dense .q-toggle__inner--indet .q-toggle__thumb {
+  left: 0.2875em;
+}
+
+// Dense pressed
+.q-toggle--dense .q-toggle__inner:active .q-toggle__thumb {
+  width: 0.35em;
+  height: 0.35em;
+}
+
+.q-toggle--dense .q-toggle__inner:not(.q-toggle__inner--truthy):active .q-toggle__thumb {
+  left: 0.0875em;
+}
+
+.q-toggle--dense .q-toggle__inner--truthy:active .q-toggle__thumb {
+  width: 0.35em;
+  height: 0.35em;
+  left: 0.3375em;
+}
+
+// Dense icons: scale down proportionally to the smaller dense thumb
+// Normal: OFF thumb 0.4em / icon 0.28em, ON thumb 0.6em / icon 0.4em
+// Dense:  OFF thumb 0.2em / icon 0.14em, ON thumb 0.3em / icon 0.2em
+.q-toggle--dense .q-toggle__thumb .q-icon {
+  font-size: 0.14em;
+}
+
+.q-toggle--dense .q-toggle__inner--truthy .q-toggle__thumb .q-icon {
+  font-size: 0.2em;
+}
+
+// Dense state layer — smaller scale
+body.desktop .q-toggle--dense:not(.disabled):hover .q-toggle__thumb:before,
+body.desktop .q-toggle--dense:not(.disabled):focus .q-toggle__thumb:before {
+  transform: translate(-50%, -50%) scale3d(0.75, 0.75, 1);
+}
+
+// ============================================================
+// DARK MODE
+// ============================================================
+// CSS custom properties auto-flip; override Quasar's hardcoded dark values
+
+// color: on dark inner removed — token doesn't flip for per-component dark mode.
+// Stock color: #fff / var(--q-primary) apply correctly when --dark is set.
+
+.q-toggle--dark .q-toggle__thumb:after {
+  box-shadow: none;
+}
+
+.q-toggle--dark .q-toggle__thumb:before {
+  opacity: 0.08 !important;
+}

@@ -1,0 +1,120 @@
+// MD3 Expressive QItem/QList Overrides
+// Appended after Quasar's QItem.sass — source order wins.
+//
+// MD3E list items: 56dp min-height, 10dp vertical padding, 16dp horizontal,
+// 12dp between-space gap, on-surface text, on-surface-variant secondary text.
+
+// === Sizing ===
+// MD3E one-line list item: 56dp (Quasar default: 48px)
+.q-item {
+  min-height: 56px;
+  padding: 10px 16px; // MD3E: 10dp top/bottom, 16dp left/right
+}
+
+// === Colors ===
+// Primary text inherits var(--md3-on-surface) from .q-layout — no explicit override
+// needed here. This preserves Quasar's --dark { color: #fff } rules.
+
+// === Side Section (leading/trailing icons) ===
+// MD3E: on-surface-variant, 12dp between-space gap
+.q-item__section--side {
+  color: var(--md3-on-surface-variant);
+  padding-right: 12px; // MD3E between-space = 12dp (was 16px)
+}
+
+// Trailing side section: 12dp gap from main content
+.q-item__section--main ~ .q-item__section--side {
+  padding-left: 12px;
+  padding-right: 0;
+}
+
+// === Label Typography ===
+// Label text = body-large: 16px, 400, 24px lh, 0.03125rem tracking
+.q-item__label {
+  line-height: 1.5rem !important; // 24px (override Quasar's 1.2em !important)
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.03125rem;
+}
+
+// Supporting text (caption) = body-medium: 14px, 400, 20px lh
+.q-item__label--caption {
+  color: var(--md3-on-surface-variant);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem !important; // 20px
+  letter-spacing: 0.015625rem;
+}
+
+// Overline = label-small: 11px, 500, 16px lh
+.q-item__label--overline {
+  color: var(--md3-on-surface-variant);
+  text-transform: none; // MD3E removes uppercase
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1rem !important; // 16px
+  letter-spacing: 0.03125rem;
+}
+
+// Header label
+.q-item__label--header {
+  color: var(--md3-on-surface-variant);
+}
+
+// === Active / Selected State ===
+// MD3E: secondary-container bg, on-secondary-container text (replaces Quasar's primary text)
+.q-item--active,
+.q-item.q-router-link--active {
+  background: var(--md3-secondary-container);
+  color: var(--md3-on-secondary-container);
+}
+
+// Icons and sections within active items inherit selected color
+.q-item--active .q-item__section--side,
+.q-item.q-router-link--active .q-item__section--side {
+  color: var(--md3-on-secondary-container);
+}
+
+// Caption and overline within active items
+.q-item--active .q-item__label--caption,
+.q-item--active .q-item__label--overline,
+.q-item.q-router-link--active .q-item__label--caption,
+.q-item.q-router-link--active .q-item__label--overline {
+  color: var(--md3-on-secondary-container);
+}
+
+// === Dark Mode ===
+// Handled globally in base.scss via [class*="--dark"] selector.
+
+
+// === Hover State Layer ===
+// MD3E list items have a rounded container shape. The focus-helper inherits
+// the border-radius via Quasar's `border-radius: inherit`.
+.q-item {
+  overflow: hidden;
+  border-radius: $md3-corner-small;
+}
+
+// === Dense Variant ===
+// Not in MD3E spec; keep for Quasar compatibility but adjust slightly
+.q-list--dense > .q-item,
+.q-item--dense {
+  min-height: 40px; // slightly larger than Quasar's 32px default
+  padding: 4px 16px;
+}
+
+// === List Bordered ===
+// Use outline-variant for borders
+.q-list--bordered {
+  border-color: var(--md3-outline-variant);
+}
+
+// === List Separator ===
+// Separator between items uses outline-variant (handled by $separator-color variable)
+// No additional override needed; the Sass variable does the work.
+
+// === List Padding ===
+// MD3E: 8dp top/bottom padding on list container (matches Quasar default)
+.q-list--padding {
+  padding: 8px 0;
+}

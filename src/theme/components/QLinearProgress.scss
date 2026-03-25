@@ -1,0 +1,49 @@
+// MD3 Expressive QLinearProgress Overrides
+// Appended after Quasar's QLinearProgress.sass — source order wins.
+//
+// MD3E spec: 4dp track height (matches Quasar default of font-size:4px + height:1em),
+// primary active indicator, secondary-container track, fully pill-shaped ends.
+
+// === Colors ===
+// Active indicator uses primary via currentColor on the container.
+// Quasar sets color: var(--q-primary) by default; override to MD3 primary.
+.q-linear-progress {
+  color: var(--md3-primary); // replaces stock var(--q-primary)
+}
+
+// Track: MD3E secondary-container, not an opacity-dimmed version of primary.
+// Quasar applies opacity: .4 to .q-linear-progress__track — override both
+// the background color and the opacity so the token color renders faithfully.
+.q-linear-progress__track {
+  opacity: 1 !important;
+  background: var(--md3-secondary-container) !important;
+
+  // Dark-mode track class still set by Quasar JS — neutralise both variants.
+  &--light,
+  &--dark {
+    background: var(--md3-secondary-container) !important;
+  }
+}
+
+// === Shape: Pill-shaped ends ===
+// The container already has overflow: hidden (set by Quasar), so rounding it
+// clips the track to a pill. We also round the model so partially-filled
+// determinate bars show rounded leading/trailing edges independent of the clip.
+.q-linear-progress {
+  border-radius: $md3-corner-full; // 9999px — pill ends on the track container
+}
+
+.q-linear-progress__model {
+  border-radius: $md3-corner-full; // 9999px — pill ends on the active indicator
+}
+
+// === Indeterminate bars ===
+// The :before/:after pseudo-elements inside __model also benefit from pill ends
+// so that the animated bars look rounded as they sweep across the track.
+.q-linear-progress__model--indeterminate,
+.q-linear-progress__model--query {
+  &::before,
+  &::after {
+    border-radius: $md3-corner-full;
+  }
+}

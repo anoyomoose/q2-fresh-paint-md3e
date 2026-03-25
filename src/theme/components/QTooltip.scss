@@ -1,0 +1,28 @@
+// MD3 Expressive QTooltip Overrides
+// Appended after Quasar's QTooltip.sass — source order wins.
+//
+// Most tooltip styling is handled by Sass variable overrides in variables.scss:
+//   $tooltip-background, $tooltip-color, $tooltip-fontsize,
+//   $tooltip-border-radius, $tooltip-padding
+//
+// This file handles properties that cannot be set via variables:
+// line-height, letter-spacing, font-weight, and mobile overrides.
+
+// === Plain Tooltip Typography: Body Small ===
+// 12px, weight 400, line-height 16px, tracking 0.4pt
+.q-tooltip--style {
+  line-height: 1rem; // 16px
+  letter-spacing: 0.03333em; // 0.4pt / 12sp
+  font-weight: 400;
+}
+
+// === Mobile Tooltip ===
+// MD3E does not differentiate mobile vs desktop tooltip styling.
+// Override Quasar's mobile-specific font-size (14px) and padding (8px 16px)
+// to match desktop values.
+@media (max-width: 599.99px) {
+  .q-tooltip {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}

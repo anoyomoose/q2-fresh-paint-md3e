@@ -1,0 +1,13 @@
+// MD3 Expressive QBanner Overrides
+// Appended after Quasar's QBanner.sass — source order wins.
+//
+// MD3E banner maps to the "Medium" or "Large" banner role which sits on
+// surface. Quasar's default is background: #fff (hardcoded white).
+// We correct to surface token and on-surface text for proper dark/light
+// mode support and MD3E color system compliance.
+
+// === Container ===
+.q-banner {
+  background: var(--md3-surface);
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+}

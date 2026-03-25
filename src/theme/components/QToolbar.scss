@@ -1,0 +1,31 @@
+// MD3 Expressive QToolbar Overrides
+// Appended after Quasar's QToolbar.sass — source order wins.
+//
+// Height (64px) and title typography (22px, weight 400, ls 0) are already
+// handled via Sass variable overrides in variables.scss. This file covers
+// runtime color tokens and shadow removal.
+
+// === Surface Background ===
+// MD3E app bars use surface color, not primary.
+// The background-color swap for .q-layout__section--marginal is in QLayout.scss,
+// but we also set it directly on the toolbar for standalone usage.
+// MD3E app bars use surface color, not primary. This is a deliberate departure
+// from MD2 where bg-primary was the default. Demo pages using bg-primary on
+// headers/footers are using the MD2 pattern.
+.q-toolbar {
+  background-color: var(--md3-surface);
+}
+
+// === No Shadow ===
+// MD3E app bars have no drop shadow at rest. Elevation is communicated via
+// surface-container color change on scroll, not shadow.
+.q-toolbar {
+  box-shadow: none;
+}
+
+// === Title Line Height ===
+// Ensure title-large line-height (28px) is applied — font-size, weight,
+// and letter-spacing are already set by variables.scss.
+.q-toolbar__title {
+  line-height: 1.75rem; // 28px
+}

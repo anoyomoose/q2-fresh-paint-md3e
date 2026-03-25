@@ -1,0 +1,24 @@
+// MD3 Expressive QSelect Overrides
+// Appended after Quasar's QSelect.sass — source order wins.
+//
+// Most text field styling comes from QField.scss.
+// This file handles select-specific elements.
+
+// === Dropdown Arrow ===
+// On-surface-variant color, MD3E easing
+.q-select__dropdown-icon {
+  color: var(--md3-on-surface-variant);
+  transition: transform $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+// Disabled dropdown icon
+.q-field--disabled .q-select__dropdown-icon {
+  color: rgba(var(--md3-on-surface-rgb), 0.38);
+}
+
+// === Dialog Background ===
+// MD3E surface-container-high for select dialog
+.q-select__dialog {
+  background: var(--md3-surface-container-high);
+  border-radius: $md3-corner-extra-large;
+}

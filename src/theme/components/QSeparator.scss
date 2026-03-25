@@ -1,0 +1,31 @@
+// MD3 Expressive QSeparator Overrides
+// Appended after Quasar's QSeparator.sass — source order wins.
+//
+// Separator color is handled by Sass variable overrides in variables.scss:
+//   $separator-color: $md3-outline-variant
+//   $separator-dark-color: $md3-dark-outline-variant
+//
+// This file adjusts inset margins to match MD3E specs.
+
+// === Inset Variant ===
+// MD3E: inset = 16dp left, 0dp right (Quasar defaults: 16px both sides)
+.q-separator--horizontal-inset {
+  margin-left: 16px;
+  margin-right: 0;
+}
+
+// === Item Inset ===
+// MD3E: leading-space(16) + avatar(40) + between(12) = 68dp
+// Quasar default: 72px (legacy M2 alignment)
+.q-separator--horizontal-item-inset {
+  margin-left: 68px;
+  margin-right: 0;
+}
+
+// === Item Thumbnail Inset ===
+// MD3E: leading-space(16) + video-width(100) + between(12) = 128dp
+// Quasar default: 116px
+.q-separator--horizontal-item-thumbnail-inset {
+  margin-left: 128px;
+  margin-right: 0;
+}

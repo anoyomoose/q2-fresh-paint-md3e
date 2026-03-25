@@ -1,0 +1,168 @@
+// MD3 Expressive QBtnToggle Overrides — Segmented Button Style
+// Appended to QBtnToggle.sass via the Sass importer.
+//
+// QBtnToggle renders as QBtnGroup (.q-btn-toggle on the container) with
+// QBtn children. Selection is indicated via aria-pressed="true" on the
+// selected button(s).
+//
+// Default (no design prop) variant is styled as MD3E Segmented Button:
+//   Unselected: transparent bg, on-surface text, outline border
+//   Selected:   secondary-container bg, on-secondary-container text, checkmark
+//
+// Color roles from segmented-buttons.md:
+//   On surface, Outline, Secondary container, On secondary container
+
+// Checkmark SVG (Material Design check icon) as data URI for CSS mask.
+// Using mask lets it inherit currentColor for proper theming.
+$_md3e-check-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+
+// =============================================================================
+// 1. ALL VARIANTS: Zero gap, straight inner corners, no corner morphing
+// =============================================================================
+
+.q-btn-group.q-btn-toggle {
+  gap: 0 !important;
+
+  // Equal-width segments: spec says "Segment width = Container width / total segments".
+  // inline-grid + 1fr makes each column equal to the widest button's content width.
+  display: inline-grid !important;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+
+  // Outer pill corners on first/last, straight inner edges.
+  // Use 9999px instead of em-based values because group buttons stretch to
+  // the tallest button's height — em is relative to font-size, not height,
+  // so a small-font button next to a large-font button won't look pill.
+  > .q-btn:first-child {
+    border-top-left-radius: 9999px !important;
+    border-bottom-left-radius: 9999px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  > .q-btn:last-child {
+    border-top-right-radius: 9999px !important;
+    border-bottom-right-radius: 9999px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  > .q-btn:not(:first-child):not(:last-child) {
+    border-radius: 0 !important;
+  }
+
+  > .q-btn:only-child {
+    border-radius: 9999px !important;
+  }
+
+  // Disable corner morphing on press — segmented buttons keep their shape.
+  // Repeat the resting radii so the morph transition fires but has no effect.
+  > .q-btn.q-btn--actionable:first-child:active,
+  > .q-btn.q-btn--actionable:first-child.q-btn--active {
+    border-top-left-radius: 9999px !important;
+    border-bottom-left-radius: 9999px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  > .q-btn.q-btn--actionable:last-child:active,
+  > .q-btn.q-btn--actionable:last-child.q-btn--active {
+    border-top-right-radius: 9999px !important;
+    border-bottom-right-radius: 9999px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  > .q-btn.q-btn--actionable:not(:first-child):not(:last-child):active,
+  > .q-btn.q-btn--actionable:not(:first-child):not(:last-child).q-btn--active {
+    border-radius: 0 !important;
+  }
+
+  > .q-btn.q-btn--actionable:only-child:active,
+  > .q-btn.q-btn--actionable:only-child.q-btn--active {
+    border-radius: 9999px !important;
+  }
+}
+
+// =============================================================================
+// 2. DEFAULT VARIANT: Segmented button appearance
+// =============================================================================
+// When QBtnToggle has no explicit design prop (buttons are unelevated via
+// boot.ts default), style per MD3E segmented button spec.
+
+.q-btn-group.q-btn-toggle:not(.q-btn-group--outline):not(.q-btn-group--flat):not(.q-btn-group--push):not(.q-btn-group--glossy) {
+  // --- Unselected state ---
+  > .q-btn {
+    background: transparent !important;
+    color: var(--md3-on-surface) !important;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  > .q-btn:before {
+    border: 1px solid var(--md3-outline) !important;
+    box-shadow: none !important;
+  }
+
+  // Shared borders: adjacent buttons share a border edge.
+  > .q-btn + .q-btn:before {
+    border-left: 0 !important;
+  }
+
+  // --- Selected state ---
+  > .q-btn[aria-pressed="true"] {
+    background-color: var(--md3-secondary-container) !important;
+    color: var(--md3-on-secondary-container) !important;
+  }
+
+  // Tighter padding for segmented buttons (spec: min 12dp)
+  > .q-btn {
+    padding-left: 0.857em !important;  // 12dp
+    padding-right: 0.857em !important;
+  }
+
+  // --- Checkmark icon ---
+  // Each side reserves HALF the checkmark+gap space as an invisible spacer.
+  // Total reserved = checkmark (1.286em) + gap (0.571em) = 1.857em.
+  // Half = 0.929em per side. This keeps text centered and columns stable:
+  //   Unselected: [0.929em] text [0.929em]  = text + 1.857em
+  //   Selected:   [1.286em ✓ + 0.571em gap] text  = text + 1.857em (same!)
+  > .q-btn > .q-btn__content::before,
+  > .q-btn > .q-btn__content::after {
+    content: '';
+    display: inline-block;
+    width: 0.929em; // half of (18dp + 8dp)
+    height: 1.286em;
+    flex-shrink: 0;
+    visibility: hidden;
+  }
+
+  // Selected: left spacer becomes full-size checkmark, right spacer removed
+  > .q-btn[aria-pressed="true"] > .q-btn__content::before {
+    width: 1.286em;  // full 18dp checkmark
+    margin-right: 0.571em; // 8dp gap to label
+    -webkit-mask-image: #{$_md3e-check-svg};
+    mask-image: #{$_md3e-check-svg};
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: currentColor;
+    visibility: visible;
+  }
+
+  > .q-btn[aria-pressed="true"] > .q-btn__content::after {
+    display: none;
+  }
+}
+
+// =============================================================================
+// 3. OUTLINE VARIANT: Fix shared borders for zero gap
+// =============================================================================
+// Our QBtnGroup.scss re-adds inner borders (border-left/right) for the gapped
+// layout. With zero gap, undo that so buttons share a single border edge.
+
+.q-btn-group.q-btn-toggle.q-btn-group--outline {
+  > .q-btn-item + .q-btn-item:before {
+    border-left: 0 !important;
+  }
+}

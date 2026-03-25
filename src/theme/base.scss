@@ -1,0 +1,576 @@
+// MD3 Expressive Theme — CSS Custom Properties for Light/Dark Mode Switching
+// Maps $md3-* Sass variables to --md3-* CSS custom properties.
+// Component overrides should use var(--md3-*) for colors (runtime switching)
+// and $md3-corner-* Sass variables for shape tokens (compile-time, same in both modes).
+
+@use 'sass:color';
+
+// Helper function to extract RGB components from a hex color
+@function hex-to-rgb-values($c) {
+  @return color.channel($c, "red", $space: rgb), color.channel($c, "green", $space: rgb), color.channel($c, "blue", $space: rgb);
+}
+
+:root, body.body--light {
+  // Primary
+  --md3-primary: #{$md3-primary};
+  --md3-on-primary: #{$md3-on-primary};
+  --md3-primary-container: #{$md3-primary-container};
+  --md3-on-primary-container: #{$md3-on-primary-container};
+
+  // Secondary
+  --md3-secondary: #{$md3-secondary};
+  --md3-on-secondary: #{$md3-on-secondary};
+  --md3-secondary-container: #{$md3-secondary-container};
+  --md3-on-secondary-container: #{$md3-on-secondary-container};
+
+  // Tertiary
+  --md3-tertiary: #{$md3-tertiary};
+  --md3-on-tertiary: #{$md3-on-tertiary};
+  --md3-tertiary-container: #{$md3-tertiary-container};
+  --md3-on-tertiary-container: #{$md3-on-tertiary-container};
+
+  // Error
+  --md3-error: #{$md3-error};
+  --md3-on-error: #{$md3-on-error};
+  --md3-error-container: #{$md3-error-container};
+  --md3-on-error-container: #{$md3-on-error-container};
+
+  // Background
+  --md3-background: #{$md3-background};
+  --md3-on-background: #{$md3-on-background};
+
+  // Surface
+  --md3-surface: #{$md3-surface};
+  --md3-on-surface: #{$md3-on-surface};
+  --md3-surface-variant: #{$md3-surface-variant};
+  --md3-on-surface-variant: #{$md3-on-surface-variant};
+
+  // Outline
+  --md3-outline: #{$md3-outline};
+  --md3-outline-variant: #{$md3-outline-variant};
+
+  // Utility
+  --md3-shadow: #{$md3-shadow};
+  --md3-scrim: #{$md3-scrim};
+
+  // Inverse
+  --md3-inverse-surface: #{$md3-inverse-surface};
+  --md3-inverse-on-surface: #{$md3-inverse-on-surface};
+  --md3-inverse-primary: #{$md3-inverse-primary};
+
+  // Surface containers
+  --md3-surface-dim: #{$md3-surface-dim};
+  --md3-surface-bright: #{$md3-surface-bright};
+  --md3-surface-container-lowest: #{$md3-surface-container-lowest};
+  --md3-surface-container-low: #{$md3-surface-container-low};
+  --md3-surface-container: #{$md3-surface-container};
+  --md3-surface-container-high: #{$md3-surface-container-high};
+  --md3-surface-container-highest: #{$md3-surface-container-highest};
+
+  // RGB triplets for rgba() usage in state layers and disabled states
+  --md3-primary-rgb: #{hex-to-rgb-values($md3-primary)};
+  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
+  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
+  --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
+
+  // Quasar brand colors (light scheme)
+  --q-primary: #{$md3-primary};
+  --q-secondary: #{$md3-secondary};
+  --q-accent: #{$md3-tertiary};
+}
+
+// === Dark Mode (Global) ===
+body.body--dark {
+  --md3-primary: #{$md3-dark-primary};
+  --md3-on-primary: #{$md3-dark-on-primary};
+  --md3-primary-container: #{$md3-dark-primary-container};
+  --md3-on-primary-container: #{$md3-dark-on-primary-container};
+  --md3-secondary: #{$md3-dark-secondary};
+  --md3-on-secondary: #{$md3-dark-on-secondary};
+  --md3-secondary-container: #{$md3-dark-secondary-container};
+  --md3-on-secondary-container: #{$md3-dark-on-secondary-container};
+  --md3-tertiary: #{$md3-dark-tertiary};
+  --md3-on-tertiary: #{$md3-dark-on-tertiary};
+  --md3-tertiary-container: #{$md3-dark-tertiary-container};
+  --md3-on-tertiary-container: #{$md3-dark-on-tertiary-container};
+  --md3-error: #{$md3-dark-error};
+  --md3-on-error: #{$md3-dark-on-error};
+  --md3-error-container: #{$md3-dark-error-container};
+  --md3-on-error-container: #{$md3-dark-on-error-container};
+  --md3-background: #{$md3-dark-background};
+  --md3-on-background: #{$md3-dark-on-background};
+  --md3-surface: #{$md3-dark-surface};
+  --md3-on-surface: #{$md3-dark-on-surface};
+  --md3-surface-variant: #{$md3-dark-surface-variant};
+  --md3-on-surface-variant: #{$md3-dark-on-surface-variant};
+  --md3-outline: #{$md3-dark-outline};
+  --md3-outline-variant: #{$md3-dark-outline-variant};
+  --md3-shadow: #{$md3-dark-shadow};
+  --md3-scrim: #{$md3-dark-scrim};
+  --md3-inverse-surface: #{$md3-dark-inverse-surface};
+  --md3-inverse-on-surface: #{$md3-dark-inverse-on-surface};
+  --md3-inverse-primary: #{$md3-dark-inverse-primary};
+  --md3-surface-dim: #{$md3-dark-surface-dim};
+  --md3-surface-bright: #{$md3-dark-surface-bright};
+  --md3-surface-container-lowest: #{$md3-dark-surface-container-lowest};
+  --md3-surface-container-low: #{$md3-dark-surface-container-low};
+  --md3-surface-container: #{$md3-dark-surface-container};
+  --md3-surface-container-high: #{$md3-dark-surface-container-high};
+  --md3-surface-container-highest: #{$md3-dark-surface-container-highest};
+  --md3-primary-rgb: #{hex-to-rgb-values($md3-dark-primary)};
+  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-dark-on-surface)};
+  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-dark-on-primary)};
+  --md3-error-rgb: #{hex-to-rgb-values($md3-dark-error)};
+  --q-primary: #{$md3-dark-primary};
+  --q-secondary: #{$md3-dark-secondary};
+  --q-accent: #{$md3-dark-tertiary};
+}
+
+// === Per-Component Dark Mode Fix ===
+// Quasar components with a `dark` prop (q-item--dark, q-card--dark, etc.) set dark
+// tokens on themselves, but those cascade into child components (e.g. a toggle inside
+// a dark list item) breaking their light-mode appearance.
+//
+// Fix: re-inject light tokens on direct children of --dark elements that aren't
+// themselves dark. Scoped to body.body--light so global dark mode is unaffected.
+// Text colors in the dark element itself are handled by Quasar's own --dark rules
+// which have higher specificity (two classes) than our single-class token overrides.
+body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {
+  --md3-primary: #{$md3-primary};
+  --md3-on-primary: #{$md3-on-primary};
+  --md3-primary-container: #{$md3-primary-container};
+  --md3-on-primary-container: #{$md3-on-primary-container};
+  --md3-secondary: #{$md3-secondary};
+  --md3-on-secondary: #{$md3-on-secondary};
+  --md3-secondary-container: #{$md3-secondary-container};
+  --md3-on-secondary-container: #{$md3-on-secondary-container};
+  --md3-tertiary: #{$md3-tertiary};
+  --md3-on-tertiary: #{$md3-on-tertiary};
+  --md3-tertiary-container: #{$md3-tertiary-container};
+  --md3-on-tertiary-container: #{$md3-on-tertiary-container};
+  --md3-error: #{$md3-error};
+  --md3-on-error: #{$md3-on-error};
+  --md3-error-container: #{$md3-error-container};
+  --md3-on-error-container: #{$md3-on-error-container};
+  --md3-background: #{$md3-background};
+  --md3-on-background: #{$md3-on-background};
+  --md3-surface: #{$md3-surface};
+  --md3-on-surface: #{$md3-on-surface};
+  --md3-surface-variant: #{$md3-surface-variant};
+  --md3-on-surface-variant: #{$md3-on-surface-variant};
+  --md3-outline: #{$md3-outline};
+  --md3-outline-variant: #{$md3-outline-variant};
+  --md3-shadow: #{$md3-shadow};
+  --md3-scrim: #{$md3-scrim};
+  --md3-inverse-surface: #{$md3-inverse-surface};
+  --md3-inverse-on-surface: #{$md3-inverse-on-surface};
+  --md3-inverse-primary: #{$md3-inverse-primary};
+  --md3-surface-dim: #{$md3-surface-dim};
+  --md3-surface-bright: #{$md3-surface-bright};
+  --md3-surface-container-lowest: #{$md3-surface-container-lowest};
+  --md3-surface-container-low: #{$md3-surface-container-low};
+  --md3-surface-container: #{$md3-surface-container};
+  --md3-surface-container-high: #{$md3-surface-container-high};
+  --md3-surface-container-highest: #{$md3-surface-container-highest};
+  --md3-primary-rgb: #{hex-to-rgb-values($md3-primary)};
+  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
+  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
+  --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
+  --q-primary: #{$md3-primary};
+  --q-secondary: #{$md3-secondary};
+  --q-accent: #{$md3-tertiary};
+}
+
+// === Brand Color Text Fix ===
+// Quasar adds text-white or text-black on buttons/components with a color prop.
+// These are hardcoded and don't adapt to dark mode or MD3E's on-* token pairing.
+// Override to use the correct MD3E on-* token for each brand color.
+// Excludes q-btn--standard (elevated), glossy (tonal), and disabled buttons which
+// each handle their own text color.
+.bg-primary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-primary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+  color: var(--md3-on-primary) !important;
+}
+.bg-secondary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-secondary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+  color: var(--md3-on-secondary) !important;
+}
+.bg-tertiary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-tertiary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-accent.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-accent.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+  color: var(--md3-on-tertiary) !important;
+}
+.bg-negative.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
+.bg-negative.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+  color: var(--md3-on-error) !important;
+}
+
+// === State Layer Opacity Override ===
+// MD3E state layers: hover 8%, focus 12%, pressed 12%, dragged 16%
+// Quasar's .q-focus-helper uses higher values (MD2). Override globally.
+.q-focus-helper {
+  &:before {
+    opacity: 0 !important; // Reset — let :hover/:focus rules control
+  }
+  &:after {
+    opacity: 0 !important;
+  }
+}
+
+body.desktop {
+  // Quasar sets opacity on the .q-focus-helper itself (0.15 hover, 0.22 focus).
+  // MD3E wants 8% hover, 12% focus. Override the helper's own opacity.
+  .q-focusable:hover > .q-focus-helper,
+  .q-hoverable:hover > .q-focus-helper {
+    opacity: 0.08 !important; // MD3E hover = 8%
+  }
+  .q-focusable:focus > .q-focus-helper,
+  .q-manual-focusable--focused > .q-focus-helper {
+    opacity: 0.12 !important; // MD3E focus = 12%
+  }
+}
+
+// === MD3E Ripple Override ===
+// Quasar's ripple uses MD2 easing and 20% peak opacity.
+// MD3E pressed state layer = 10% opacity with MD3 standard easing.
+// The peak opacity is set as an inline style by JS, so we need !important.
+.q-ripple__inner--enter {
+  opacity: 0.10 !important;
+  transition: transform 300ms $md3-easing-standard,
+              opacity 100ms $md3-easing-standard !important;
+}
+
+.q-ripple__inner--leave {
+  transition: opacity 250ms $md3-easing-standard !important;
+}
+
+// === MD3E Typography Utility Classes ===
+// Baseline type scale (15 roles)
+.text-display-large {
+  font-size: 3.5625rem;
+  font-weight: 400;
+  line-height: 4rem;
+  letter-spacing: 0;
+}
+.text-display-medium {
+  font-size: 2.8125rem;
+  font-weight: 400;
+  line-height: 3.25rem;
+  letter-spacing: 0;
+}
+.text-display-small {
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 2.75rem;
+  letter-spacing: 0;
+}
+.text-headline-large {
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 2.5rem;
+  letter-spacing: 0;
+}
+.text-headline-medium {
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 2.25rem;
+  letter-spacing: 0;
+}
+.text-headline-small {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: 0;
+}
+.text-title-large {
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+}
+.text-title-medium {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  letter-spacing: 0;
+}
+.text-title-small {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-body-large {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0;
+}
+.text-body-medium {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-body-small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1rem;
+  letter-spacing: 0.00833em; // 0.1pt / 12sp
+}
+.text-label-large {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-label-medium {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0.00833em; // 0.1pt / 12sp
+}
+.text-label-small {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0.00909em; // 0.1pt / 11sp
+}
+
+// === Emphasized Typography (NEW in MD3E) ===
+// Weight bumps: display/headline/title-large +100 (400→500)
+// title-medium/small and labels +200 (500→700)
+// body +100 (400→500)
+.text-emph-display-large {
+  font-size: 3.5625rem;
+  font-weight: 500;
+  line-height: 4rem;
+  letter-spacing: 0;
+}
+.text-emph-display-medium {
+  font-size: 2.8125rem;
+  font-weight: 500;
+  line-height: 3.25rem;
+  letter-spacing: 0;
+}
+.text-emph-display-small {
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 2.75rem;
+  letter-spacing: 0;
+}
+.text-emph-headline-large {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 2.5rem;
+  letter-spacing: 0;
+}
+.text-emph-headline-medium {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 2.25rem;
+  letter-spacing: 0;
+}
+.text-emph-headline-small {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: 0;
+}
+.text-emph-title-large {
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+}
+.text-emph-title-medium {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  letter-spacing: 0;
+}
+.text-emph-title-small {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-emph-body-large {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  letter-spacing: 0;
+}
+.text-emph-body-medium {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-emph-body-small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0;
+}
+.text-emph-label-large {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  letter-spacing: 0;
+}
+.text-emph-label-medium {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  letter-spacing: 0.00833em; // 0.1pt / 12sp
+}
+.text-emph-label-small {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1rem;
+  letter-spacing: 0.00909em; // 0.1pt / 11sp
+}
+
+// === MD3E Shape Utility Classes ===
+.rounded-none {
+  border-radius: 0 !important;
+}
+.rounded-xs {
+  border-radius: 4px !important;
+}
+.rounded-sm {
+  border-radius: 8px !important;
+}
+.rounded-md {
+  border-radius: 12px !important;
+}
+.rounded-lg {
+  border-radius: 16px !important;
+}
+.rounded-lg-inc {
+  border-radius: 20px !important;
+}
+.rounded-xl {
+  border-radius: 28px !important;
+}
+.rounded-xl-inc {
+  border-radius: 32px !important;
+}
+.rounded-xxl {
+  border-radius: 48px !important;
+}
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+// === MD3 Overline Fix ===
+// MD3E removes uppercase from overline text
+.text-overline {
+  text-transform: none !important;
+}
+
+// === MD3 Color Token Classes ===
+// Enables Quasar color prop usage: color="primary-container", text-color="on-primary", etc.
+//
+// Each bg-* class sets BOTH background-color AND the correct on-* text color.
+// This means color="primary-container" just works — no text-color needed.
+// Quasar's auto text-white is overridden because our bg- class (loaded after
+// Quasar's CSS) sets color with !important.
+//
+// If the user explicitly sets text-color, Quasar adds a text-* class. The text-*
+// classes are defined AFTER the bg-* classes, so they win by source order,
+// allowing the user to override the automatic text color.
+//
+// Tokens already covered by Quasar's brand colors (primary, secondary, accent, negative)
+// are not duplicated as bg-* classes — those work via Quasar's --q-* properties.
+// Their on-* counterparts ARE provided as text-* classes.
+
+// --- Primary ---
+.bg-on-primary { background-color: var(--md3-on-primary) !important; color: var(--md3-primary) !important; }
+.bg-primary-container { background-color: var(--md3-primary-container) !important; color: var(--md3-on-primary-container) !important; }
+.bg-on-primary-container { background-color: var(--md3-on-primary-container) !important; color: var(--md3-primary-container) !important; }
+
+// --- Secondary ---
+.bg-on-secondary { background-color: var(--md3-on-secondary) !important; color: var(--md3-secondary) !important; }
+.bg-secondary-container { background-color: var(--md3-secondary-container) !important; color: var(--md3-on-secondary-container) !important; }
+.bg-on-secondary-container { background-color: var(--md3-on-secondary-container) !important; color: var(--md3-secondary-container) !important; }
+
+// --- Tertiary ---
+.bg-on-tertiary { background-color: var(--md3-on-tertiary) !important; color: var(--md3-tertiary) !important; }
+.bg-tertiary-container { background-color: var(--md3-tertiary-container) !important; color: var(--md3-on-tertiary-container) !important; }
+.bg-on-tertiary-container { background-color: var(--md3-on-tertiary-container) !important; color: var(--md3-tertiary-container) !important; }
+
+// --- Error ---
+.bg-on-error { background-color: var(--md3-on-error) !important; color: var(--md3-error) !important; }
+.bg-error-container { background-color: var(--md3-error-container) !important; color: var(--md3-on-error-container) !important; }
+.bg-on-error-container { background-color: var(--md3-on-error-container) !important; color: var(--md3-error-container) !important; }
+
+// --- Background ---
+.bg-background { background-color: var(--md3-background) !important; color: var(--md3-on-background) !important; }
+.bg-on-background { background-color: var(--md3-on-background) !important; color: var(--md3-background) !important; }
+
+// --- Surface ---
+.bg-surface { background-color: var(--md3-surface) !important; color: var(--md3-on-surface) !important; }
+.bg-on-surface { background-color: var(--md3-on-surface) !important; color: var(--md3-surface) !important; }
+.bg-surface-variant { background-color: var(--md3-surface-variant) !important; color: var(--md3-on-surface-variant) !important; }
+.bg-on-surface-variant { background-color: var(--md3-on-surface-variant) !important; color: var(--md3-surface-variant) !important; }
+
+// --- Surface Containers (all use on-surface as text) ---
+.bg-surface-dim { background-color: var(--md3-surface-dim) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-bright { background-color: var(--md3-surface-bright) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-container-lowest { background-color: var(--md3-surface-container-lowest) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-container-low { background-color: var(--md3-surface-container-low) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-container { background-color: var(--md3-surface-container) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-container-high { background-color: var(--md3-surface-container-high) !important; color: var(--md3-on-surface) !important; }
+.bg-surface-container-highest { background-color: var(--md3-surface-container-highest) !important; color: var(--md3-on-surface) !important; }
+
+// --- Outline ---
+.bg-outline { background-color: var(--md3-outline) !important; color: var(--md3-surface) !important; }
+.bg-outline-variant { background-color: var(--md3-outline-variant) !important; color: var(--md3-on-surface) !important; }
+
+// --- Inverse ---
+.bg-inverse-surface { background-color: var(--md3-inverse-surface) !important; color: var(--md3-inverse-on-surface) !important; }
+.bg-inverse-on-surface { background-color: var(--md3-inverse-on-surface) !important; color: var(--md3-inverse-surface) !important; }
+.bg-inverse-primary { background-color: var(--md3-inverse-primary) !important; color: var(--md3-on-primary) !important; }
+
+// --- Utility ---
+.bg-shadow { background-color: var(--md3-shadow) !important; }
+.bg-scrim { background-color: var(--md3-scrim) !important; }
+
+// --- Text-only classes (defined AFTER bg- classes so they win by source order) ---
+// Use with Quasar's text-color prop or as standalone utility classes.
+.text-on-primary { color: var(--md3-on-primary) !important; }
+.text-primary-container { color: var(--md3-primary-container) !important; }
+.text-on-primary-container { color: var(--md3-on-primary-container) !important; }
+.text-on-secondary { color: var(--md3-on-secondary) !important; }
+.text-secondary-container { color: var(--md3-secondary-container) !important; }
+.text-on-secondary-container { color: var(--md3-on-secondary-container) !important; }
+.text-tertiary { color: var(--md3-tertiary) !important; }
+.text-on-tertiary { color: var(--md3-on-tertiary) !important; }
+.text-tertiary-container { color: var(--md3-tertiary-container) !important; }
+.text-on-tertiary-container { color: var(--md3-on-tertiary-container) !important; }
+.text-on-error { color: var(--md3-on-error) !important; }
+.text-error-container { color: var(--md3-error-container) !important; }
+.text-on-error-container { color: var(--md3-on-error-container) !important; }
+.text-background { color: var(--md3-background) !important; }
+.text-on-background { color: var(--md3-on-background) !important; }
+.text-surface { color: var(--md3-surface) !important; }
+.text-on-surface { color: var(--md3-on-surface) !important; }
+.text-surface-variant { color: var(--md3-surface-variant) !important; }
+.text-on-surface-variant { color: var(--md3-on-surface-variant) !important; }
+.text-surface-dim { color: var(--md3-surface-dim) !important; }
+.text-surface-bright { color: var(--md3-surface-bright) !important; }
+.text-surface-container-lowest { color: var(--md3-surface-container-lowest) !important; }
+.text-surface-container-low { color: var(--md3-surface-container-low) !important; }
+.text-surface-container { color: var(--md3-surface-container) !important; }
+.text-surface-container-high { color: var(--md3-surface-container-high) !important; }
+.text-surface-container-highest { color: var(--md3-surface-container-highest) !important; }
+.text-outline { color: var(--md3-outline) !important; }
+.text-outline-variant { color: var(--md3-outline-variant) !important; }
+.text-inverse-surface { color: var(--md3-inverse-surface) !important; }
+.text-inverse-on-surface { color: var(--md3-inverse-on-surface) !important; }
+.text-inverse-primary { color: var(--md3-inverse-primary) !important; }
+.text-shadow { color: var(--md3-shadow) !important; }
+.text-scrim { color: var(--md3-scrim) !important; }

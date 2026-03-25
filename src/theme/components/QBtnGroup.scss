@@ -1,0 +1,246 @@
+// MD3 Expressive QBtnGroup Overrides
+// Appended to QBtnGroup.sass via the Sass importer.
+//
+// Two variants:
+//   - Connected group (default, no `stretch` prop):
+//     2dp gap, pill outer corners, 8dp inner corners, shape morph on press
+//   - Standard group (`stretch` prop → `q-btn-group--stretch`):
+//     12dp gap, individual pill shapes, pressed button grows wider
+//
+// The `stretch` prop's original Quasar meaning (stretch buttons to fill container
+// height via align-self: stretch) is superseded in the MD3E theme to denote the
+// "standard button group" variant.
+
+// =============================================================================
+// 1. CONNECTED BUTTON GROUP (default)
+// =============================================================================
+
+// Override Quasar's box-shadow on the group container
+.q-btn-group {
+  box-shadow: none;
+}
+
+// Connected group only (not stretch/standard) — shared corners
+.q-btn-group:not(.q-btn-group--stretch) {
+  gap: 2px;
+
+  // Override Quasar's border-radius: 0 on inner buttons.
+  // Quasar sets border-radius: 0 via :not(:first-child) and :not(:last-child) selectors
+  // on .q-btn-item — we need !important to beat that.
+
+  // Base: all buttons get inner corner radius
+  > .q-btn {
+    border-radius: $md3-corner-small !important; // 8dp all corners
+    transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+  }
+
+  // First button: pill left corners, inner right corners
+  > .q-btn:first-child {
+    border-top-left-radius: 1.5em !important;
+    border-bottom-left-radius: 1.5em !important;
+    border-top-right-radius: $md3-corner-small !important;
+    border-bottom-right-radius: $md3-corner-small !important;
+  }
+
+  // Last button: inner left corners, pill right corners
+  > .q-btn:last-child {
+    border-top-right-radius: 1.5em !important;
+    border-bottom-right-radius: 1.5em !important;
+    border-top-left-radius: $md3-corner-small !important;
+    border-bottom-left-radius: $md3-corner-small !important;
+  }
+
+  // Single button: all pill
+  > .q-btn:only-child {
+    border-radius: 1.5em !important;
+  }
+
+  // Shape morph on press: connected buttons morph toward the inner corner size.
+  // Only the pressed button morphs; adjacent buttons stay at resting shape.
+  // Middle buttons: all corners morph to a tighter radius
+  > .q-btn.q-btn--actionable:active,
+  > .q-btn.q-btn--actionable.q-btn--active {
+    border-radius: calc(#{$md3-corner-small} * 0.5) !important; // 4dp pressed — tighter than resting 8dp
+  }
+
+  // First button pressed: pill left corners morph inward, right stays inner
+  > .q-btn.q-btn--actionable:first-child:active,
+  > .q-btn.q-btn--actionable:first-child.q-btn--active {
+    border-top-left-radius: 0.571em !important;
+    border-bottom-left-radius: 0.571em !important;
+    border-top-right-radius: calc(#{$md3-corner-small} * 0.5) !important;
+    border-bottom-right-radius: calc(#{$md3-corner-small} * 0.5) !important;
+  }
+
+  // Last button pressed: right pill corners morph inward, left stays inner
+  > .q-btn.q-btn--actionable:last-child:active,
+  > .q-btn.q-btn--actionable:last-child.q-btn--active {
+    border-top-right-radius: 0.571em !important;
+    border-bottom-right-radius: 0.571em !important;
+    border-top-left-radius: calc(#{$md3-corner-small} * 0.5) !important;
+    border-bottom-left-radius: calc(#{$md3-corner-small} * 0.5) !important;
+  }
+
+  // Single button pressed: all corners morph like standalone
+  > .q-btn.q-btn--actionable:only-child:active,
+  > .q-btn.q-btn--actionable:only-child.q-btn--active {
+    border-radius: 0.571em !important;
+  }
+}
+
+// =============================================================================
+// 2. STANDARD BUTTON GROUP (stretch prop repurposed)
+// =============================================================================
+
+.q-btn-group--stretch {
+  gap: 12px;
+
+  // Undo Quasar's group border-radius zeroing — standard group buttons are
+  // independent (spaced apart) so they keep their individual shapes.
+  // Default is pill; .q-btn--square override in QBtn.scss handles square buttons.
+  // flex: 1 ensures buttons fill the container so the widen/shrink interaction
+  // stays centered (without it, padding changes shift the whole group).
+  > .q-btn,
+  > .q-btn:first-child,
+  > .q-btn:last-child,
+  > .q-btn:only-child {
+    border-radius: 1.5em !important;
+    transition: padding $md3-shape-morph-duration $md3-easing-emphasized,
+                border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
+                margin $md3-shape-morph-duration $md3-easing-emphasized;
+  }
+
+  // Square buttons keep their square shape
+  > .q-btn.q-btn--square,
+  > .q-btn.q-btn--square:first-child,
+  > .q-btn.q-btn--square:last-child {
+    border-radius: $md3-corner-medium !important;
+  }
+
+  // Press interaction: active button grows wider, adjacent buttons shrink.
+  // Widening values are approximations — the MD3E spec describes the behavior
+  // but provides no specific dp values for the width change.
+  // Press interaction: active button grows, adjacent shrink symmetrically.
+  // Math: default pad D ≈ 1.143em (16px at 14px), adjacent J = 1.0em.
+  // Middle active = 3D - 2J ≈ 1.43em per side.
+  // Edge active = D + (active-D)/2 ≈ 1.29em per side (half growth, both sides, text centered).
+  // Adjacent always = 1.0em both sides.
+
+  // Shape morph: pressed → square (same as standalone morph target)
+  > .q-btn.q-btn--actionable:active,
+  > .q-btn.q-btn--actionable.q-btn--active {
+    border-radius: 0.571em !important;
+  }
+
+  // Middle button pressed: grow both sides (full delta)
+  > .q-btn.q-btn--actionable:not(.q-btn--round):not(:first-child):not(:last-child):active,
+  > .q-btn.q-btn--actionable:not(.q-btn--round):not(:first-child):not(:last-child).q-btn--active {
+    padding-left: 1.43em;
+    padding-right: 1.43em;
+  }
+
+  // Edge button pressed: grow both sides equally (half delta, text stays centered)
+  > .q-btn.q-btn--actionable:not(.q-btn--round):first-child:not(:only-child):active,
+  > .q-btn.q-btn--actionable:not(.q-btn--round):first-child:not(:only-child).q-btn--active,
+  > .q-btn.q-btn--actionable:not(.q-btn--round):last-child:not(:only-child):active,
+  > .q-btn.q-btn--actionable:not(.q-btn--round):last-child:not(:only-child).q-btn--active {
+    padding-left: 1.29em;
+    padding-right: 1.29em;
+  }
+
+  // Adjacent pill/text buttons: shrink both sides equally (text stays centered).
+  // Only when the ACTIVE button is also not round (round buttons don't participate).
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn:not(.q-btn--round):active),
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn:not(.q-btn--round).q-btn--active),
+  > .q-btn:not(.q-btn--round):active + .q-btn.q-btn--actionable:not(.q-btn--round),
+  > .q-btn:not(.q-btn--round).q-btn--active + .q-btn.q-btn--actionable:not(.q-btn--round) {
+    padding-left: 1.0em;
+    padding-right: 1.0em;
+  }
+
+  // Round neighbor compensation: when the active button faces a round button,
+  // the round button can't shrink. Instead, the active button adds negative margin
+  // on that side to eat its growth into the gap. Round buttons stay completely static.
+  // Growth delta per side: middle ≈ 0.29em, edge ≈ 0.15em.
+
+  // Active has round RIGHT neighbor: eat right growth into gap
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn--round):active,
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn--round).q-btn--active {
+    margin-right: -0.29em;
+  }
+
+  // Active has round LEFT neighbor: eat left growth into gap
+  > .q-btn--round + .q-btn.q-btn--actionable:not(.q-btn--round):active,
+  > .q-btn--round + .q-btn.q-btn--actionable:not(.q-btn--round).q-btn--active {
+    margin-left: -0.29em;
+  }
+}
+
+// =============================================================================
+// 3. SHARED: SUPPRESS QUASAR'S ORIGINAL GROUP STYLING
+// =============================================================================
+
+// Quasar's --rounded group variant is no longer needed (pill is the default)
+.q-btn-group--rounded {
+  border-radius: 0; // reset; individual buttons have their own radii
+}
+
+// Quasar's --stretch originally sets border-radius: 0 and align-self: stretch
+// We keep align-self but override border-radius
+.q-btn-group--stretch {
+  border-radius: 0;
+}
+
+// Quasar's --square variant: in MD3E all groups use the connected or standard shape
+.q-btn-group--square {
+  border-radius: 0;
+}
+
+// =============================================================================
+// 4. GLOSSY GROUP → TONAL (matches QBtn.scss tonal remap)
+// =============================================================================
+
+// When glossy is on the group, remap to MD3E tonal. Individual button color
+// props determine which container pair is used (handled by QBtn.scss rules).
+// Group-level: remove sheen and set default tonal for buttons without explicit color.
+.q-btn-group--glossy {
+  > .q-btn-item {
+    background-image: none !important;
+  }
+  > .q-btn-item:not([class*="bg-"]) {
+    background-color: var(--md3-secondary-container) !important;
+    color: var(--md3-on-secondary-container) !important;
+  }
+}
+
+// =============================================================================
+// 5. OUTLINE GROUP: fix border overlap with gap
+// =============================================================================
+
+// With gaps between buttons, each outlined button should keep its own borders.
+// Quasar's outline group removes inner borders (border-left/right: 0) — undo that.
+.q-btn-group--outline {
+  > .q-btn-item + .q-btn-item:before {
+    border-left: 1px solid var(--md3-outline-variant) !important;
+  }
+  > .q-btn-item:not(:last-child):before {
+    border-right: 1px solid var(--md3-outline-variant) !important;
+  }
+}
+
+// =============================================================================
+// 6. SELECTED STATE IN GROUPS
+// =============================================================================
+
+// Connected groups: selected buttons morph to PILL shape (fully round).
+// At rest, connected buttons have pill outer / 8dp inner corners.
+// When selected, all corners go pill — the selected button "pops out" visually.
+.q-btn-group:not(.q-btn-group--stretch) > .q-btn.q-btn--selected {
+  border-radius: 1.5em !important; // pill
+}
+
+// Standard (stretch) groups: selected buttons morph to SQUARE shape (12dp).
+// Standard group buttons are independent (spaced apart), so square works.
+.q-btn-group--stretch > .q-btn.q-btn--selected {
+  border-radius: $md3-corner-medium !important; // 12dp square
+}

@@ -1,0 +1,65 @@
+// MD3 Expressive QEditor Overrides
+// Appended after Quasar's QEditor.sass — source order wins.
+//
+// MD3E has no dedicated rich-text editor component specification, but the
+// closest analog is a filled text area surface (surface bg, outline-variant border).
+// Key changes:
+//   • Container: surface bg, outline-variant border, medium corner (12px)
+//   • Toolbar: surface bg, outline-variant bottom border
+//   • Toolbar group dividers: outline-variant
+//   • Content area: surface bg, on-surface text
+//   • HR elements: outline-variant color
+
+// === Container ===
+.q-editor {
+  background-color: var(--md3-surface);
+  // color: inherits from QLayout (on-surface) — no stock override to replace
+  border-color: var(--md3-outline-variant);
+  border-radius: $md3-corner-medium; // 12px = generic-border-radius
+}
+
+// === Toolbar ===
+.q-editor__toolbar {
+  background-color: var(--md3-surface);
+  border-bottom-color: var(--md3-outline-variant);
+}
+
+// === Toolbar Group Dividers ===
+.q-editor__toolbar-group + .q-editor__toolbar-group::before {
+  background: var(--md3-outline-variant);
+}
+
+// === Content Area ===
+.q-editor__content {
+  background-color: var(--md3-surface);
+  // color: inherits from QLayout (on-surface) — stock uses color: inherit
+}
+
+// HR rules inside the editor content
+.q-editor__content hr {
+  background: var(--md3-outline-variant);
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+.q-editor--dark {
+  background-color: var(--md3-surface);
+  border-color: var(--md3-outline-variant);
+}
+
+.q-editor--dark .q-editor__toolbar {
+  background-color: var(--md3-surface);
+  border-bottom-color: var(--md3-outline-variant);
+}
+
+.q-editor--dark .q-editor__toolbar-group + .q-editor__toolbar-group::before {
+  background: var(--md3-outline-variant);
+}
+
+.q-editor--dark .q-editor__content {
+  background-color: var(--md3-surface);
+}
+
+.q-editor--dark .q-editor__content hr {
+  background: var(--md3-outline-variant);
+}

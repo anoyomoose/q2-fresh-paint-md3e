@@ -1,0 +1,82 @@
+// MD3 Expressive QNotify (Snackbar) Overrides
+// Appended after Quasar's Notify.sass — source order wins.
+//
+// MD3E snackbar tokens: inverse-surface container, inverse-on-surface text,
+// inverse-primary action, extra-small (4dp) corners, level-3 elevation.
+// Quasar hard-codes #323232 / #fff and uses --q-primary for actions — all replaced.
+
+// === Container ===
+.q-notification {
+  background: var(--md3-inverse-surface);
+  color: var(--md3-inverse-on-surface); // replaces stock color: #fff
+  border-radius: $md3-corner-extra-small; // 4px — MD3E spec for snackbars
+  // Level-3 elevation shadow (MD3 floating surface)
+  box-shadow:
+    0 3px 5px -1px rgba(0, 0, 0, 0.20),
+    0 5px 8px      rgba(0, 0, 0, 0.14),
+    0 1px 14px     rgba(0, 0, 0, 0.12);
+}
+
+// === Enter / Exit Animation ===
+// MD3E: Enter 400ms emphasized-decelerate, Exit 200ms emphasized-accelerate.
+// Quasar default is 1s for both — significantly too slow.
+.q-notification {
+  transition:
+    transform 400ms $md3-easing-emphasized-decel,
+    opacity   400ms $md3-easing-emphasized-decel;
+}
+
+// Leave-active classes override enter timing for the shorter exit duration.
+// All leave-active variants need the accelerate easing.
+.q-notification--top-left-leave-active,
+.q-notification--top-leave-active,
+.q-notification--top-right-leave-active,
+.q-notification--left-leave-active,
+.q-notification--center-leave-active,
+.q-notification--right-leave-active,
+.q-notification--bottom-left-leave-active,
+.q-notification--bottom-leave-active,
+.q-notification--bottom-right-leave-active {
+  transition:
+    transform 200ms $md3-easing-emphasized-accel,
+    opacity   200ms $md3-easing-emphasized-accel;
+}
+
+// === Center / Side Position: Replace 3D flip with opacity + subtle slide ===
+// Quasar uses rotateX(90deg) for center/left/right positions — not an MD3 pattern.
+// Use a short vertical translate instead, consistent with the top/bottom positions.
+.q-notification--left-enter-from,
+.q-notification--left-leave-to,
+.q-notification--center-enter-from,
+.q-notification--center-leave-to,
+.q-notification--right-enter-from,
+.q-notification--right-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+// === Action Buttons ===
+// MD3E action label color: inverse-primary (not --q-primary).
+.q-notification__actions .q-btn {
+  color: var(--md3-inverse-primary); // replaces stock var(--q-primary)
+}
+
+// === Icon ===
+// color: inherits from .q-notification (inverse-on-surface) — redundant
+
+// === Progress Bar ===
+// MD3E does not define a snackbar progress bar, but if rendered:
+// use inverse-on-surface at 38% (MD3 medium emphasis on inverse surface).
+.q-notification__progress {
+  background: var(--md3-inverse-on-surface);
+  opacity: 0.38;
+  border-radius: $md3-corner-extra-small $md3-corner-extra-small 0 0;
+}
+
+// === Badge ===
+// Map to MD3 error role (unchanged from md3 theme, correct).
+.q-notification__badge {
+  background: var(--md3-error);
+  color: var(--md3-on-error); // replaces stock color: #fff
+  border-radius: $md3-corner-full;
+}

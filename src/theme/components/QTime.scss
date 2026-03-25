@@ -1,0 +1,128 @@
+// MD3 Expressive QTime Overrides
+// Appended after Quasar's QTime.sass — source order wins.
+//
+// Key departures from Quasar defaults:
+//   • Container: surface-container-high bg, extra-large corner (28px), no shadow
+//   • Header: surface-container-high (NOT primary), on-surface-variant text
+//   • Clock face (container-child): surface-container-highest bg
+//   • Clock pointer + center dot: primary color
+//   • Active time segment (header link): primary-container bg / on-primary-container text
+//   • AM/PM: on-surface-variant, label-large typography
+//   • Active clock position: primary fill / on-primary text
+//   • Center dot: 8px (MD3E spec; Quasar: 6px)
+
+// === Container ===
+.q-time {
+  background: var(--md3-surface-container-high);
+  border-radius: $md3-corner-extra-large;
+  box-shadow: none; // time picker is always modal; dialog supplies elevation
+}
+
+// === Header ===
+// MD3E: surface-container-high, NOT the solid primary color
+.q-time__header {
+  background: var(--md3-surface-container-high);
+  color: var(--md3-on-surface-variant); // replaces stock color: #fff
+  font-weight: 400; // reset Quasar's 300 weight
+}
+
+// === Time Display (header label — large HH:MM text) ===
+// MD3E display-large: 57pt / weight 400 / tracking -0.25pt
+// Approximation within Quasar's layout constraints
+.q-time__header-label {
+  font-size: 3.5625rem; // 57pt
+  line-height: 4rem;    // 64pt
+  font-weight: 400;
+  letter-spacing: -0.00439em; // -0.25pt / 57sp
+  color: var(--md3-on-surface); // intentional: differentiate HH:MM from header's on-surface-variant
+}
+
+// === Active Time Segment (hour or minute link) ===
+// MD3E: selected tile gets primary-container fill on the tile background.
+// Quasar renders these as inline links in the header, not tiles.
+// Best CSS-only approximation: primary-container bg + on-primary-container text.
+.q-time__link--active {
+  color: var(--md3-on-primary-container);
+  background: var(--md3-primary-container);
+  border-radius: $md3-corner-large; // 16px
+  padding: 0 8px;
+  opacity: 1;
+}
+
+// === Inactive Time Link ===
+.q-time__link {
+  color: var(--md3-on-surface); // intentional: differentiate from header's on-surface-variant
+  opacity: 0.56; // consistent with Quasar default for unselected state
+}
+
+// === AM/PM Toggle ===
+// MD3E label-large (16pt / weight 500); inherits on-surface-variant from header
+.q-time__header-ampm {
+  font-size: 1rem;   // 16pt
+  font-weight: 500;
+  letter-spacing: 0;
+  // color: inherits from header (on-surface-variant) — redundant
+}
+
+// === Clock Face (circular background) ===
+// .q-time__container-child wraps the circular clock dial area
+.q-time__container-child {
+  background: var(--md3-surface-container-highest);
+}
+
+// === Clock Center Dot ===
+// MD3E: 8dp (Quasar default: 6px)
+.q-time__clock-center {
+  width: 8px;
+  height: 8px;
+  background: var(--md3-primary);
+}
+
+// === Clock Pointer (track / hand) ===
+.q-time__clock-pointer {
+  background: var(--md3-primary);
+  color: var(--md3-primary); // replaces stock var(--q-primary)
+  // width: 2px is already correct in Quasar (matches MD3E 2dp track)
+}
+
+// Clock pointer back cap (small circle at pivot center)
+.q-time__clock-pointer::after {
+  background: var(--md3-primary);
+}
+
+// Clock pointer handle tip (circle at clock-face end of hand)
+// MD3E: 48dp handle. Quasar's ::before is the tip circle.
+// We upsize from 8px to 48px to approximate MD3E handle prominence.
+.q-time__clock-pointer::before {
+  width: 48px;
+  height: 48px;
+  background: var(--md3-primary);
+  bottom: -24px; // re-center the enlarged circle on the pointer tip
+}
+
+// === Clock Position Numbers ===
+// Active position: primary fill / on-primary text
+.q-time__clock-position--active {
+  background-color: var(--md3-primary);
+  color: var(--md3-on-primary); // replaces stock color: #fff
+}
+
+// Inactive positions: inherit from QLayout (on-surface) — no stock override to replace
+
+// === "Now" Button ===
+// MD3E approximation: tertiary-container fill (closest semantic match)
+.q-time__now-button {
+  background-color: var(--md3-tertiary-container);
+  color: var(--md3-on-tertiary-container); // replaces stock color: #fff
+}
+
+// === Dark Mode ===
+// color: overrides removed — tokens don't flip for per-component dark mode.
+.q-time--dark {
+  background: var(--md3-surface-container-high);
+  box-shadow: none;
+}
+
+.q-time--dark .q-time__header {
+  background: var(--md3-surface-container-high);
+}

@@ -1,0 +1,212 @@
+// MD3 Expressive QChip Overrides
+// Appended after Quasar's QChip.sass — source order wins.
+//
+// boot.ts sets `square: true` which disables the default 16px pill radius
+// and applies $generic-border-radius (12px). We override to the MD3E chip
+// shape of 8px (corner-small).
+//
+// MD3E chip variants (assist, filter, input, suggestion) all share the same
+// base dimensions. Quasar maps these through props: outline, selected,
+// clickable, removable.
+//
+// Quasar's `size` prop sets font-size inline. Original Quasar uses em-based
+// values so everything scales. We do the same, targeting MD3E proportions
+// at the default 14px font-size.
+//
+// em reference points:
+//   On .q-chip (font-size = chip font-size, default 14px):
+//     height: 32/14 ≈ 2.286em,  padding: 16/14 ≈ 1.143em
+//   On .q-chip__icon (font-size = 1.286em of chip = 18px at 14px):
+//     margins use icon's own em, so 8px = 8/18 ≈ 0.444em
+
+// === Shape ===
+// MD3E chips: corner-small (8px) — not pill (16px) or generic (12px)
+.q-chip {
+  border-radius: $md3-corner-small;
+}
+
+.q-chip--dense {
+  border-radius: $md3-corner-small;
+}
+
+// === Sizing ===
+// MD3E height: 32dp → 32/14 ≈ 2.286em (scales with size prop)
+.q-chip {
+  height: 2.286em;
+}
+
+// === Colors ===
+// Default: transparent bg, on-surface-variant text
+.q-chip {
+  background: transparent;
+  color: var(--md3-on-surface-variant);
+}
+
+// Colored chips (user-applied color prop) inherit icon color
+.q-chip--colored .q-chip__icon,
+.q-chip--dark .q-chip__icon {
+  color: inherit;
+}
+
+// === Outline Variant ===
+// MD3E: outline-variant border (not currentColor), transparent bg
+.q-chip--outline {
+  border-color: var(--md3-outline-variant);
+}
+
+// === Selected State ===
+// MD3E filter/input selected: secondary-container bg, on-secondary-container text
+.q-chip--selected {
+  background: var(--md3-secondary-container);
+  color: var(--md3-on-secondary-container);
+  border-color: transparent;
+}
+
+.q-chip--selected .q-chip__icon,
+.q-chip--selected .q-chip__icon--remove {
+  color: var(--md3-on-secondary-container);
+}
+
+// When selected, avatar hides (display:none from Quasar base) and a checkmark
+// icon appears. The avatar (24dp) is larger than the icon (18dp), so the chip
+// width shrinks by ~2px at default size. Compensate by widening the checkmark
+// icon's right margin to match the avatar's effective width.
+//
+// Avatar effective width (chip em): 1.714 * (-0.5 + 1 + 0.333) = 1.428em
+// Icon effective width (chip em):   1.286 * (-0.444 + 1 + 0.444) = 1.286em
+// Diff: 0.142em of chip font-size = 0.110em of icon font-size
+// New margin-right: 0.444 + 0.110 ≈ 0.555em
+// Dense variant already matches (avatar 1.429em, icon 1.429em) — no fix needed.
+.q-chip--selected:not(.q-chip--dense):has(.q-avatar) .q-chip__icon--left {
+  margin-right: 0.555em;
+}
+
+// === Typography: Label Large ===
+// 14px size (already matches), weight 500, line-height 20px, tracking 0
+.q-chip {
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+// === Padding ===
+// MD3E: 16dp L/R without icon → 16/14 ≈ 1.143em
+.q-chip {
+  padding: 0 1.143em;
+}
+
+// === Icon Size & Positioning ===
+// MD3E icon: 18dp → 18/14 ≈ 1.286em (relative to chip font-size)
+// Once the icon's own font-size is 1.286em, its em-based margins resolve
+// against 18px (at default). So 8dp gap = 8/18 ≈ 0.444em on the icon.
+//
+// IMPORTANT: .q-chip__icon must come BEFORE the variant rules so that the
+// more-specific --left/--right/--remove margins win by source order.
+.q-chip__icon {
+  font-size: 1.286em;
+  // Reset Quasar's base margin (-.2em all sides) — each variant sets its own
+  margin: 0;
+}
+
+// Left icon: pull toward left edge (8dp from edge, 8dp gap to label)
+// margin-left: -(chip padding - 8dp) = -(16-8)/18 = -8/18 ≈ -0.444em
+// margin-right: 8/18 ≈ 0.444em
+.q-chip .q-chip__icon--left {
+  margin: 0 0.444em 0 -0.444em;
+}
+
+// Right icon: pull toward right edge
+.q-chip .q-chip__icon--right {
+  margin: 0 -0.444em 0 0.444em;
+}
+
+// Remove/close button
+.q-chip .q-chip__icon--remove {
+  margin: 0 -0.444em 0 0.444em;
+  opacity: 0.7;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+}
+
+// === Avatar ===
+// MD3E input chip avatar: 24dp, 12dp corner radius
+// Avatar font-size: 24/14 ≈ 1.714em (relative to chip)
+// Left margin: pull avatar so it's 4dp from chip edge
+//   chip padding is 16dp, need to eat 12dp → -12/24 = -0.5em (relative to avatar's 24px)
+//   But avatar margin em resolves against chip font-size because .q-avatar
+//   inherits font-size from the chip (its own font-size IS 1.714em but margin
+//   em resolves against the element's computed font-size which is 24px).
+//   -12/24 = -0.5em ... no wait, actually the avatar's font-size is set explicitly,
+//   so margin em = avatar's computed font-size.
+// Actually: margin-left = -(16 - 4) = -12dp. At avatar font-size 24px: -12/24 = -0.5em.
+// margin-right: 8dp gap = 8/24 ≈ 0.333em.
+.q-chip .q-avatar {
+  font-size: 1.714em; // 24/14
+  border-radius: 12px; // MD3E: input chip avatar = 12dp
+  margin-left: -0.5em; // pull to 4dp from edge
+  margin-right: 0.333em; // 8dp gap
+}
+
+// Outline chip avatar margin compensation
+.q-chip--outline .q-avatar {
+  margin-left: calc(-0.5em - 1px); // compensate for border
+}
+
+// === Dense Chip ===
+// MD3E has no dense concept; keep Quasar's dense with adjusted radius
+// Dense height: 24/14 ≈ 1.714em, padding: 8/14 ≈ 0.571em
+.q-chip--dense {
+  padding: 0 0.571em;
+  height: 1.714em;
+
+  .q-avatar {
+    font-size: 1.429em; // 20/14
+    border-radius: 8px;
+    margin-left: -0.2em; // 20px font-size → -0.2*20 = -4px
+    margin-right: 0.2em; // 4px gap
+  }
+
+  // Dense icon: 16/14 ≈ 1.143em
+  .q-chip__icon {
+    font-size: 1.143em;
+  }
+
+  // Dense left icon: margin at 16px icon font-size
+  // margin-right gap: 4/16 = 0.25em
+  .q-chip__icon--left {
+    margin: 0 0.25em 0 0;
+  }
+
+  // Dense remove: pull to edge -4/16 = -0.25em, gap 4/16 = 0.25em
+  .q-chip__icon--remove {
+    margin: 0 -0.25em 0 0.25em;
+  }
+}
+
+// === Focus State ===
+// MD3E uses state layers, not elevation/box-shadow for focus
+body.desktop .q-chip--clickable:focus {
+  box-shadow: none;
+}
+
+body.desktop.body--dark .q-chip--clickable:focus {
+  box-shadow: none;
+}
+
+// === Disabled State ===
+// MD3E: container on-surface at 12%, content on-surface at 38% opacity
+.q-chip.disabled {
+  opacity: 1; // override Quasar's blanket opacity
+
+  .q-chip__content,
+  .q-chip__icon {
+    opacity: 0.38;
+  }
+}
+
+.q-chip--outline.disabled {
+  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+}
