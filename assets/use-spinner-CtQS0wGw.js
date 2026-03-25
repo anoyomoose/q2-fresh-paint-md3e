@@ -1,0 +1,1 @@
+import{s as e}from"./runtime-core.esm-bundler-CI8Widki.js";import{t}from"./use-size-c-BAcG6K.js";var n={size:{type:[String,Number],default:`1em`},color:String};function r(n){return{cSize:e(()=>n.size in t?`${t[n.size]}px`:n.size),classes:e(()=>`q-spinner`+(n.color?` text-${n.color}`:``))}}export{n,r as t};

@@ -1,0 +1,1 @@
+import{P as e,d as t}from"./runtime-core.esm-bundler-CI8Widki.js";var n={class:`q-layout-padding`},r={__name:`fast-test`,setup(r){return(r,i)=>(e(),t(`div`,n))}};export{r as default};

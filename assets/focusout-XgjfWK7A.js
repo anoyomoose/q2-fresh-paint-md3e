@@ -1,0 +1,1 @@
+import{n as e}from"./Platform-AG5ZHNIu.js";var t=[];function n(e){t[t.length-1](e)}function r(r){e.is.desktop===!0&&(t.push(r),t.length===1&&document.body.addEventListener(`focusin`,n))}function i(e){let r=t.indexOf(e);r!==-1&&(t.splice(r,1),t.length===0&&document.body.removeEventListener(`focusin`,n))}export{i as n,r as t};

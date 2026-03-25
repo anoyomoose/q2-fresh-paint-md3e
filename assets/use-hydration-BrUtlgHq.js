@@ -1,0 +1,1 @@
+import{Z as e,j as t}from"./runtime-core.esm-bundler-CI8Widki.js";import{r as n}from"./Platform-AG5ZHNIu.js";function r(){let r=e(!n.value);return r.value===!1&&t(()=>{r.value=!0}),{isHydrated:r}}export{r as t};

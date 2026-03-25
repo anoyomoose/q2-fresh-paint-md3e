@@ -1,0 +1,1 @@
+var e=!1;function t(t){e=t.isComposing===!0}function n(t){return e===!0||t!==Object(t)||t.isComposing===!0||t.qKeyEvent===!0}function r(e,t){return n(e)===!0?!1:[].concat(t).includes(e.keyCode)}export{t as n,n as r,r as t};

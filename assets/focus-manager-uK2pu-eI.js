@@ -1,0 +1,1 @@
+var e=[],t=[];function n(e){t=t.filter(t=>t!==e)}function r(e){n(e),t.push(e)}function i(r){n(r),t.length===0&&e.length!==0&&(e[e.length-1](),e=[])}function a(n){t.length===0?n():e.push(n)}function o(t){e=e.filter(e=>e!==t)}export{i,r as n,o as r,a as t};

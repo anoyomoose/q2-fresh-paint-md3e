@@ -1,0 +1,1 @@
+.grid-rows .container{max-height:1000px;padding:15px}.grid-rows .row>div{background:#563d7c26;border:1px solid #563d7c33;padding:10px 15px}.grid-rows .row+.row{margin-top:1rem}.grid-rows .example-minheight .row{background:#ff00001a;height:0;min-height:5rem}

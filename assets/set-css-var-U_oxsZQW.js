@@ -1,0 +1,1 @@
+function e(e,t,n=document.body){if(typeof e!=`string`)throw TypeError(`Expected a string as propName`);if(typeof t!=`string`)throw TypeError(`Expected a string as value`);if(!(n instanceof Element))throw TypeError(`Expected a DOM element`);n.style.setProperty(`--q-${e}`,t)}export{e as t};

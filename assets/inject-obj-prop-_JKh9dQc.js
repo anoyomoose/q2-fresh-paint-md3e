@@ -1,0 +1,1 @@
+function e(e,t,n,r){return Object.defineProperty(e,t,{get:n,set:r,enumerable:!0}),e}function t(t,n){for(let r in n)e(t,r,n[r]);return t}export{e as n,t};

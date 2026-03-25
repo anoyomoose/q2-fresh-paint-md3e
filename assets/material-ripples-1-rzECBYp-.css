@@ -1,0 +1,1 @@
+.ripple-example{cursor:pointer;color:#fff;-webkit-user-select:none;user-select:none;border-radius:3px;justify-content:center;align-items:center;display:flex}.ripple-example:focus{outline-offset:3px;outline:1px solid #9e9e9e}.ripple-example+.ripple-example{margin-top:24px}.ripple-round{border-radius:50%;width:150px;height:150px;margin-top:0!important}

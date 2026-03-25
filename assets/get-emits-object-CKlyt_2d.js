@@ -1,0 +1,1 @@
+var e=()=>!0;function t(t){let n={};return t.forEach(t=>{n[t]=e}),n}export{t};

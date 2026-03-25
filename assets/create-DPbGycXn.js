@@ -1,0 +1,1 @@
+import{X as e,Y as t,v as n}from"./runtime-core.esm-bundler-CI8Widki.js";import{n as r}from"./inject-obj-prop-_JKh9dQc.js";function i(e){return t(n(e))}function a(e){return t(e)}var o=(t,n)=>{let i=e(t);for(let e in t)r(n,e,()=>i[e],t=>{i[e]=t});return n};export{a as n,o as r,i as t};

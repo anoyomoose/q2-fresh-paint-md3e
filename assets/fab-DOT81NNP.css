@@ -1,0 +1,1 @@
+.test-fab-animate,.q-fab:hover .test-fab-animate--hover{backface-visibility:hidden;perspective:1000px;animation:.82s cubic-bezier(.36,.07,.19,.97) both test-fab-animate;transform:translate(0,0)}@keyframes test-fab-animate{10%,90%{transform:translate(-1px)}20%,80%{transform:translate(2px)}30%,50%,70%{transform:translate(-4px)}40%,60%{transform:translate(4px)}}

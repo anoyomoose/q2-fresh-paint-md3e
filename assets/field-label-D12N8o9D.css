@@ -1,0 +1,1 @@
+.q-input--test-label{outline-offset:2px;border-radius:2px}.q-input--test-label:has(input:valid){outline:2px solid green!important}.q-input--test-label:has(input:invalid){outline:2px solid red!important}.q-input--test-label:has(input:placeholder-shown){background-color:#c864644d}

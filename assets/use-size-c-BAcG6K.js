@@ -1,0 +1,1 @@
+import{s as e}from"./runtime-core.esm-bundler-CI8Widki.js";var t={xs:18,sm:24,md:32,lg:38,xl:46},n={size:String};function r(n,r=t){return e(()=>n.size===void 0?null:{fontSize:n.size in r?`${r[n.size]}px`:n.size})}export{n,r,t};

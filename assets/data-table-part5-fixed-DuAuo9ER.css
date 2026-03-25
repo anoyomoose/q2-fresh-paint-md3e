@@ -1,0 +1,1 @@
+.table-sticky .q-table__top,.table-sticky .q-table__bottom,.table-sticky thead tr:first-child th{background-color:#c1f4cd}.table-sticky thead tr th{z-index:1;position:sticky}.table-sticky thead tr:last-child th{top:48px}.table-sticky thead tr:first-child th{top:0}.table-sticky tbody{scroll-margin-top:48px}

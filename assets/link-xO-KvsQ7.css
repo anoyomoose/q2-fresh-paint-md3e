@@ -1,0 +1,1 @@
+.dev-link{position:relative}.dev-link:before{content:"";opacity:0;background:#000;transition:opacity .28s;position:absolute;inset:0}.dev-link:focus:before{opacity:.1}

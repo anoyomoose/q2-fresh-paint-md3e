@@ -1,0 +1,1 @@
+import{A as e,O as t,T as n,y as r}from"./runtime-core.esm-bundler-CI8Widki.js";import{i}from"./vm-D-hMBHyZ.js";function a(){let a,o=r();function s(){a=void 0}return e(s),t(s),{removeTick:s,registerTick(e){a=e,n(()=>{a===e&&(i(o)===!1&&a(),a=void 0)})}}}export{a as t};
