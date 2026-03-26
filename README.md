@@ -8,7 +8,7 @@ Requires [`@anoyomoose/q2-fresh-paint-core`](https://github.com/anoyomoose/q2-fr
 
 This is an attempt to (partially) provide a Material Design 3 Expressive theme to Quasar 2.x, including (but not limited to):
 
-- **Color system**: the complete MD3E color palette, generated from a single source color
+- **Color system**: the complete MD3E color palette, generated from a single source color, adjustable at runtime
 - **Spring-based motion**: bouncy overshoot curves on interactive elements, replacing MD2's linear easing
 - **Morphing**: extensive morphing animations for specific elements such as buttons
 - **5-level shadow scale**: replacing Quasar's variable shadows
@@ -63,7 +63,7 @@ export default defineConfig({
     vitePlugins: [
       freshPaint({
         themes: [
-          md3eTheme({ sourceColor: '#6750a4', scheme: 'tonalSpot' })
+          md3eTheme({ sourceColor: '#6750a4', scheme: 'tonalSpot', contrastLevel: 0 })
         ],
       })
     ]
@@ -147,6 +147,19 @@ Controls how the palette is derived from the source color. Each variant produces
 
 Both light and dark scheme tokens are generated from every variant (as `$md3-<token>` and `$md3-dark-<token>` Sass variables). The SCSS layer then maps these to Quasar brand colors and CSS custom properties for light/dark switching.
 
+### `contrastLevel`
+
+Adjusts the contrast of the generated palette. Accepts a number from -1.0 to 1.0.
+
+| Value | Effect |
+|---|---|
+| `-1.0` | Reduced contrast — lower contrast between foreground and background |
+| `0` | Standard contrast (default) |
+| `0.5` | Medium-high contrast |
+| `1.0` | High contrast — maximum contrast between foreground and background |
+
+Default: `0`
+
 ## Colors
 
 The theme generates 30+ MD3 color tokens from your `sourceColor` and makes them available in four ways:
@@ -173,6 +186,38 @@ The theme generates 30+ MD3 color tokens from your `sourceColor` and makes them 
 Quasar's brand colors (`primary`, `secondary`, `accent`, `negative`) are mapped to MD3 roles and work as usual. The theme also patches Quasar's hardcoded `text-white` fallback so that brand-colored and token-colored elements get the correct `on-*` text color automatically.
 
 For the full token list, dark mode details, and how the system works under the hood, see [docs/colors.md](docs/colors.md).
+
+## Runtime Palette
+
+Change the color palette at runtime - from a color picker, an image, or programmatically.
+
+```ts
+import {
+  generatePaletteFromHex,
+  generatePaletteFromImage,
+  getDefaultPaletteConfig,
+  applyPalette,
+  resetPalette,
+} from '@anoyomoose/q2-fresh-paint-md3e/palette'
+
+// Change palette from a hex color
+applyPalette(generatePaletteFromHex('#ff0000'))
+
+// With options
+applyPalette(generatePaletteFromHex('#ff0000', { scheme: 'vibrant', contrastLevel: 0.5 }))
+
+// From an image (async, image must be same-origin or CORS-enabled)
+const img = document.querySelector('img')
+applyPalette(await generatePaletteFromImage(img))
+
+// Reset to the build-time palette (also use for cleanup on unmount)
+resetPalette()
+
+// Query the build-time config (sourceColor, scheme, contrastLevel)
+const config = getDefaultPaletteConfig()
+```
+
+For the full token list, all access methods, and how the color system works, see [docs/colors.md](docs/colors.md).
 
 ## Components
 

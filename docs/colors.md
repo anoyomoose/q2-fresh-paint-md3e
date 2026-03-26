@@ -197,3 +197,114 @@ For Quasar's own brand colors (`primary`, `secondary`, `accent`/`tertiary`, `neg
 ```
 
 The `:not()` exclusions preserve text color handling for elevated buttons (`.q-btn--standard`), tonal buttons (`.glossy`), and disabled buttons, which each have their own color logic.
+
+## Runtime Palette
+
+The theme provides functions to change the color palette at runtime. Import from the `/palette` entry point:
+
+```ts
+import {
+  generatePaletteFromHex,
+  generatePaletteFromImage,
+  getDefaultPalette,
+  applyPalette,
+  resetPalette,
+} from '@anoyomoose/q2-fresh-paint-md3e/palette'
+```
+
+All palette functions work with the `PaletteTokens` type:
+
+```ts
+interface PaletteTokens {
+  light: Record<string, string>  // { 'primary': '#655789', ... }
+  dark: Record<string, string>
+}
+```
+
+### Changing the Palette
+
+Generate a palette from a hex color and apply it:
+
+```ts
+const palette = generatePaletteFromHex('#ff0000')
+applyPalette(palette)
+```
+
+With scheme and contrast options:
+
+```ts
+applyPalette(generatePaletteFromHex('#ff0000', {
+  scheme: 'vibrant',
+  contrastLevel: 0.5,
+}))
+```
+
+### Palette from an Image
+
+Extract a dominant color from an image and generate a palette:
+
+```ts
+const img = document.querySelector('img')
+const palette = await generatePaletteFromImage(img)
+applyPalette(palette)
+```
+
+The image must be same-origin or served with CORS headers (`Access-Control-Allow-Origin`). Cross-origin images without CORS will throw a tainted canvas error.
+
+### Resetting to Default
+
+Reset to the build-time palette:
+
+```ts
+resetPalette()
+```
+
+This removes the injected `<style>` element, restoring the original build-time palette via CSS cascade. Also use this for cleanup on component unmount:
+
+```ts
+onBeforeUnmount(() => {
+  resetPalette()
+})
+```
+
+### Querying Build-Time Config
+
+`getDefaultPaletteConfig()` returns the build-time source color, scheme, and contrast level:
+
+```ts
+import { getDefaultPaletteConfig } from '@anoyomoose/q2-fresh-paint-md3e/palette'
+
+const config = getDefaultPaletteConfig()
+// { sourceColor: '#6750a4', scheme: 'tonalSpot', contrastLevel: 0 }
+```
+
+`getDefaultPalette()` returns the full `PaletteTokens` for the build-time config (cached on first call).
+
+### Contrast Level
+
+The `contrastLevel` option adjusts contrast between foreground and background tokens:
+
+| Value | Effect |
+|---|---|
+| `-1.0` | Reduced contrast |
+| `0` | Standard (default) |
+| `0.5` | Medium-high contrast |
+| `1.0` | High contrast |
+
+Values are clamped to the [-1, 1] range.
+
+### How It Works
+
+`applyPalette()` injects a single `<style>` element that overrides the CSS custom properties from `base.scss`. It targets three selectors:
+
+1. `:root, body.body--light` — light mode tokens
+2. `body.body--dark` — dark mode tokens
+3. `body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"])` — per-component dark mode fix
+
+Each call replaces the style element content (constant memory). `resetPalette()` removes the element entirely, reverting to build-time CSS.
+
+`getDefaultPaletteConfig()` reads `--md3-palette-source-color`, `--md3-palette-scheme`, and `--md3-palette-contrast-level` from the DOM. `getDefaultPalette()` uses these to generate and cache the full token set.
+
+### Browser Only
+
+All palette functions are browser-only. `getDefaultPalette()` throws in SSR. `applyPalette()` and `resetPalette()` silently no-op in SSR.

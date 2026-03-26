@@ -85,6 +85,12 @@ body, body.body--dark {
   --q-secondary: #{$md3-secondary};
   --q-accent: #{$md3-tertiary};
   --q-negative: #{$md3-error};
+
+  // Palette metadata (for runtime palette API)
+  --md3-palette-source-color: #{$md3-palette-source-color};
+  --md3-palette-scheme: #{$md3-palette-scheme};
+  --md3-palette-contrast-level: #{$md3-palette-contrast-level};
+  --md3-palette-spec-version: #{$md3-palette-spec-version};
 }
 
 // === Dark Mode (Global) ===

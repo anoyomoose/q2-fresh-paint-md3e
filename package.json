@@ -21,6 +21,11 @@
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js",
       "require": "./dist/components/index.cjs"
+    },
+    "./palette": {
+      "types": "./dist/palette.d.ts",
+      "import": "./dist/palette.js",
+      "require": "./dist/palette.cjs"
     }
   },
   "files": ["dist"],

@@ -26,10 +26,17 @@ export type ColorScheme =
   | 'rainbow'
   | 'fruitSalad'
 
+export interface PaletteTokens {
+  light: Record<string, string>
+  dark: Record<string, string>
+}
+
 export interface GenerateOptions {
   sourceColor?: string
   /** Color scheme variant. Default: 'tonalSpot' */
   scheme?: ColorScheme
+  /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
+  contrastLevel?: number
 }
 
 const schemeConstructors: Record<ColorScheme, new (...args: any[]) => DynamicScheme> = {
@@ -45,7 +52,7 @@ const schemeConstructors: Record<ColorScheme, new (...args: any[]) => DynamicSch
 }
 
 /** All MD3 color tokens to extract via MaterialDynamicColors static properties */
-const colorTokens: Array<[string, keyof typeof MaterialDynamicColors]> = [
+export const colorTokens: Array<[string, keyof typeof MaterialDynamicColors]> = [
   ['primary', 'primary'],
   ['on-primary', 'onPrimary'],
   ['primary-container', 'primaryContainer'],
@@ -92,9 +99,11 @@ function extractDynamicScheme(
   sourceColorHct: Hct,
   isDark: boolean,
   schemeName: ColorScheme,
+  contrastLevel: number,
 ): Record<string, string> {
   const SchemeClass = schemeConstructors[schemeName]
-  const scheme = new SchemeClass(sourceColorHct, isDark, 0, '2025')
+  const contrast = Math.max(-1, Math.min(1, contrastLevel))
+  const scheme = new SchemeClass(sourceColorHct, isDark, contrast, '2025')
   const result: Record<string, string> = {}
 
   for (const [name, prop] of colorTokens) {
@@ -106,6 +115,24 @@ function extractDynamicScheme(
 }
 
 /**
+ * Generate a full light+dark palette from a hex color.
+ * Pure function — no DOM access.
+ */
+export function generatePalette(
+  hex: string,
+  options?: { scheme?: ColorScheme; contrastLevel?: number },
+): PaletteTokens {
+  const sourceColor = hex.startsWith('#') ? hex : `#${hex}`
+  const schemeName = options?.scheme ?? 'tonalSpot'
+  const contrastLevel = options?.contrastLevel ?? 0
+  const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
+  return {
+    light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel),
+    dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel),
+  }
+}
+
+/**
  * Generate Sass variable content for the MD3 Expressive theme.
  *
  * Uses SchemeExpressive (or other scheme variants) with specVersion '2025'
@@ -114,19 +141,25 @@ function extractDynamicScheme(
  * The output contains:
  * - $md3-<token>: <light-value> !default;    (light scheme)
  * - $md3-dark-<token>: <dark-value> !default; (dark scheme)
+ * - $md3-palette-source-color / scheme / contrast-level / spec-version metadata
  */
 export function generateMd3eVariables(options: GenerateOptions): string {
   const sourceColor = options.sourceColor ?? '#6750a4'
   const schemeName = options.scheme ?? 'tonalSpot'
-  const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
+  const contrastLevel = options.contrastLevel ?? 0
 
-  const light = extractDynamicScheme(sourceHct, false, schemeName)
-  const dark = extractDynamicScheme(sourceHct, true, schemeName)
+  const { light, dark } = generatePalette(sourceColor, { scheme: schemeName, contrastLevel })
 
   const lines: string[] = [
     `// Auto-generated MD3 Expressive palette from source color: ${sourceColor}`,
-    `// Scheme: ${schemeName}, specVersion: 2025`,
+    `// Scheme: ${schemeName}, contrastLevel: ${contrastLevel}, specVersion: 2025`,
     '// Do not edit — regenerated on every dev server start.',
+    '',
+    '// Palette metadata',
+    `$md3-palette-source-color: ${sourceColor} !default;`,
+    `$md3-palette-scheme: ${schemeName} !default;`,
+    `$md3-palette-contrast-level: ${contrastLevel} !default;`,
+    `$md3-palette-spec-version: 2025 !default;`,
     '',
     '// Light scheme',
   ]
