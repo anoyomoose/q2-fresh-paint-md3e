@@ -12,8 +12,7 @@
 // Surface-container-low background; Level 1 shadow (subtle, tonal difference is primary signal)
 .q-card {
   background: var(--md3-surface-container-low);
-  // Text color inherits var(--md3-on-surface) from .q-layout — no explicit override
-  // needed. This preserves Quasar's --dark { color: #fff } rules.
+  color: var(--md3-on-surface);
   // Level 1 shadow (1dp) — lighter than Quasar's default $shadow-2
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
 }

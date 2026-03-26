@@ -10,6 +10,13 @@
   @return color.channel($c, "red", $space: rgb), color.channel($c, "green", $space: rgb), color.channel($c, "blue", $space: rgb);
 }
 
+// Default body text color: MD3E on-background (matches the background token)
+// Elements with bg-surface or surface-container classes get on-surface auto-paired.
+// Both selectors needed to beat Quasar's body.body--dark { color: #fff }.
+body, body.body--dark {
+  color: var(--md3-on-background);
+}
+
 :root, body.body--light {
   // Primary
   --md3-primary: #{$md3-primary};
@@ -77,6 +84,7 @@
   --q-primary: #{$md3-primary};
   --q-secondary: #{$md3-secondary};
   --q-accent: #{$md3-tertiary};
+  --q-negative: #{$md3-error};
 }
 
 // === Dark Mode (Global) ===
@@ -124,6 +132,7 @@ body.body--dark {
   --q-primary: #{$md3-dark-primary};
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
+  --q-negative: #{$md3-dark-error};
 }
 
 // === Per-Component Dark Mode Fix ===
@@ -179,6 +188,7 @@ body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {
   --q-primary: #{$md3-primary};
   --q-secondary: #{$md3-secondary};
   --q-accent: #{$md3-tertiary};
+  --q-negative: #{$md3-error};
 }
 
 // === Brand Color Text Fix ===

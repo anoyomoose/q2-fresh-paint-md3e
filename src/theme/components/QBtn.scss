@@ -306,6 +306,11 @@ body.desktop {
   background-color: var(--md3-surface-container-low) !important;
   color: var(--md3-primary) !important;
 
+  // Color-specific text for elevated buttons — text matches the semantic role
+  &.bg-secondary { color: var(--md3-secondary) !important; }
+  &.bg-accent { color: var(--md3-tertiary) !important; }
+  &.bg-negative { color: var(--md3-error) !important; }
+
   &.q-btn--actionable {
     // Level 1 resting shadow with spring transition
     &:before {
