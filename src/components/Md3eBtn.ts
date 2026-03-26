@@ -64,10 +64,14 @@ export const Md3eBtn = defineComponent({
     /** Use tertiary/accent color family */
     tertiary: Boolean,
 
+    /** Use error/negative color family */
+    error: Boolean,
+
     /**
      * Pass through the color attr to QBtn as-is, bypassing color computation.
      * Only needed for non-standard colors (e.g. color="deep-orange").
-     * color="primary", "secondary", "tertiary" work without this.
+     * color="primary", "secondary", "tertiary", "accent", "error", "negative",
+     * work without this.
      */
     allowColor: Boolean,
 
@@ -113,11 +117,14 @@ export const Md3eBtn = defineComponent({
       if (c === 'secondary') return 'secondary'
       if (c === 'tertiary') return 'accent'
       if (c === 'accent') return 'accent'
+      if (c === 'error') return 'negative'
+      if (c === 'negative') return 'negative'
 
       // Boolean props
       if (props.primary) return 'primary'
       if (props.secondary) return 'secondary'
       if (props.tertiary) return 'accent'
+      if (props.error) return 'negative'
 
       // Default: tonal/glossy → secondary, everything else → primary
       return (props.tonal || (attrs.glossy as boolean)) ? 'secondary' : 'primary'

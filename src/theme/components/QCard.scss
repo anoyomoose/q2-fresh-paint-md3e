@@ -48,7 +48,8 @@
 // === Card Action Buttons ===
 // Quasar sets .q-card__actions .q-btn--rectangle { padding: 0 8px } for MD2's
 // compact card footer look. MD3E card actions use standard button padding.
-.q-card__actions .q-btn--rectangle {
+.q-card__actions .q-btn--rectangle,
+.q-card__actions .q-btn--rounded {
   padding: $button-padding;
 }
 

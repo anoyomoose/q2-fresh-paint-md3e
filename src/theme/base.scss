@@ -201,24 +201,26 @@ body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {
 // Quasar adds text-white or text-black on buttons/components with a color prop.
 // These are hardcoded and don't adapt to dark mode or MD3E's on-* token pairing.
 // Override to use the correct MD3E on-* token for each brand color.
-// Excludes q-btn--standard (elevated), glossy (tonal), and disabled buttons which
-// each handle their own text color.
-.bg-primary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-primary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+// Excludes q-btn--standard (elevated), glossy (tonal), disabled, and selected
+// toggle buttons — each handles their own text color via dedicated rules.
+.bg-primary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-primary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
   color: var(--md3-on-primary) !important;
 }
-.bg-secondary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-secondary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+.bg-secondary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-secondary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
   color: var(--md3-on-secondary) !important;
 }
-.bg-tertiary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-tertiary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-accent.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-accent.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+.bg-tertiary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-tertiary.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-accent.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-accent.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
   color: var(--md3-on-tertiary) !important;
 }
-.bg-negative.text-white:not(.q-btn--standard):not(.glossy):not(.disabled),
-.bg-negative.text-black:not(.q-btn--standard):not(.glossy):not(.disabled) {
+.bg-negative.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-negative.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-error.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-error.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
   color: var(--md3-on-error) !important;
 }
 

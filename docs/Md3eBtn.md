@@ -7,7 +7,7 @@ A drop-in replacement for Quasar's `QBtn` that adds MD3 Expressive toggle/select
 `Md3eBtn` wraps `QBtn` and adds:
 
 - **Toggle/selection** — standalone toggle, single-select, and multi-select via `v-model`
-- **Color family shortcuts** — `primary`, `secondary`, `tertiary` boolean props
+- **Color family shortcuts** — `primary`, `secondary`, `tertiary`, `error` boolean props
 - **Variant shortcuts** — `elevated`, `tonal`, `text` props that map to the underlying Quasar props
 - **Selected icon** — swap the button icon when selected
 
@@ -47,18 +47,19 @@ In templates, use the kebab-case name:
 
 All `QBtn` props pass through to the underlying button. The following props are added by `Md3eBtn`:
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `modelValue` | any | `undefined` | Enables toggle mode. `Boolean` = standalone toggle; primitive + `value` = single-select; array + `value` = multi-select. `undefined` = not a toggle. `null` = toggle with nothing selected. |
-| `value` | any | `undefined` | The value this button represents in a group. Used for single-select and multi-select modes. |
-| `primary` | Boolean | `false` | Use the primary color family. |
-| `secondary` | Boolean | `false` | Use the secondary color family. |
-| `tertiary` | Boolean | `false` | Use the tertiary/accent color family. |
-| `allowColor` | Boolean | `false` | Pass the `color` attribute through to `QBtn` as-is, bypassing color resolution. Needed for non-standard Quasar colors like `"deep-orange"`. |
-| `elevated` | Boolean | `false` | MD3E elevated variant. Sets `:unelevated="false"` on the underlying `QBtn`. |
-| `tonal` | Boolean | `false` | MD3E tonal variant. Sets `glossy` on the underlying `QBtn` (remapped to container colors by CSS). |
-| `text` | Boolean | `false` | MD3E text variant. Sets `flat` on the underlying `QBtn`. |
-| `selectedIcon` | String | `undefined` | Icon to display when the button is in the selected state. Replaces the `icon` prop when selected. |
+| Prop           | Type | Default | Description                                                                                                                                                                                 |
+|----------------|---|---|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `modelValue`   | any | `undefined` | Enables toggle mode. `Boolean` = standalone toggle; primitive + `value` = single-select; array + `value` = multi-select. `undefined` = not a toggle. `null` = toggle with nothing selected. |
+| `value`        | any | `undefined` | The value this button represents in a group. Used for single-select and multi-select modes.                                                                                                 |
+| `primary`      | Boolean | `false` | Use the primary color family.                                                                                                                                                               |
+| `secondary`    | Boolean | `false` | Use the secondary color family.                                                                                                                                                             |
+| `tertiary`     | Boolean | `false` | Use the tertiary/accent color family.                                                                                                                                                       |
+| `error`        | Boolean | `false` | Use the error/negative color family.                                                                                                                                                         |
+| `allowColor`   | Boolean | `false` | Pass the `color` attribute through to `QBtn` as-is, bypassing color resolution. Needed for non-standard Quasar colors like `"deep-orange"`.                                                 |
+| `elevated`     | Boolean | `false` | MD3E elevated variant. Sets `:unelevated="false"` on the underlying `QBtn`.                                                                                                                 |
+| `tonal`        | Boolean | `false` | MD3E tonal variant. Sets `glossy` on the underlying `QBtn` (remapped to container colors by CSS).                                                                                           |
+| `text`         | Boolean | `false` | MD3E text variant. Sets `flat` on the underlying `QBtn`.                                                                                                                                    |
+| `selectedIcon` | String | `undefined` | Icon to display when the button is in the selected state. Replaces the `icon` prop when selected.                                                                                           |
 
 ## Selection Modes
 

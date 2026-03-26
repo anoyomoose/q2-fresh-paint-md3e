@@ -308,8 +308,8 @@ body.desktop {
 
   // Color-specific text for elevated buttons — text matches the semantic role
   &.bg-secondary { color: var(--md3-secondary) !important; }
-  &.bg-accent { color: var(--md3-tertiary) !important; }
-  &.bg-negative { color: var(--md3-error) !important; }
+  &.bg-accent, &.bg-tertiary { color: var(--md3-tertiary) !important; }
+  &.bg-negative, &.bg-error { color: var(--md3-error) !important; }
 
   &.q-btn--actionable {
     // Level 1 resting shadow with spring transition
@@ -370,13 +370,13 @@ body.desktop {
   }
 
   // Accent/tertiary tonal
-  &.bg-accent {
+  &.bg-accent, &.bg-tertiary {
     background-color: var(--md3-tertiary-container) !important;
     color: var(--md3-on-tertiary-container) !important;
   }
 
-  // Error tonal
-  &.bg-negative {
+  // Error/negative tonal
+  &.bg-negative, &.bg-error {
     background-color: var(--md3-error-container) !important;
     color: var(--md3-on-error-container) !important;
   }
@@ -426,11 +426,16 @@ body.desktop {
 // emphasis when selected. Shape morphs from pill (unselected) to square (selected).
 
 // --- Toggle Unselected: Filled (unelevated) variant ---
-// Default filled is primary bg — toggle unselected gets surface-container.
+// De-emphasized: surface-container bg with the brand color as text.
+// This preserves color family identity while being visually subdued.
 // Excludes disabled so the generic disabled styling (section 7) applies.
 .q-btn--toggle:not(.q-btn--selected):not(.disabled).q-btn--unelevated:not(.q-btn--flat):not(.q-btn--outline):not(.glossy) {
   background-color: var(--md3-surface-container) !important;
-  color: var(--md3-on-surface-variant) !important;
+  color: var(--md3-primary) !important;
+
+  &.bg-secondary { color: var(--md3-secondary) !important; }
+  &.bg-accent, &.bg-tertiary { color: var(--md3-tertiary) !important; }
+  &.bg-negative, &.bg-error { color: var(--md3-error) !important; }
 }
 
 // --- Toggle Unselected: Outlined variant ---
@@ -456,9 +461,15 @@ body.desktop {
   }
 
   // Accent/tertiary color
-  &.bg-accent {
+  &.bg-accent, &.bg-tertiary {
     background-color: var(--md3-tertiary) !important;
     color: var(--md3-on-tertiary) !important;
+  }
+
+  // Error/negative color
+  &.bg-negative, &.bg-error {
+    background-color: var(--md3-error) !important;
+    color: var(--md3-on-error) !important;
   }
 }
 
@@ -473,9 +484,14 @@ body.desktop {
     color: var(--md3-on-secondary) !important;
   }
 
-  &.bg-accent {
+  &.bg-accent, &.bg-tertiary {
     background-color: var(--md3-tertiary) !important;
     color: var(--md3-on-tertiary) !important;
+  }
+
+  &.bg-negative, &.bg-error {
+    background-color: var(--md3-error) !important;
+    color: var(--md3-on-error) !important;
   }
 }
 
@@ -496,19 +512,39 @@ body.desktop {
     color: var(--md3-on-secondary) !important;
   }
 
-  &.bg-accent {
+  &.bg-accent, &.bg-tertiary {
     background-color: var(--md3-tertiary) !important;
     color: var(--md3-on-tertiary) !important;
+  }
+
+  &.bg-negative, &.bg-error {
+    background-color: var(--md3-error) !important;
+    color: var(--md3-on-error) !important;
   }
 }
 
 // --- Toggle Selected: Outlined variant ---
-// Selected outlined = inverse-surface bg, inverse-on-surface text
+// Selected outlined = brand color bg, on-brand text
 .q-btn--selected:not(.disabled).q-btn--outline {
-  background-color: var(--md3-inverse-surface) !important;
-  color: var(--md3-inverse-on-surface) !important;
+  background-color: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
 
-  // Remove the outline border when filled with inverse-surface
+  &.text-secondary {
+    background-color: var(--md3-secondary) !important;
+    color: var(--md3-on-secondary) !important;
+  }
+
+  &.text-accent, &.text-tertiary {
+    background-color: var(--md3-tertiary) !important;
+    color: var(--md3-on-tertiary) !important;
+  }
+
+  &.text-negative, &.text-error {
+    background-color: var(--md3-error) !important;
+    color: var(--md3-on-error) !important;
+  }
+
+  // Remove the outline border when filled
   &:before {
     border-color: transparent !important;
   }
