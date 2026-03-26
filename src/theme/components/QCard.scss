@@ -45,6 +45,13 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
 }
 
+// === Card Action Buttons ===
+// Quasar sets .q-card__actions .q-btn--rectangle { padding: 0 8px } for MD2's
+// compact card footer look. MD3E card actions use standard button padding.
+.q-card__actions .q-btn--rectangle {
+  padding: $button-padding;
+}
+
 // === State Layers (interactive/clickable cards) ===
 // MD3E: hover 0.08, focus 0.12, pressed 0.12 with on-surface color.
 // The .q-focus-helper inside clickable cards inherits the global state layer

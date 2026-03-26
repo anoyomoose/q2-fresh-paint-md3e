@@ -445,34 +445,34 @@ body.desktop {
 
 // === MD3E Shape Utility Classes ===
 .rounded-none {
-  border-radius: 0 !important;
+  border-radius: $md3-corner-none !important;
 }
 .rounded-xs {
-  border-radius: 4px !important;
+  border-radius: $md3-corner-extra-small !important;
 }
 .rounded-sm {
-  border-radius: 8px !important;
+  border-radius: $md3-corner-small !important;
 }
 .rounded-md {
-  border-radius: 12px !important;
+  border-radius: $md3-corner-medium !important;
 }
 .rounded-lg {
-  border-radius: 16px !important;
+  border-radius: $md3-corner-large !important;
 }
 .rounded-lg-inc {
-  border-radius: 20px !important;
+  border-radius: $md3-corner-large-increased !important;
 }
 .rounded-xl {
-  border-radius: 28px !important;
+  border-radius: $md3-corner-extra-large !important;
 }
 .rounded-xl-inc {
-  border-radius: 32px !important;
+  border-radius: $md3-corner-extra-large-increased !important;
 }
 .rounded-xxl {
-  border-radius: 48px !important;
+  border-radius: $md3-corner-extra-extra-large !important;
 }
 .rounded-full {
-  border-radius: 9999px !important;
+  border-radius: $md3-corner-full !important;
 }
 
 // === MD3 Overline Fix ===

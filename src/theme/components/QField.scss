@@ -15,7 +15,7 @@
 // from $input-font-size — our Sass variable override only affects app-level
 // Sass, not the pre-built quasar.css.
 .q-field {
-  font-size: 16px;
+  font-size: $input-font-size;
 }
 
 .q-field__native,
@@ -237,11 +237,11 @@ $_notch: '.q-field--outlined[data-notch]';
 // (for notch gap spacing) which would otherwise snap instantly, causing a
 // visible horizontal jump while left/transform animate smoothly.
 #{$_notch} .q-field__label {
-  transition: transform 0.36s cubic-bezier(.4,0,.2,1),
-              top 0.36s cubic-bezier(.4,0,.2,1),
-              left 0.36s cubic-bezier(.4,0,.2,1),
-              padding 0.36s cubic-bezier(.4,0,.2,1),
-              max-width 0.396s cubic-bezier(.4,0,.2,1);
+  transition: transform 0.36s $md3-easing-emphasized,
+              top 0.36s $md3-easing-emphasized,
+              left 0.36s $md3-easing-emphasized,
+              padding 0.36s $md3-easing-emphasized,
+              max-width 0.396s $md3-easing-emphasized;
 }
 
 // Input text vertically centered in notch fields.
@@ -342,13 +342,13 @@ $_notch: '.q-field--outlined[data-notch]';
 // Notch transitions: opening = fast, no delay; closing = fast, slightly delayed.
 // Label slide is 0.36s. Notch opens in first half, closes starting at 90ms.
 #{$_notch}.q-field--float .q-field__control {
-  transition: --notch-left 0.18s cubic-bezier(.4,0,.2,1),
-              --notch-width 0.18s cubic-bezier(.4,0,.2,1);
+  transition: --notch-left 0.18s $md3-easing-emphasized,
+              --notch-width 0.18s $md3-easing-emphasized;
 }
 
 #{$_notch}:not(.q-field--float) .q-field__control {
-  transition: --notch-left 0.18s cubic-bezier(.4,0,.2,1) 0.09s,
-              --notch-width 0.18s cubic-bezier(.4,0,.2,1) 0.09s;
+  transition: --notch-left 0.18s $md3-easing-emphasized 0.09s,
+              --notch-width 0.18s $md3-easing-emphasized 0.09s;
 }
 
 

@@ -34,8 +34,8 @@
 // === Tab Transition ===
 // MD3E easing for color/background transitions
 .q-tab {
-  transition: color 0.2s $md3-spring-expressive-effects-default,
-              background-color 0.2s $md3-spring-expressive-effects-default;
+  transition: color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
 }
 
 // === Icon+Text Tab Height ===

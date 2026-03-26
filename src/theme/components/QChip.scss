@@ -152,7 +152,7 @@
 // margin-right: 8dp gap = 8/24 ≈ 0.333em.
 .q-chip .q-avatar {
   font-size: 1.714em; // 24/14
-  border-radius: 12px; // MD3E: input chip avatar = 12dp
+  border-radius: $md3-corner-medium; // MD3E: input chip avatar = 12dp
   margin-left: -0.5em; // pull to 4dp from edge
   margin-right: 0.333em; // 8dp gap
 }
@@ -171,7 +171,7 @@
 
   .q-avatar {
     font-size: 1.429em; // 20/14
-    border-radius: 8px;
+    border-radius: $md3-corner-small;
     margin-left: -0.2em; // 20px font-size → -0.2*20 = -4px
     margin-right: 0.2em; // 4px gap
   }

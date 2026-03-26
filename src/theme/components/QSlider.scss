@@ -39,7 +39,7 @@
 // Track and inner: 16dp tall with pill-shaped ends
 .q-slider__track {
   background: transparent; // Track itself is just a container now
-  border-radius: 8px;
+  border-radius: $md3-corner-small;
   height: 16px;
 }
 
@@ -72,7 +72,7 @@
 // Style thumb container as a vertical bar
 .q-slider__thumb {
   color: var(--q-primary);
-  transition: transform 0.2s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 
   // The visible handle bar
   &:before {

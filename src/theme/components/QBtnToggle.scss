@@ -95,7 +95,7 @@ $_md3e-check-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   > .q-btn {
     background: transparent !important;
     color: var(--md3-on-surface) !important;
-    transition: background-color 200ms ease, color 200ms ease;
+    transition: background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default, color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
   }
 
   > .q-btn:before {

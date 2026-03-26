@@ -24,15 +24,15 @@
 
 // === Transition ===
 .q-checkbox__bg {
-  transition: background 0.2s $md3-easing-emphasized;
+  transition: background $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 .q-checkbox__truthy {
-  transition: stroke-dashoffset 0.18s $md3-easing-emphasized;
+  transition: stroke-dashoffset $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 .q-checkbox__indet {
-  transition: transform 0.22s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 // === State Layers ===
@@ -40,7 +40,7 @@
 // when unchecked, primary when checked)
 body.desktop .q-checkbox:not(.disabled) .q-checkbox__inner:before {
   opacity: 0.08;
-  transition: transform 0.2s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 // Focus: 10% (MD3E spec)

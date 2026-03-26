@@ -82,7 +82,7 @@ body.desktop {
 
 // MD3E uses emphasized easing for the actions expand/collapse
 .q-fab__actions {
-  transition: transform 0.3s $md3-easing-emphasized, opacity 0.3s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-slow-duration $md3-easing-emphasized, opacity $md3-spring-effects-slow-duration $md3-easing-emphasized;
 }
 
 // =============================================================================

@@ -22,7 +22,7 @@
 // to match desktop values.
 @media (max-width: 599.99px) {
   .q-tooltip {
-    font-size: 12px;
-    padding: 4px 8px;
+    font-size: $tooltip-fontsize;
+    padding: $tooltip-padding;
   }
 }

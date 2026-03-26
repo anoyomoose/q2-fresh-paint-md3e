@@ -17,14 +17,14 @@
 
 // === Transition ===
 .q-radio__check {
-  transition: transform 0.2s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 // === State Layers ===
 // Hover: 8% (currentColor auto-adapts per selection state)
 body.desktop .q-radio:not(.disabled) .q-radio__inner:before {
   opacity: 0.08;
-  transition: transform 0.2s $md3-easing-emphasized;
+  transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
 // Focus: 10% (MD3E spec, was 12% in MD3)
