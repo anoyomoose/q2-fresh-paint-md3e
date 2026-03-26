@@ -188,7 +188,7 @@ The `text-*` classes are defined after the `bg-*` classes in source order, so an
 
 ### Brand Color Text Fix
 
-For Quasar's own brand colors (`primary`, `secondary`, `accent`/`tertiary`, `negative`), Quasar adds `text-white` or `text-black` based on a hardcoded luminosity check. This doesn't adapt to dark mode or MD3E's token pairing. The theme overrides this:
+For Quasar's own brand colors (`primary`, `secondary`, `accent`/`tertiary`, `negative`), Quasar adds `text-white` or `text-black`. This doesn't adapt to dark mode or MD3E's token pairing. The theme overrides this:
 
 ```scss
 .bg-primary.text-white:not(.q-btn--standard):not(.glossy):not(.disabled) {

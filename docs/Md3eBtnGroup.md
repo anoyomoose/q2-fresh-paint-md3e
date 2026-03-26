@@ -132,11 +132,13 @@ Transitions use `$md3-shape-morph-duration` (350ms) and `$md3-shape-morph-curve`
 
 1. **Split buttons (QBtnDropdown)** inside groups render as nested wrapper divs, so they don't participate in the press morph/widen interaction.
 
-2. **Round icon buttons** (`.q-btn--round`) in standard groups morph shape on press but do not participate in the widening/shrinking padding animation — their fixed `min-width` prevents padding-based resizing. When a non-round button is pressed next to a round button, the active button uses negative margin to absorb its growth into the gap.
+2. **Group-level shape props** (`rounded`, `square`) do not propagate to individual buttons — the theme's `!important` border-radius overrides control button shapes. Set shape on individual buttons instead.
 
-3. **Group-level shape props** (`rounded`, `square`) do not propagate to individual buttons — the theme's `!important` border-radius overrides control button shapes. Set shape on individual buttons instead.
+3. **`elevated` at group level** only sets a CSS class on the group wrapper. Since `boot.ts` sets `unelevated: true` on QBtn globally, setting `elevated` on the group alone won't make buttons elevated — each button needs its own `elevated` prop (on `Md3eBtn`) or `:unelevated="false"` (on `QBtn`).
 
-4. **`elevated` at group level** only sets a CSS class on the group wrapper. Since `boot.ts` sets `unelevated: true` on QBtn globally, setting `elevated` on the group alone won't make buttons elevated — each button needs its own `elevated` prop (on `Md3eBtn`) or `:unelevated="false"` (on `QBtn`).
+4. **Dense** buttons do not participate in the widening transitions
+
+5. **Mixing sizes and dense** does not work 
 
 ## Using Plain QBtnGroup
 
