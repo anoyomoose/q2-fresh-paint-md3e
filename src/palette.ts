@@ -168,3 +168,105 @@ export function resetPalette(): void {
   if (typeof document === 'undefined') return
   document.getElementById(STYLE_ID)?.remove()
 }
+
+// ── Scoped palettes ──────────────────────────────────────────────────────
+
+const SCOPE_CLASS_PREFIX = 'md3e-palette-'
+let scopeCounter = 0
+
+export interface PaletteScope {
+  /** The generated CSS class name for this scope. */
+  readonly className: string
+  /** Apply or update the palette for this scope. Can be called multiple times. */
+  applyPalette(tokens: PaletteTokens): void
+  /** Add the scope class to an element. With track=true (default), remove() will auto-detach. */
+  attach(element: Element, track?: boolean): void
+  /** Remove the scope class from an element. */
+  detach(element: Element): void
+  /** Remove the style element and detach from all tracked elements. */
+  remove(): void
+}
+
+function buildScopedCss(className: string, tokens: PaletteTokens): string {
+  const sel = `.${className}`
+  let css = ''
+
+  // Light mode
+  css += `${sel} {\n`
+  css += buildTokenBlock(tokens.light)
+  css += '}\n\n'
+
+  // Dark mode
+  css += `body.body--dark ${sel} {\n`
+  css += buildTokenBlock(tokens.dark)
+  css += '}\n\n'
+
+  // Per-component dark mode fix
+  css += `body.body--light ${sel} [class*="--dark"]:not(body) > *:not([class*="--dark"]) {\n`
+  css += buildTokenBlock(tokens.light)
+  css += '}\n'
+
+  return css
+}
+
+/**
+ * Create a scoped palette that can be attached to specific elements.
+ * Each scope gets a unique CSS class and its own <style> element.
+ * Multiple elements can share a scope; updating the palette updates all of them.
+ * Dark mode switching works automatically via CSS selectors.
+ *
+ * @example
+ * const scope = createPaletteScope()
+ * scope.applyPalette(generatePaletteFromHex('#ff0000'))
+ * scope.attach(document.getElementById('sidebar'))
+ * // Later: scope.remove()
+ */
+export function createPaletteScope(): PaletteScope {
+  if (typeof document === 'undefined') {
+    throw new Error('createPaletteScope() is browser-only')
+  }
+
+  const className = `${SCOPE_CLASS_PREFIX}${++scopeCounter}`
+  const tracked = new Set<Element>()
+
+  const styleEl = document.createElement('style')
+  styleEl.id = className
+  document.head.appendChild(styleEl)
+
+  return {
+    get className() { return className },
+
+    applyPalette(tokens: PaletteTokens) {
+      styleEl.textContent = buildScopedCss(className, tokens)
+    },
+
+    attach(element: Element, track = true) {
+      element.classList.add(className)
+      if (track) tracked.add(element)
+    },
+
+    detach(element: Element) {
+      element.classList.remove(className)
+      tracked.delete(element)
+    },
+
+    remove() {
+      for (const el of tracked) {
+        el.classList.remove(className)
+      }
+      tracked.clear()
+      styleEl.remove()
+    },
+  }
+}
+
+/**
+ * Remove all palette scope classes from an element.
+ * Useful for cleanup when you don't have references to the individual scopes.
+ */
+export function detachAllScopes(element: Element): void {
+  const toRemove = Array.from(element.classList).filter(c => c.startsWith(SCOPE_CLASS_PREFIX))
+  for (const cls of toRemove) {
+    element.classList.remove(cls)
+  }
+}

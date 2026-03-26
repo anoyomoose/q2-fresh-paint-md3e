@@ -8,7 +8,7 @@ Requires [`@anoyomoose/q2-fresh-paint-core`](https://github.com/anoyomoose/q2-fr
 
 This is an attempt to (partially) provide a Material Design 3 Expressive theme to Quasar 2.x, including (but not limited to):
 
-- **Color system**: the complete MD3E color palette, generated from a single source color, adjustable at runtime
+- **Color system**: the complete MD3E color palette, generated from a single source color, adjustable at runtime, targetable to specific containers 
 - **Spring-based motion**: bouncy overshoot curves on interactive elements, replacing MD2's linear easing
 - **Morphing**: extensive morphing animations for specific elements such as buttons
 - **5-level shadow scale**: replacing Quasar's variable shadows
@@ -189,35 +189,9 @@ For the full token list, dark mode details, and how the system works under the h
 
 ## Runtime Palette
 
-Change the color palette at runtime - from a color picker, an image, or programmatically.
+Change the color palette at runtime - from a color picker, an image, or programmatically - for the entire page, or targeted elements.
 
-```ts
-import {
-  generatePaletteFromHex,
-  generatePaletteFromImage,
-  getDefaultPaletteConfig,
-  applyPalette,
-  resetPalette,
-} from '@anoyomoose/q2-fresh-paint-md3e/palette'
-
-// Change palette from a hex color
-applyPalette(generatePaletteFromHex('#ff0000'))
-
-// With options
-applyPalette(generatePaletteFromHex('#ff0000', { scheme: 'vibrant', contrastLevel: 0.5 }))
-
-// From an image (async, image must be same-origin or CORS-enabled)
-const img = document.querySelector('img')
-applyPalette(await generatePaletteFromImage(img))
-
-// Reset to the build-time palette (also use for cleanup on unmount)
-resetPalette()
-
-// Query the build-time config (sourceColor, scheme, contrastLevel)
-const config = getDefaultPaletteConfig()
-```
-
-For the full token list, all access methods, and how the color system works, see [docs/colors.md](docs/colors.md).
+See [docs/colors.md](docs/colors.md) for details.
 
 ## Components
 

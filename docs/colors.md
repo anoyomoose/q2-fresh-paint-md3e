@@ -305,6 +305,41 @@ Each call replaces the style element content (constant memory). `resetPalette()`
 
 `getDefaultPaletteConfig()` reads `--md3-palette-source-color`, `--md3-palette-scheme`, and `--md3-palette-contrast-level` from the DOM. `getDefaultPalette()` uses these to generate and cache the full token set.
 
+### Scoped Palettes
+
+Apply a different palette to a specific container instead of the entire page. All components inside the container inherit the scoped tokens via CSS cascade. Dark mode switching works automatically.
+
+```ts
+import { createPaletteScope, generatePaletteFromHex, detachAllScopes } from '@anoyomoose/q2-fresh-paint-md3e/palette'
+
+// Create a scope (generates a unique CSS class and <style> element)
+const scope = createPaletteScope()
+
+// Apply a palette to the scope
+scope.applyPalette(generatePaletteFromHex('#ff0000'))
+
+// Attach to one or more elements
+scope.attach(document.getElementById('sidebar'))
+scope.attach(document.getElementById('dialog'))
+
+// Update the palette — all attached elements update instantly
+scope.applyPalette(generatePaletteFromHex('#00ff00', { scheme: 'vibrant' }))
+
+// Detach from a specific element
+scope.detach(document.getElementById('dialog'))
+
+// Clean up: removes the style element and detaches from all tracked elements
+scope.remove()
+```
+
+**Tracking:** By default, `attach(el)` tracks the element so `remove()` can auto-detach. Pass `attach(el, false)` to skip tracking — useful for dynamic elements (e.g., list items) where holding references could cause memory leaks.
+
+**Cleanup without scope references:** `detachAllScopes(element)` removes all palette scope classes from an element:
+
+```ts
+detachAllScopes(myElement)
+```
+
 ### Browser Only
 
-All palette functions are browser-only. `getDefaultPalette()` throws in SSR. `applyPalette()` and `resetPalette()` silently no-op in SSR.
+All palette functions are browser-only. `getDefaultPalette()` and `createPaletteScope()` throw in SSR. `applyPalette()` and `resetPalette()` silently no-op in SSR.
