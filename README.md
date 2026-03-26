@@ -217,6 +217,8 @@ Must-know in short:
 - `elevated` similarly maps to `:unelevated=false`
 - you can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
 - toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
+- due to MD3E's design principles, not all variants support arbitrary colors: `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors; this also applies to QBtn!
+
 
 For full documentation including all props, selection modes, color system, variant shortcuts, and migration guide, see [docs/Md3eBtn.md](docs/Md3eBtn.md).
 
@@ -287,7 +289,7 @@ See the [core package documentation](https://github.com/anoyomoose/q2-fresh-pain
 
 ## Implementation notes
 
-- **Button variant mapping** MD3E button variants are mapped to Quasar props: Filled (default, `unelevated`), Elevated (`:unelevated="false"`), Outlined (`outline`), Text (`flat`), Tonal (`glossy`). The `push` prop is kept as a Quasar-specific variant. The `square` prop is repurposed as MD3E's "square" button shape option, where the default is now "pill" shaped.
+- **Button variant mapping** MD3E button variants are mapped to Quasar props: Filled (default, `unelevated`), Elevated (`:unelevated="false"`), Outlined (`outline`), Text (`flat`), Tonal (`glossy`). The `push` prop is kept as a Quasar-specific variant. The `square` prop is repurposed as MD3E's "square" button shape option, where the default is now "pill" shaped. Arbitrary colors (not `primary` / `secondary` / `teriary` / `error` or an alias) are *not* supported on `elevated`, `total` or `toggle` buttons!
 - **Button groups** Split QBtnDropdown components inside groups render as nested wrapper divs, so they don't participate in the press morph/widen interaction, and should not be used (they look bad).
 - **Split button dropdowns** icon gets filled look in case of Tonal (`glossy`), not fixable without code changes
 - **Segmented buttons** MD3E's deprecated "segmented buttons" are implemented via Quasar's QBtnToggle component (themed in QBtnToggle.scss). The default variant (no design prop) is styled as a segmented button with checkmark icon via CSS mask. Consider if you don't mean to use a connected button group instead.

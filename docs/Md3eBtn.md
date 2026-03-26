@@ -13,6 +13,8 @@ A drop-in replacement for Quasar's `QBtn` that adds MD3 Expressive toggle/select
 
 All QBtn props and attributes pass through unchanged. The CSS classes that drive the toggle appearance can also be applied manually to a plain `QBtn` without using this wrapper at all.
 
+**Important**: Due to MD3E's design principles, not all variants support arbitrary colors. `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors! 
+
 ## Installation
 
 ```ts

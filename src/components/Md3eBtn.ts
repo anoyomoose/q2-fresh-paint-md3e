@@ -7,6 +7,10 @@
  * - Variant shortcuts (elevated, tonal, text)
  * - Selected icon swapping
  *
+ * **Important**: Due to MD3E's design principles, not all variants support
+ * arbitrary colors. `elevated` and `tonal` variants, as well as all `toggle`
+ * buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors!
+ *
  * All styling is handled by CSS classes (.q-btn--toggle, .q-btn--selected)
  * defined in the theme's QBtn.scss. Users can apply these classes manually
  * to a plain QBtn without using this wrapper.
