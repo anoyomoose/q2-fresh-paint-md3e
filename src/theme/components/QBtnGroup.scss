@@ -142,14 +142,16 @@
     border-radius: 0.571em !important;
   }
 
-  // Middle button pressed: grow both sides (full delta)
+  // --- Non-round buttons (base padding ~1.14em) ---
+
+  // Middle button pressed: grow both sides (full delta +0.29em)
   > .q-btn.q-btn--actionable:not(.q-btn--round):not(:first-child):not(:last-child):active,
   > .q-btn.q-btn--actionable:not(.q-btn--round):not(:first-child):not(:last-child).q-btn--active {
     padding-left: 1.43em;
     padding-right: 1.43em;
   }
 
-  // Edge button pressed: grow both sides equally (half delta, text stays centered)
+  // Edge button pressed: grow both sides (half delta +0.15em)
   > .q-btn.q-btn--actionable:not(.q-btn--round):first-child:not(:only-child):active,
   > .q-btn.q-btn--actionable:not(.q-btn--round):first-child:not(:only-child).q-btn--active,
   > .q-btn.q-btn--actionable:not(.q-btn--round):last-child:not(:only-child):active,
@@ -158,31 +160,40 @@
     padding-right: 1.29em;
   }
 
-  // Adjacent pill/text buttons: shrink both sides equally (text stays centered).
-  // Only when the ACTIVE button is also not round (round buttons don't participate).
-  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn:not(.q-btn--round):active),
-  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn:not(.q-btn--round).q-btn--active),
-  > .q-btn:not(.q-btn--round):active + .q-btn.q-btn--actionable:not(.q-btn--round),
-  > .q-btn:not(.q-btn--round).q-btn--active + .q-btn.q-btn--actionable:not(.q-btn--round) {
+  // Adjacent non-round: shrink both sides (-0.14em)
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn:active),
+  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn.q-btn--active),
+  > .q-btn:active + .q-btn.q-btn--actionable:not(.q-btn--round),
+  > .q-btn.q-btn--active + .q-btn.q-btn--actionable:not(.q-btn--round) {
     padding-left: 1.0em;
     padding-right: 1.0em;
   }
 
-  // Round neighbor compensation: when the active button faces a round button,
-  // the round button can't shrink. Instead, the active button adds negative margin
-  // on that side to eat its growth into the gap. Round buttons stay completely static.
-  // Growth delta per side: middle ≈ 0.29em, edge ≈ 0.15em.
+  // --- Round buttons (base padding 0.571em) — same deltas, different targets ---
 
-  // Active has round RIGHT neighbor: eat right growth into gap
-  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn--round):active,
-  > .q-btn.q-btn--actionable:not(.q-btn--round):has(+ .q-btn--round).q-btn--active {
-    margin-right: -0.29em;
+  // Middle round pressed: +0.29em per side
+  > .q-btn--round.q-btn--actionable:not(:first-child):not(:last-child):active,
+  > .q-btn--round.q-btn--actionable:not(:first-child):not(:last-child).q-btn--active {
+    padding-left: 0.861em;
+    padding-right: 0.861em;
   }
 
-  // Active has round LEFT neighbor: eat left growth into gap
-  > .q-btn--round + .q-btn.q-btn--actionable:not(.q-btn--round):active,
-  > .q-btn--round + .q-btn.q-btn--actionable:not(.q-btn--round).q-btn--active {
-    margin-left: -0.29em;
+  // Edge round pressed: +0.15em per side
+  > .q-btn--round.q-btn--actionable:first-child:not(:only-child):active,
+  > .q-btn--round.q-btn--actionable:first-child:not(:only-child).q-btn--active,
+  > .q-btn--round.q-btn--actionable:last-child:not(:only-child):active,
+  > .q-btn--round.q-btn--actionable:last-child:not(:only-child).q-btn--active {
+    padding-left: 0.721em;
+    padding-right: 0.721em;
+  }
+
+  // Adjacent round: shrink -0.14em per side
+  > .q-btn--round.q-btn--actionable:has(+ .q-btn:active),
+  > .q-btn--round.q-btn--actionable:has(+ .q-btn.q-btn--active),
+  > .q-btn:active + .q-btn--round.q-btn--actionable,
+  > .q-btn.q-btn--active + .q-btn--round.q-btn--actionable {
+    padding-left: 0.431em;
+    padding-right: 0.431em;
   }
 }
 

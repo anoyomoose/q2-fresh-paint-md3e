@@ -94,17 +94,30 @@
   }
 }
 
-// Round icon buttons morph from circle to rounded square on press.
-// MD3E spec: "While pressed, icon buttons can morph to become more square."
-// Uses 50% as resting radius (circle) — same approach as FABs.
-.q-btn--round:not(.q-btn-group .q-btn) {
-  border-radius: 50%;
+// Round icon buttons: replace Quasar's round model (border-radius: 50%, padding: 0,
+// min-width-based sizing) with a padding-based model that uses pill radius.
+// Equal padding makes the button square around the icon → pill radius = circle.
+// This lets round buttons participate in standard group widening (padding-based)
+// while looking identical to circles at rest.
+// Round icon buttons: replace Quasar's round model (border-radius: 50%, padding: 0,
+// min-width-based sizing) with a padding-based model that uses pill radius.
+// Equal padding makes the button square around the icon → pill radius = circle.
+// This lets round buttons participate in standard group widening (padding-based)
+// while looking identical to circles at rest.
+// No !important — our rules come after Quasar's in source order, so they win.
+// This also allows group widening rules to override padding without fighting.
+.q-btn--round {
+  border-radius: 1.5em; // same as pill buttons — circle on a square element,
+  // and small enough delta to 0.571em that spring overshoot doesn't flash to 0
+  padding: 0.571em; // (2.857em - 1.715em icon) / 2 — makes button square
+  min-width: 0; // remove Quasar's fixed min-width, let padding size it
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
-  &.q-btn--actionable {
+  // Standalone morph: circle → rounded square on press
+  &.q-btn--actionable:not(.q-btn-group .q-btn) {
     &:active,
     &.q-btn--active {
-      border-radius: 0.571em; // matches other buttons' pressed shape
+      border-radius: 0.571em;
     }
   }
 }
@@ -258,21 +271,18 @@ body.desktop {
 // 8. ROUND BUTTON (ICON BUTTONS) SIZING
 // =============================================================================
 
-// MD3E icon buttons: 40dp default at 14px base (same as standard buttons)
+// MD3E icon buttons: min-height for touch target, width controlled by padding
 .q-btn--round:not(.q-btn--dense) {
-  min-width: 2.857em; // 40px / 14px — scales with size prop
-  min-height: 2.857em;
+  min-height: 2.857em; // 40px / 14px — scales with size prop
 }
-
-// Icon buttons keep Quasar's default 1.715em (24dp at 14px base) — no override needed
 
 // =============================================================================
 // 9. DENSE BUTTONS
 // =============================================================================
 
-// Dense round buttons: slightly smaller touch target (em-based for scaling)
+// Dense round buttons: smaller padding to match dense touch target
 .q-btn--dense.q-btn--round {
-  min-width: 2.286em; // ~32px at 14px base
+  padding: 0.286em; // (2.286em - 1.715em) / 2
   min-height: 2.286em;
 }
 
