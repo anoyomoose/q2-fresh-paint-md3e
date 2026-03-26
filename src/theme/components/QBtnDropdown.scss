@@ -46,7 +46,23 @@
 }
 
 // =============================================================================
-// 3. ARROW ICON TRANSITION
+// 3. SPLIT BUTTON: ARROW MORPHS TO ROUND WHEN OPEN
+// =============================================================================
+
+// MD3E: the arrow button morphs to a round/pill shape when the dropdown is open.
+// Detected via aria-expanded="true" which Quasar sets on the arrow container.
+// Use high-specificity selector to beat the connected group corner rules
+// (.q-btn-group:not(.q-btn-group--stretch) > .q-btn { border-radius: 8px !important })
+.q-btn-dropdown--split.q-btn-group .q-btn-dropdown__arrow-container.q-btn {
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
+
+  &[aria-expanded="true"] {
+    border-radius: 1.5em !important;
+  }
+}
+
+// =============================================================================
+// 4. ARROW ICON TRANSITION
 // =============================================================================
 
 // MD3E uses expressive spatial spring for the dropdown arrow rotation

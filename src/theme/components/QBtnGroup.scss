@@ -24,7 +24,8 @@
 // Uses CSS Grid to enforce equal column widths (1fr), matching MD3E spec imagery
 // which only shows equal-width connected groups. inline-grid for default sizing,
 // grid (block-level) when spread prop is used to fill the container.
-.q-btn-group:not(.q-btn-group--stretch) {
+// Exclude split dropdowns — the main button and arrow should NOT be equal width.
+.q-btn-group:not(.q-btn-group--stretch):not(.q-btn-dropdown--split) {
   display: inline-grid !important;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
@@ -33,6 +34,9 @@
   &.q-btn-group--spread {
     display: grid !important;
   }
+}
+
+.q-btn-group:not(.q-btn-group--stretch) {
 
   // Override Quasar's border-radius: 0 on inner buttons.
   // Quasar sets border-radius: 0 via :not(:first-child) and :not(:last-child) selectors
