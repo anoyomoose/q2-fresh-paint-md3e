@@ -1,0 +1,1 @@
+import{P as e,c as t,d as n}from"./runtime-core.esm-bundler-CI8Widki.js";import{m as r}from"./index-DPmTGiHX.js";var i={data(){return{}}},a={class:`q-layout-padding`};function o(r,i,o,s,c,l){return e(),n(`div`,a,[...i[0]||=[t(`span`,null,`BBB`,-1)]])}var s=r(i,[[`render`,o]]);export{s as default};
