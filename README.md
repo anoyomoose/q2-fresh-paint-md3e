@@ -33,7 +33,8 @@ While the theme is *mostly* drop-in, in an existing project you will no doubt ha
 A version of Quasar's UI Playground with this theme loaded is available [on GitHub pages](https://anoyomoose.github.io/q2-fresh-paint-md3e/), with the default settings as described further below.
 
 Some pages of particular interest:
-- [Md3eBtns](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-btn-test)
+- [MD3E Palette](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-palette-test) (interactive, with many component examples)
+- [MD3E Buttons](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-btn-test)
 - [Toggles](https://anoyomoose.github.io/q2-fresh-paint-md3e/form/toggle)
 - [Cards](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/card)
 - [Inputs](https://anoyomoose.github.io/q2-fresh-paint-md3e/form/input) (see the outlined section)
