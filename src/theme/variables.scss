@@ -36,7 +36,7 @@ $button-push-border-radius: $md3-corner-large !default;
 // === Button Variables ===
 $button-shadow: none !default;
 $button-shadow-active: none !default;
-$button-padding: 6px 16px !default;  // MD3E: 16dp horizontal, 6px vertical for 40px height
+$button-padding: 0.429em 1.143em !default;  // MD3E: 6dp vertical, 16dp horizontal (em-based for size scaling)
 
 // === Motion Tokens ===
 // Legacy easing curves (CSS fallbacks for spring physics)

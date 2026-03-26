@@ -22,6 +22,15 @@
   min-height: 2.857em; // 40px / 14px = 2.857em
 }
 
+// Icon-to-text gap: em-based for proper scaling across button sizes.
+// The .on-left/.on-right class is on the icon element, whose font-size is
+// 1.715em (24px at 14px base). So em values here are relative to 24px, not 14px.
+// Icon-to-text gap: 0.283em ≈ 6.8px at md (14px), 9.7px at lg (20px)
+.q-btn .on-left { margin-right: 0.283em; }
+.q-btn .on-right { margin-left: 0.283em; }
+.q-btn--dense .on-left { margin-right: 0.212em; }
+.q-btn--dense .on-right { margin-left: 0.212em; }
+
 // Icon size: Quasar's default 1.715em (24dp at 14px base) scales well with the
 // em-based size system. MD3E specifies 20dp for standard buttons at the native level,
 // but on web, keeping the em-based default produces better results across all sizes.
