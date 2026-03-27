@@ -1,0 +1,6 @@
+// MD3 Expressive QPullToRefresh Overrides
+// Pull indicator floats above all content — level 5 elevation.
+
+.q-pull-to-refresh__puller {
+  box-shadow: $md3-elevation-5;
+}

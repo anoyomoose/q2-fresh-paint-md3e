@@ -497,3 +497,9 @@ $_notch: '.q-field--outlined[data-notch]';
 .q-field--readonly.q-field--outlined .q-field__control:before {
   border-color: var(--md3-outline);
 }
+
+// === Filled Field Focus Shadow ===
+// MD3E: no elevation on text fields. Override Quasar's $shadow-2 on focus.
+.q-field--filled.q-field--highlighted .q-field__control {
+  box-shadow: none;
+}

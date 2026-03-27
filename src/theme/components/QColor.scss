@@ -1,0 +1,10 @@
+// MD3 Expressive QColor Overrides
+// MD3E: color picker has no elevation — dialog supplies it when used modally.
+
+.q-color-picker {
+  box-shadow: none;
+}
+
+.q-color-picker--dark {
+  box-shadow: none;
+}

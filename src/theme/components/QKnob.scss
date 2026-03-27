@@ -1,0 +1,10 @@
+// MD3 Expressive QKnob Overrides
+// MD3E: sliders/knobs have no elevation.
+
+.q-knob {
+  box-shadow: none;
+}
+
+.q-knob--dark {
+  box-shadow: none;
+}

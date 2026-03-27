@@ -75,9 +75,15 @@
 // token explicitly specifies 40%. We follow the component-specific token.
 
 // === Layout Shadow ===
-// MD3E: use standard shadow color (no white-tinted shadows in dark mode)
-body.body--dark .q-layout__shadow:after {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.3), 0 4px 5px rgba(0, 0, 0, 0.2), 0 1px 10px rgba(0, 0, 0, 0.15);
+// MD3E: level 2 shadow on scrolled app bars (replaces Quasar's heavy layout shadow)
+.q-layout__shadow:after {
+  box-shadow: $md3-elevation-2;
+}
+
+// === Modal Drawer Shadow ===
+// MD3E: modal navigation drawer uses level 1 elevation
+.q-drawer--mobile {
+  box-shadow: $md3-elevation-1;
 }
 
 // ============================================================
