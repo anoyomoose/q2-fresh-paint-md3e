@@ -470,24 +470,23 @@ body.desktop {
 }
 
 // --- Toggle Selected: Outlined variant ---
-// Selected outlined = brand color bg, on-brand text
+// Selected outlined = inverse-surface bg with inverse brand color text.
+// Uses inverse-primary (from spec) and custom inverse-secondary/tertiary/error
+// tokens that swap light↔dark scheme values for readability on inverse-surface.
 .q-btn--selected:not(.disabled).q-btn--outline {
-  background-color: var(--md3-primary) !important;
-  color: var(--md3-on-primary) !important;
+  background-color: var(--md3-inverse-surface) !important;
+  color: var(--md3-inverse-primary) !important;
 
   &.text-secondary {
-    background-color: var(--md3-secondary) !important;
-    color: var(--md3-on-secondary) !important;
+    color: var(--md3-inverse-secondary) !important;
   }
 
   &.text-accent, &.text-tertiary {
-    background-color: var(--md3-tertiary) !important;
-    color: var(--md3-on-tertiary) !important;
+    color: var(--md3-inverse-tertiary) !important;
   }
 
   &.text-negative, &.text-error {
-    background-color: var(--md3-error) !important;
-    color: var(--md3-on-error) !important;
+    color: var(--md3-inverse-error) !important;
   }
 
   // Remove the outline border when filled
@@ -497,21 +496,32 @@ body.desktop {
 }
 
 // --- Shape morph: selected → square ---
-// Toggle buttons morph from pill (unselected) to square (selected)
+// Toggle buttons morph shapes: pill ↔ square on selection.
+// Pill buttons become square when selected; square buttons become pill.
+// Does NOT apply inside button groups (groups handle their own radii).
 .q-btn--toggle {
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
               background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
               color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
 }
 
-.q-btn--selected:not(.q-btn-group .q-btn) {
+// Pill → square when selected
+.q-btn--selected:not(.q-btn--square):not(.q-btn-group .q-btn) {
   border-radius: $md3-corner-medium !important; // 12dp square shape
 
-  // Press morph: selected buttons morph from 12dp to 8dp.
-  // Needs !important to beat the resting selected radius above.
   &.q-btn--actionable:active,
   &.q-btn--actionable.q-btn--active {
     border-radius: $md3-corner-small !important; // 8dp pressed
+  }
+}
+
+// Square → pill when selected
+.q-btn--selected.q-btn--square:not(.q-btn-group .q-btn) {
+  border-radius: 1.5em !important; // pill shape
+
+  &.q-btn--actionable:active,
+  &.q-btn--actionable.q-btn--active {
+    border-radius: $md3-corner-medium !important; // 12dp pressed
   }
 }
 

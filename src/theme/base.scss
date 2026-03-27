@@ -64,6 +64,9 @@ body, body.body--dark {
   --md3-inverse-surface: #{$md3-inverse-surface};
   --md3-inverse-on-surface: #{$md3-inverse-on-surface};
   --md3-inverse-primary: #{$md3-inverse-primary};
+  --md3-inverse-secondary: #{$md3-dark-secondary};
+  --md3-inverse-tertiary: #{$md3-dark-tertiary};
+  --md3-inverse-error: #{$md3-dark-error};
 
   // Surface containers
   --md3-surface-dim: #{$md3-surface-dim};
@@ -133,6 +136,10 @@ body.body--dark {
   --md3-inverse-surface: #{$md3-dark-inverse-surface};
   --md3-inverse-on-surface: #{$md3-dark-inverse-on-surface};
   --md3-inverse-primary: #{$md3-dark-inverse-primary};
+  // Inverse brand colors (light-scheme values in dark mode, for use on inverse-surface)
+  --md3-inverse-secondary: #{$md3-secondary};
+  --md3-inverse-tertiary: #{$md3-tertiary};
+  --md3-inverse-error: #{$md3-error};
   --md3-surface-dim: #{$md3-dark-surface-dim};
   --md3-surface-bright: #{$md3-dark-surface-bright};
   --md3-surface-container-lowest: #{$md3-dark-surface-container-lowest};

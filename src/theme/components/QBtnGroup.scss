@@ -27,6 +27,12 @@
   }
 }
 
+// Elevated button hover: +1 level (1→2) in groups.
+// Must target the button element (not :before) since Quasar kills :before shadows in groups.
+body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn--actionable:hover {
+  box-shadow: $md3-elevation-2;
+}
+
 // Connected group only (not stretch/standard) — shared corners, equal-width buttons.
 // Uses CSS Grid to enforce equal column widths (1fr), matching MD3E spec imagery
 // which only shows equal-width connected groups. inline-grid for default sizing,
@@ -273,8 +279,18 @@
   border-radius: 1.5em !important; // pill
 }
 
-// Standard (stretch) groups: selected buttons morph to SQUARE shape (12dp).
-// Standard group buttons are independent (spaced apart), so square works.
-.q-btn-group--stretch > .q-btn.q-btn--selected {
-  border-radius: $md3-corner-medium !important; // 12dp square
+// Standard (stretch) groups: selected buttons swap shape.
+// Pill buttons → square, square buttons → pill (same as standalone toggles).
+.q-btn-group--stretch > .q-btn.q-btn--selected:not(.q-btn--square) {
+  border-radius: $md3-corner-medium !important; // pill → 12dp square
+}
+.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--square {
+  border-radius: 1.5em !important; // square → pill
+}
+
+// Press morph for selected buttons in standard groups.
+// Must come AFTER selected shape rules so !important + source order wins.
+.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:active,
+.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable.q-btn--active {
+  border-radius: 0.571em !important;
 }

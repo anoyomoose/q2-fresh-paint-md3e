@@ -212,7 +212,7 @@ import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
 ```
 
 Must-know in short:
-- the wrapper ignores most coloring settings (unless `allow-color` is set)
+- the wrapper ignores most coloring settings (unless `allow-color` is set); you should generally only use `primary` (mostly), and `secondary`, `tertiary` and `error` (scarcely), as these move with the theme. Per the spec, if no color is specified for a `tonal` button, it uses `secondary` rather than `primary`.
 - `tonal` maps to `glossy`, which has been repurposed
 - `elevated` similarly maps to `:unelevated=false`
 - you can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect

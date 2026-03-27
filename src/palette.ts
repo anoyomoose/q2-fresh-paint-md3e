@@ -105,7 +105,7 @@ function hexToRgb(hex: string): string {
   return `${r}, ${g}, ${b}`
 }
 
-function buildTokenBlock(tokens: Record<string, string>): string {
+function buildTokenBlock(tokens: Record<string, string>, inverseTokens?: Record<string, string>): string {
   let css = ''
   for (const [name, value] of Object.entries(tokens)) {
     css += `  --md3-${name}: ${value};\n`
@@ -116,6 +116,12 @@ function buildTokenBlock(tokens: Record<string, string>): string {
   css += `  --md3-on-primary-rgb: ${hexToRgb(tokens['on-primary'])};\n`
   css += `  --md3-error-rgb: ${hexToRgb(tokens.error)};\n`
   css += `  --md3-shadow-rgb: ${hexToRgb(tokens.shadow)};\n`
+  // Inverse brand colors (opposite mode's values for use on inverse-surface)
+  if (inverseTokens) {
+    css += `  --md3-inverse-secondary: ${inverseTokens.secondary};\n`
+    css += `  --md3-inverse-tertiary: ${inverseTokens.tertiary};\n`
+    css += `  --md3-inverse-error: ${inverseTokens.error};\n`
+  }
   // Quasar brand mappings
   css += `  --q-primary: ${tokens.primary};\n`
   css += `  --q-secondary: ${tokens.secondary};\n`
@@ -142,19 +148,21 @@ export function applyPalette(tokens: PaletteTokens): void {
   let css = ''
 
   // Light mode — matches base.scss `:root, body.body--light`
+  // Inverse tokens use dark mode values (for readability on inverse-surface)
   css += ':root, body.body--light {\n'
-  css += buildTokenBlock(tokens.light)
+  css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
   // Dark mode — matches base.scss `body.body--dark`
+  // Inverse tokens use light mode values
   css += 'body.body--dark {\n'
-  css += buildTokenBlock(tokens.dark)
+  css += buildTokenBlock(tokens.dark, tokens.light)
   css += '}\n\n'
 
   // Per-component dark mode fix — matches base.scss rule that re-injects
   // light tokens on children of dark-scoped elements in light mode
   css += 'body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {\n'
-  css += buildTokenBlock(tokens.light)
+  css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n'
 
   styleEl.textContent = css
@@ -194,17 +202,17 @@ function buildScopedCss(className: string, tokens: PaletteTokens): string {
 
   // Light mode
   css += `${sel} {\n`
-  css += buildTokenBlock(tokens.light)
+  css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
   // Dark mode
   css += `body.body--dark ${sel} {\n`
-  css += buildTokenBlock(tokens.dark)
+  css += buildTokenBlock(tokens.dark, tokens.light)
   css += '}\n\n'
 
   // Per-component dark mode fix
   css += `body.body--light ${sel} [class*="--dark"]:not(body) > *:not([class*="--dark"]) {\n`
-  css += buildTokenBlock(tokens.light)
+  css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n'
 
   return css
