@@ -19,8 +19,8 @@
   background: var(--md3-surface-container-high);
   border-radius: $md3-corner-extra-large;
   // color: inherits from QLayout (on-surface) — no stock override to replace
-  // Level 3 shadow (6dp)
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  // Level 3 shadow
+  box-shadow: $md3-elevation-3;
   // MD3E min-width for basic dialogs
   min-width: 280px;
 }
@@ -76,7 +76,7 @@
 // Reduce shadow intensity in dark mode; MD3E relies on tonal differences.
 body.body--dark .q-dialog__inner > .q-card {
   // Keep a subtle shadow for dark mode dialogs (they float above content)
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+  box-shadow: $md3-elevation-3;
 }
 
 // === Corner Stripping for Positioned Dialogs ===

@@ -74,11 +74,12 @@ body, body.body--dark {
   --md3-surface-container-high: #{$md3-surface-container-high};
   --md3-surface-container-highest: #{$md3-surface-container-highest};
 
-  // RGB triplets for rgba() usage in state layers and disabled states
+  // RGB triplets for rgba() usage in state layers, disabled states, and shadows
   --md3-primary-rgb: #{hex-to-rgb-values($md3-primary)};
   --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
   --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
   --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
+  --md3-shadow-rgb: #{hex-to-rgb-values($md3-shadow)};
 
   // Quasar brand colors (light scheme)
   --q-primary: #{$md3-primary};
@@ -91,6 +92,14 @@ body, body.body--dark {
   --md3-palette-scheme: #{$md3-palette-scheme};
   --md3-palette-contrast-level: #{$md3-palette-contrast-level};
   --md3-palette-spec-version: #{$md3-palette-spec-version};
+
+  // Elevation shadows
+  --md3-elevation-0: #{$md3-elevation-0};
+  --md3-elevation-1: #{$md3-elevation-1};
+  --md3-elevation-2: #{$md3-elevation-2};
+  --md3-elevation-3: #{$md3-elevation-3};
+  --md3-elevation-4: #{$md3-elevation-4};
+  --md3-elevation-5: #{$md3-elevation-5};
 }
 
 // === Dark Mode (Global) ===
@@ -135,6 +144,7 @@ body.body--dark {
   --md3-on-surface-rgb: #{hex-to-rgb-values($md3-dark-on-surface)};
   --md3-on-primary-rgb: #{hex-to-rgb-values($md3-dark-on-primary)};
   --md3-error-rgb: #{hex-to-rgb-values($md3-dark-error)};
+  --md3-shadow-rgb: #{hex-to-rgb-values($md3-dark-shadow)};
   --q-primary: #{$md3-dark-primary};
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
@@ -191,6 +201,7 @@ body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {
   --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
   --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
   --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
+  --md3-shadow-rgb: #{hex-to-rgb-values($md3-shadow)};
   --q-primary: #{$md3-primary};
   --q-secondary: #{$md3-secondary};
   --q-accent: #{$md3-tertiary};
@@ -481,6 +492,26 @@ body.desktop {
 }
 .rounded-full {
   border-radius: $md3-corner-full !important;
+}
+
+// === MD3E Elevation Utility Classes ===
+.elevation-0 {
+  box-shadow: var(--md3-elevation-0) !important;
+}
+.elevation-1 {
+  box-shadow: var(--md3-elevation-1) !important;
+}
+.elevation-2 {
+  box-shadow: var(--md3-elevation-2) !important;
+}
+.elevation-3 {
+  box-shadow: var(--md3-elevation-3) !important;
+}
+.elevation-4 {
+  box-shadow: var(--md3-elevation-4) !important;
+}
+.elevation-5 {
+  box-shadow: var(--md3-elevation-5) !important;
 }
 
 // === MD3 Overline Fix ===

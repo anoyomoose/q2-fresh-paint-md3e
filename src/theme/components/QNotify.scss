@@ -11,10 +11,7 @@
   color: var(--md3-inverse-on-surface); // replaces stock color: #fff
   border-radius: $md3-corner-extra-small; // 4px — MD3E spec for snackbars
   // Level-3 elevation shadow (MD3 floating surface)
-  box-shadow:
-    0 3px 5px -1px rgba(0, 0, 0, 0.20),
-    0 5px 8px      rgba(0, 0, 0, 0.14),
-    0 1px 14px     rgba(0, 0, 0, 0.12);
+  box-shadow: $md3-elevation-3;
 }
 
 // === Enter / Exit Animation ===

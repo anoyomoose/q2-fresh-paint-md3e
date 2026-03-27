@@ -115,6 +115,7 @@ function buildTokenBlock(tokens: Record<string, string>): string {
   css += `  --md3-on-surface-rgb: ${hexToRgb(tokens['on-surface'])};\n`
   css += `  --md3-on-primary-rgb: ${hexToRgb(tokens['on-primary'])};\n`
   css += `  --md3-error-rgb: ${hexToRgb(tokens.error)};\n`
+  css += `  --md3-shadow-rgb: ${hexToRgb(tokens.shadow)};\n`
   // Quasar brand mappings
   css += `  --q-primary: ${tokens.primary};\n`
   css += `  --q-secondary: ${tokens.secondary};\n`

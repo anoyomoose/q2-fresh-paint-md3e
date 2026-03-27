@@ -13,8 +13,8 @@
 .q-card {
   background: var(--md3-surface-container-low);
   color: var(--md3-on-surface);
-  // Level 1 shadow (1dp) — lighter than Quasar's default $shadow-2
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  // Level 1 shadow — lighter than Quasar's default $shadow-2
+  box-shadow: $md3-elevation-1;
 }
 
 // === Filled Card (flat prop) ===
@@ -42,7 +42,7 @@
 
 // Keep subtle shadow on elevated (non-flat, non-bordered) dark cards
 .q-card--dark:not(.q-card--flat):not(.q-card--bordered):not(.no-shadow) {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: $md3-elevation-1;
 }
 
 // === Card Action Buttons ===

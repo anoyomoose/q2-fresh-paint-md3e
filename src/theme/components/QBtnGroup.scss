@@ -18,6 +18,13 @@
 // Override Quasar's box-shadow on the group container
 .q-btn-group {
   box-shadow: none;
+
+  // Re-enable shadows for elevated buttons inside ANY group type.
+  // Quasar's base QBtnGroup.sass kills :before shadows on grouped buttons.
+  // Apply directly on the button element since :before is suppressed.
+  > .q-btn-item.q-btn--standard:not(.q-btn--push) {
+    box-shadow: $md3-elevation-1;
+  }
 }
 
 // Connected group only (not stretch/standard) — shared corners, equal-width buttons.

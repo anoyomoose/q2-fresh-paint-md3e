@@ -167,70 +167,15 @@
 }
 
 // =============================================================================
-// 5. FAB ELEVATION (SHADOWS)
+// 5. FAB ELEVATION — handled in QFab.scss (not here, to avoid specificity conflicts)
 // =============================================================================
 
-// FABs have Level 3 resting shadow (6dp), Level 4 on hover (8dp).
-// boot.ts sets unelevated=true globally, so we need explicit shadows for FABs.
-// The :before pseudo-element carries the shadow in Quasar's architecture.
-
-.q-btn--fab:before,
-.q-btn--fab-mini:before {
-  // Level 3 (6dp) resting shadow
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
-  transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
-}
-
-// Hover: elevate from Level 3 to Level 4 (desktop only)
-body.desktop {
-  .q-btn--fab.q-btn--actionable:hover:before,
-  .q-btn--fab-mini.q-btn--actionable:hover:before {
-    // Level 4 (8dp) shadow
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
-  }
-}
-
-// Pressed: return to Level 3
-.q-btn--fab.q-btn--actionable:active:before,
-.q-btn--fab.q-btn--actionable.q-btn--active:before,
-.q-btn--fab-mini.q-btn--actionable:active:before,
-.q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
-}
-
 // =============================================================================
-// 6. HOVER ELEVATION FOR FILLED / TONAL / STANDARD BUTTONS
+// 6. HOVER ELEVATION
 // =============================================================================
-
-// Filled buttons (non-flat, non-outline, non-fab) get +1 elevation on hover.
-// Resting state is Level 0 (no shadow, via unelevated default).
-// Hover adds Level 1 shadow. Desktop only.
-body.desktop {
-  .q-btn--actionable.q-btn--standard:not(.q-btn--flat):not(.q-btn--outline):not(.q-btn--fab):not(.q-btn--fab-mini) {
-    &:before {
-      transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
-    }
-
-    &:hover:before {
-      // Level 1 (1dp) shadow
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  // Unelevated buttons also get hover lift (most buttons are unelevated via boot.ts)
-  .q-btn--actionable.q-btn--unelevated:not(.q-btn--flat):not(.q-btn--outline):not(.q-btn--fab):not(.q-btn--fab-mini) {
-    &:before {
-      transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
-    }
-
-    &:hover:before {
-      // Level 1 (1dp) shadow
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
-    }
-  }
-}
-
-// Flat and outline buttons never get elevation lift (they stay at Level 0)
+// MD3E (Expressive) removes the +1 hover elevation from filled/tonal buttons.
+// Only elevated (standard) buttons get hover shadow (handled in section 10).
+// This differs from base MD3 which specified +1 for all buttons on hover.
 
 // =============================================================================
 // 7. DISABLED STATE
@@ -302,7 +247,8 @@ body.desktop {
 // MD3E "elevated" button: surface-container-low bg, primary text, Level 1 shadow.
 // In Quasar, setting :unelevated="false" gives q-btn--standard (the non-unelevated state).
 // We restyle to match MD3E elevated spec.
-.q-btn--standard:not(.q-btn--push) {
+// Exclude FABs — they have their own elevation rules in QFab.scss
+.q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini) {
   background-color: var(--md3-surface-container-low) !important;
   color: var(--md3-primary) !important;
 
@@ -315,26 +261,26 @@ body.desktop {
     // Level 1 resting shadow with spring transition
     &:before {
       transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+      box-shadow: $md3-elevation-1;
     }
 
     // Pressed: stays at Level 1
     &:active:before,
     &.q-btn--active:before {
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+      box-shadow: $md3-elevation-1;
     }
   }
 }
 
 body.desktop {
-  .q-btn--standard:not(.q-btn--push).q-btn--actionable:hover:before {
+  .q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini).q-btn--actionable:hover:before {
     // Level 2 hover shadow for elevated buttons
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: $md3-elevation-2;
   }
 }
 
 // Disabled elevated buttons: no shadow, standard disabled colors
-.q-btn--standard:not(.q-btn--push).disabled:before {
+.q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini).disabled:before {
   box-shadow: none !important;
 }
 

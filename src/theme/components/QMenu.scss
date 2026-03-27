@@ -14,10 +14,8 @@
 }
 
 // === Elevation: MD3E Level 2 ===
-// More accurate MD3 level 2 shadow (tone-mapped)
 .q-menu {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3),
-              0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: $md3-elevation-2;
 }
 
 // === Square Menu ===
@@ -30,8 +28,7 @@
 // Same surface-container, same shadow
 .q-menu--dark {
   background: var(--md3-surface-container);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3),
-              0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: $md3-elevation-2;
 }
 
 // === Menu Items ===

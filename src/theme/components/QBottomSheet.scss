@@ -18,7 +18,7 @@
   border-radius: $md3-corner-extra-large $md3-corner-extra-large 0 0;
   background: var(--md3-surface-container-low);
   // Level 1 shadow (optional — scrim provides separation for modal variant)
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: $md3-elevation-1;
 }
 
 // === Max Width ===
