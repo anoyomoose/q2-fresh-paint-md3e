@@ -197,6 +197,8 @@ See [docs/colors.md](docs/colors.md) for details.
 
 These are convenience wrappers and not required to be used.
 
+All `Md3e...` components have an `M...` alias for easier typing.
+
 ### `Md3eBtn`
 
 A QBtn wrapper that adds MD3E toggle/selection behavior, color family shortcuts, and variant shortcuts.

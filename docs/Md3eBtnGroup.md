@@ -12,6 +12,8 @@ The MD3E theme changes `QBtnGroup` behavior whether you use this wrapper or not 
 
 ## Installation
 
+Note: you can import `MBtnGroup` and use `m-btn-group` instead for convenience
+
 ```ts
 import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
 ```

@@ -17,6 +17,8 @@ All QBtn props and attributes pass through unchanged. The CSS classes that drive
 
 ## Installation
 
+Note: you can import `MBtn` and use `m-btn` instead for convenience
+
 ```ts
 import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
 ```
