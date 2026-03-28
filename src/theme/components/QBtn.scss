@@ -66,7 +66,7 @@
   border-radius: 1.5em; // ~21px at 14px, ~12px at 8px — always a pill
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
-  &.q-btn--actionable {
+  &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
       border-radius: 0.571em; // ~8px at 14px, ~4.6px at 8px — scales with size
@@ -79,7 +79,7 @@
   border-radius: 1.5em;
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
-  &.q-btn--actionable {
+  &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
       border-radius: 0.571em;
@@ -95,7 +95,7 @@
   border-radius: $md3-corner-medium; // 12dp
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
-  &.q-btn--actionable {
+  &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
       border-radius: $md3-corner-small; // 8dp pressed — same target as pill
@@ -123,7 +123,7 @@
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
   // Standalone morph: circle → rounded square on press
-  &.q-btn--actionable:not(.q-btn-group .q-btn) {
+  &.q-btn--actionable:not(.no-morph):not(.q-btn-group .q-btn) {
     &:active,
     &.q-btn--active {
       border-radius: 0.571em;
@@ -142,7 +142,7 @@
               box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
 
   // Shape morph: FAB press goes from 28px to medium (12px)
-  &.q-btn--actionable {
+  &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
       border-radius: $md3-corner-medium; // 12px pressed
@@ -158,7 +158,7 @@
               box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
 
   // Shape morph: mini FAB press goes from 12px to small (8px)
-  &.q-btn--actionable {
+  &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
       border-radius: $md3-corner-small; // 8px pressed
@@ -499,28 +499,33 @@ body.desktop {
 // Toggle buttons morph shapes: pill ↔ square on selection.
 // Pill buttons become square when selected; square buttons become pill.
 // Does NOT apply inside button groups (groups handle their own radii).
-.q-btn--toggle {
+.q-btn--toggle:not(.no-morph) {
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
               background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
               color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
 }
 
-// Pill → square when selected
+.q-btn--toggle.no-morph {
+  transition: background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
+}
+
+// Pill → square when selected (still applies with no-morph, just instantly)
 .q-btn--selected:not(.q-btn--square):not(.q-btn-group .q-btn) {
   border-radius: $md3-corner-medium !important; // 12dp square shape
 
-  &.q-btn--actionable:active,
-  &.q-btn--actionable.q-btn--active {
+  &.q-btn--actionable:not(.no-morph):active,
+  &.q-btn--actionable:not(.no-morph).q-btn--active {
     border-radius: $md3-corner-small !important; // 8dp pressed
   }
 }
 
-// Square → pill when selected
+// Square → pill when selected (still applies with no-morph, just instantly)
 .q-btn--selected.q-btn--square:not(.q-btn-group .q-btn) {
   border-radius: 1.5em !important; // pill shape
 
-  &.q-btn--actionable:active,
-  &.q-btn--actionable.q-btn--active {
+  &.q-btn--actionable:not(.no-morph):active,
+  &.q-btn--actionable:not(.no-morph).q-btn--active {
     border-radius: $md3-corner-medium !important; // 12dp pressed
   }
 }

@@ -23,6 +23,12 @@
  *   <q-btn label="Day" />
  *   <q-btn label="Week" />
  * </md3e-btn-group>
+ *
+ * // Disable widening on press
+ * <md3e-btn-group no-widening>
+ *   <q-btn label="A" />
+ *   <q-btn label="B" />
+ * </md3e-btn-group>
  */
 
 import { h, defineComponent } from 'vue'
@@ -45,6 +51,9 @@ export const Md3eBtnGroup = defineComponent({
 
     /** MD3E elevated variant (maps to unelevated=false on QBtnGroup) */
     elevated: Boolean,
+
+    /** Disable padding widening/shrinking on press */
+    noWidening: Boolean,
   },
 
   setup(props, { attrs, slots }) {
@@ -54,6 +63,7 @@ export const Md3eBtnGroup = defineComponent({
         glossy: attrGlossy,
         flat: attrFlat,
         unelevated: attrUnelevated,
+        class: attrClass,
         ...restAttrs
       } = attrs
 
@@ -65,6 +75,10 @@ export const Md3eBtnGroup = defineComponent({
         glossy: props.tonal || attrGlossy || undefined,
         flat: props.text || attrFlat || undefined,
         unelevated: props.elevated ? false : (attrUnelevated ?? undefined),
+        class: [
+          attrClass,
+          props.noWidening ? 'no-widening' : null,
+        ].filter(Boolean),
       }, slots)
     }
   },

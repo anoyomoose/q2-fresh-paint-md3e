@@ -44,6 +44,7 @@ export default {
 | `tonal` | Boolean | `false` | MD3E tonal variant. Maps to `glossy` on QBtnGroup. |
 | `text` | Boolean | `false` | MD3E text variant. Maps to `flat` on QBtnGroup. |
 | `elevated` | Boolean | `false` | MD3E elevated variant. Maps to `unelevated=false` on QBtnGroup. |
+| `noWidening` | Boolean | `false` | Disable padding widening/shrinking on press in standard groups. Can also be applied as a `no-widening` CSS class on any `QBtnGroup`. |
 
 All other QBtnGroup props pass through: `outline`, `unelevated`, `glossy`, `flat`, `push`, `rounded`, `square`, `spread`.
 

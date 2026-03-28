@@ -85,14 +85,14 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
   // Shape morph on press: connected buttons morph toward the inner corner size.
   // Only the pressed button morphs; adjacent buttons stay at resting shape.
   // Middle buttons: all corners morph to a tighter radius
-  > .q-btn.q-btn--actionable:active,
-  > .q-btn.q-btn--actionable.q-btn--active {
+  > .q-btn.q-btn--actionable:not(.no-morph):active,
+  > .q-btn.q-btn--actionable:not(.no-morph).q-btn--active {
     border-radius: calc(#{$md3-corner-small} * 0.5) !important; // 4dp pressed — tighter than resting 8dp
   }
 
   // First button pressed: pill left corners morph inward, right stays inner
-  > .q-btn.q-btn--actionable:first-child:active,
-  > .q-btn.q-btn--actionable:first-child.q-btn--active {
+  > .q-btn.q-btn--actionable:not(.no-morph):first-child:active,
+  > .q-btn.q-btn--actionable:not(.no-morph):first-child.q-btn--active {
     border-top-left-radius: 0.571em !important;
     border-bottom-left-radius: 0.571em !important;
     border-top-right-radius: calc(#{$md3-corner-small} * 0.5) !important;
@@ -100,8 +100,8 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
   }
 
   // Last button pressed: right pill corners morph inward, left stays inner
-  > .q-btn.q-btn--actionable:last-child:active,
-  > .q-btn.q-btn--actionable:last-child.q-btn--active {
+  > .q-btn.q-btn--actionable:not(.no-morph):last-child:active,
+  > .q-btn.q-btn--actionable:not(.no-morph):last-child.q-btn--active {
     border-top-right-radius: 0.571em !important;
     border-bottom-right-radius: 0.571em !important;
     border-top-left-radius: calc(#{$md3-corner-small} * 0.5) !important;
@@ -109,8 +109,8 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
   }
 
   // Single button pressed: all corners morph like standalone
-  > .q-btn.q-btn--actionable:only-child:active,
-  > .q-btn.q-btn--actionable:only-child.q-btn--active {
+  > .q-btn.q-btn--actionable:not(.no-morph):only-child:active,
+  > .q-btn.q-btn--actionable:not(.no-morph):only-child.q-btn--active {
     border-radius: 0.571em !important;
   }
 }
@@ -154,10 +154,15 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
   // Adjacent always = 1.0em both sides.
 
   // Shape morph: pressed → square (same as standalone morph target)
-  > .q-btn.q-btn--actionable:active,
-  > .q-btn.q-btn--actionable.q-btn--active {
+  > .q-btn.q-btn--actionable:not(.no-morph):active,
+  > .q-btn.q-btn--actionable:not(.no-morph).q-btn--active {
     border-radius: 0.571em !important;
   }
+}
+
+// --- Standard group widening on press ---
+// Disabled by adding .no-widening to the group element.
+.q-btn-group--stretch:not(.no-widening) {
 
   // --- Non-round buttons (base padding ~1.14em) ---
   // Dense buttons are excluded — widening is disabled for dense groups.
@@ -290,7 +295,7 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
 
 // Press morph for selected buttons in standard groups.
 // Must come AFTER selected shape rules so !important + source order wins.
-.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:active,
-.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable.q-btn--active {
+.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph):active,
+.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph).q-btn--active {
   border-radius: 0.571em !important;
 }

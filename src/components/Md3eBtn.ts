@@ -32,6 +32,9 @@
  *
  * // Elevated button
  * <md3e-btn elevated label="Elevated" />
+ *
+ * // Disable shape morphing on press (button keeps its resting shape)
+ * <md3e-btn no-morph label="No morph" />
  */
 
 import { h, computed, defineComponent } from 'vue'
@@ -87,6 +90,9 @@ export const Md3eBtn = defineComponent({
 
     /** MD3E text variant (sets flat on QBtn) */
     text: Boolean,
+
+    /** Disable shape morphing on press */
+    noMorph: Boolean,
 
     /** Icon to show when in selected state (swaps the icon prop) */
     selectedIcon: String,
@@ -202,11 +208,12 @@ export const Md3eBtn = defineComponent({
         // Accessibility: communicate toggle state to screen readers
         'aria-pressed': isToggle.value ? (isSelected.value ? 'true' : 'false') : undefined,
 
-        // Classes: merge user classes with toggle/selected
+        // Classes: merge user classes with toggle/selected/no-morph
         class: [
           attrClass,
           isToggle.value ? 'q-btn--toggle' : null,
           isSelected.value ? 'q-btn--selected' : null,
+          props.noMorph ? 'no-morph' : null,
         ].filter(Boolean),
 
         // Click: our handler + user's handler

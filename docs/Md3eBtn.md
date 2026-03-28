@@ -63,6 +63,7 @@ All `QBtn` props pass through to the underlying button. The following props are 
 | `elevated`     | Boolean | `false` | MD3E elevated variant. Sets `:unelevated="false"` on the underlying `QBtn`.                                                                                                                 |
 | `tonal`        | Boolean | `false` | MD3E tonal variant. Sets `glossy` on the underlying `QBtn` (remapped to container colors by CSS).                                                                                           |
 | `text`         | Boolean | `false` | MD3E text variant. Sets `flat` on the underlying `QBtn`.                                                                                                                                    |
+| `noMorph`      | Boolean | `false` | Disable shape morphing on press. The button keeps its resting shape when pressed. Toggle selection still swaps pill↔square but instantly. Can also be applied as a `no-morph` CSS class on any `QBtn`. |
 | `selectedIcon` | String | `undefined` | Icon to display when the button is in the selected state. Replaces the `icon` prop when selected.                                                                                           |
 
 ## Selection Modes

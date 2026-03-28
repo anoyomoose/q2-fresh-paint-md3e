@@ -521,6 +521,21 @@ body.desktop {
   box-shadow: var(--md3-elevation-5) !important;
 }
 
+// === MD3E Opt-Out Utility Classes ===
+// .no-morph — add to a q-btn to disable shape morphing on press.
+//   Toggle selection still swaps pill↔square but instantly (no animation).
+//   Implemented via :not(.no-morph) checks in QBtn.scss and QBtnGroup.scss.
+// .no-widening — add to a q-btn-group to disable padding widening/shrinking on press.
+//   Implemented via :not(.no-widening) in QBtnGroup.scss.
+// Disable border-radius transition on opted-out toggle buttons (selected shape change is instant).
+// Keep padding/margin transitions for group widening compatibility.
+.q-btn--toggle.no-morph {
+  transition: padding $md3-shape-morph-duration $md3-easing-emphasized,
+              margin $md3-shape-morph-duration $md3-easing-emphasized,
+              background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default !important;
+}
+
 // === MD3 Overline Fix ===
 // MD3E removes uppercase from overline text
 .text-overline {

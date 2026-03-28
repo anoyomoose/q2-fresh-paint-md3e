@@ -214,13 +214,12 @@ import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
 ```
 
 Must-know in short:
-- the wrapper ignores most coloring settings (unless `allow-color` is set); you should generally only use `primary` (mostly), and `secondary`, `tertiary` and `error` (scarcely), as these move with the theme. Per the spec, if no color is specified for a `tonal` button, it uses `secondary` rather than `primary`.
+- The wrapper ignores most coloring settings (unless `allow-color` is set); you should generally only use `primary` (mostly), and `secondary`, `tertiary` and `error` (scarcely), as these move with the theme. Per the spec, if no color is specified for a `tonal` button, it uses `secondary` rather than `primary`. Only default, `rounded`, `square`, and `text` buttons support other colors in practise.
 - `tonal` maps to `glossy`, which has been repurposed
 - `elevated` similarly maps to `:unelevated=false`
-- you can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
-- toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
-- due to MD3E's design principles, not all variants support arbitrary colors: `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors; this also applies to QBtn!
-
+- You can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
+- Toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
+- Morph transition can be disabled with `no-morph` attribute or class
 
 For full documentation including all props, selection modes, color system, variant shortcuts, and migration guide, see [docs/Md3eBtn.md](docs/Md3eBtn.md).
 
@@ -245,6 +244,7 @@ Must-know in short:
 - Shape definitions do not inherit properly (nor do they on QBtnGroup anymore), due to a combination of how Quasar's CSS rules work and the MD3E specification. You should not use them on the group at all; rather you should specify each button's shape and style explicitly if you want to depart from MD3E's default behavior, in so far as the design will actually allow it (some things are just forced by the specification). Particularly in connected groups, look and feel is probably initially different from what you'd expect!
 - Transitions do not work on dense buttons
 - You should not mix sizes and dense in the same group
+- Widening transition can be disabled with `no-widening` attribute or class
 
 For full documentation including group variants, shape morphing, design props, and known limitations, see [docs/Md3eBtnGroup.md](docs/Md3eBtnGroup.md).
 
