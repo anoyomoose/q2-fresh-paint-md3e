@@ -1,0 +1,1 @@
+import{S as e}from"./runtime-core.esm-bundler-CI8Widki.js";import{t}from"./create-DPbGycXn.js";import{i as n}from"./render-wln3ejow.js";import{t as r}from"./use-panel-D07F61Y7.js";var i=t({name:`QTabPanel`,props:r,setup(t,{slots:r}){return()=>e(`div`,{class:`q-tab-panel`,role:`tabpanel`},n(r.default))}});export{i as t};
