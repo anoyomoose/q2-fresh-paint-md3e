@@ -74,8 +74,6 @@ Per the MD3E spec, the shape is square.
 
 Only default and `tonal` variants are supported.
 
-MD3E FABs should not have labels, if a label is set, it is converted to a tooltip (only if the button doesn't already have subcontent).
-
 ## Selection Modes
 
 The `modelValue` prop drives all toggle behavior. There are four modes depending on the value types involved.

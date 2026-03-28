@@ -220,7 +220,7 @@ Must-know in short:
 - You can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
 - Toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
 - Morph transition can be disabled with `no-morph` attribute or class
-- FABs: `fab-mini` = `md`, `fab` = `lg` in `size`; shape is `square`; only default and `tonal` variants should be used; label is converted to tooltip if present (wrapper only)
+- FABs: `fab-mini` = `md`, `fab` = `lg` in `size`; shape is `square`; only default and `tonal` variants should be used
 
 For full documentation including all props, selection modes, color system, variant shortcuts, and migration guide, see [docs/Md3eBtn.md](docs/Md3eBtn.md).
 

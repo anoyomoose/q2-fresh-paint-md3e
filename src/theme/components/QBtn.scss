@@ -169,6 +169,12 @@
   font-size: 20px;
 }
 
+// Extended FAB: extra trailing padding to visually balance the icon gap on the leading side
+.q-btn--fab:has(.block),
+.q-btn--fab-mini:has(.block) {
+  padding-right: calc(#{$md3-button-round-padding} + #{$md3-button-icon-gap});
+}
+
 // FAB mini: md size (14px font-size, inherited — no override needed)
 
 // =============================================================================
