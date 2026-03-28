@@ -21,7 +21,7 @@ This is an attempt to (partially) provide a Material Design 3 Expressive theme t
 - **Toggle switches**: completely redesigned to follow MD3E specification with expanding handles
 - **Sliders**: similarly updated - **NOTE**: I am not quite happy with them, might change/revert
 - **Outlined inputs**: labels now animated and positioned to intersect the border as per MD3E specification
-- **FABs**: adjusted to MD3E standards; FAB menus: TODO
+- **FABs**: adjusted to MD3E standards, see the `Md3eBtn` section for (extended) FABs, and `Md3eFab` section for FAB menus
 - **Toolbars, headers and footers**: Now use MD3E specification mandated palette entries
 
 30+ Quasar built-in components have received styling changes, so this summary is by no means exhaustive. This is still a work-in-progress and likely several components will need further tweaking.
@@ -197,11 +197,11 @@ See [docs/colors.md](docs/colors.md) for details.
 
 These are convenience wrappers and not required to be used.
 
-All `Md3e...` components have an `M...` alias for easier typing.
+All `Md3e...` components have an `M...` alias for easier typing! We use the full name here for clarity.
 
 ### `Md3eBtn`
 
-A QBtn wrapper that adds MD3E toggle/selection behavior, color family shortcuts, and variant shortcuts.
+A `QBtn` wrapper that adds MD3E toggle/selection behavior, color family shortcuts, and variant shortcuts.
 
 ```ts
 import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
@@ -226,7 +226,7 @@ For full documentation including all props, selection modes, color system, varia
 
 ### `Md3eBtnGroup`
 
-A QBtnGroup wrapper that defaults to the MD3E standard group variant (spaced buttons, individual pill shapes). Use `connected` for the connected variant.
+A `QBtnGroup` wrapper that defaults to the MD3E standard group variant (spaced buttons, individual pill shapes). Use `connected` for the connected variant.
 
 ```ts
 import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
@@ -248,6 +248,45 @@ Must-know in short:
 - Widening transition can be disabled with `no-widening` attribute or class
 
 For full documentation including group variants, shape morphing, design props, and known limitations, see [docs/Md3eBtnGroup.md](docs/Md3eBtnGroup.md).
+
+### `Md3eFab` / `Md3eFabAction`
+
+QFab / QFabAction wrappers that default to MD3E FAB menus.
+
+MD3E FAB Menus are much more restricted than all the options Quasar provides. Implementation and testing has been limited to the spec:
+- Only `primary`, `secondary`, `tertiary` and `error` colors are supported. Others at your own risk
+- The menu button itself uses the `tonal` color scheme when closed, and the `filled` scheme when open and showing a close icon
+- An icon is required, a label is optional and not recommended
+- Only `direction="up"` is supported
+- Menus on the left side of the screen should use `label-position="left" vertical-align="left"` on the `QFab`, and `label-position="left"` on the `QFabAction`; menus on the right side of the screen can omit these attributes as they default to `right`.
+- A `QFabAction` corresponds to a `<q-btn size="lg" />`
+- `QFabAction`s **require** *both* an icon *and* a label
+- `QFabAction` automatically use the right `tonal` color (supported colors only)
+
+Using `QFab`:
+
+```vue
+<q-fab color="secondary" icon="sym_r_edit" label="Edit" label-position="left" vertical-actions-align="left" direction="up">
+  <q-fab-action icon="sym_r_mail" label="Mail" label-position="left" />
+  <q-fab-action icon="sym_r_alarm" label="Alarm" label-position="left"/>
+</q-fab>
+```
+
+Using `Md3eFab` / `Md3eFabAction`:
+- Supports `primary` (default), `secondary`, `tertiary`, `error` attributes as well as `allow-color` (at your own risk), like `Md3eBtn` does
+- `label-position`, `vertical-actions-align`, `direction` automatically set if `left` attribute is used
+- `left` attribute automatically propagates to children
+
+```ts
+import { Md3eFab, Md3eFabAction } from '@anoyomoose/q2-fresh-paint-md3e/components'
+```
+
+```vue
+<md3e-fab secondary left icon="sym_r_edit" label="Edit">
+  <md3e-fab-action icon="sym_r_mail" label="Mail" />
+  <md3e-fab-action icon="sym_r_alarm" label="Alarm" />
+</md3e-fab>
+```
 
 ## Boot File
 

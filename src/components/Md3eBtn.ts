@@ -125,16 +125,16 @@ export const Md3eBtn = defineComponent({
       const c = attrs.color as string | undefined
       if (c === 'primary') return 'primary'
       if (c === 'secondary') return 'secondary'
-      if (c === 'tertiary') return 'accent'
-      if (c === 'accent') return 'accent'
-      if (c === 'error') return 'negative'
-      if (c === 'negative') return 'negative'
+      if (c === 'tertiary') return 'tertiary'
+      if (c === 'accent') return 'tertiary'
+      if (c === 'error') return 'error'
+      if (c === 'negative') return 'error'
 
       // Boolean props
       if (props.primary) return 'primary'
       if (props.secondary) return 'secondary'
-      if (props.tertiary) return 'accent'
-      if (props.error) return 'negative'
+      if (props.tertiary) return 'tertiary'
+      if (props.error) return 'error'
 
       // Default: tonal/glossy → secondary, everything else → primary
       return (props.tonal || (attrs.glossy as boolean)) ? 'secondary' : 'primary'

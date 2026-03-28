@@ -16,6 +16,20 @@
   font-weight: 500;
 }
 
+// Vertical text centering fix: trim descender/ascender space from the label.
+// Applied to the label span (block container), not the button (flex container).
+// Progressive enhancement: cap/lh units have broad support; text-box is newer.
+.q-btn .block {
+  margin-block: calc(0.5cap - 0.5lh);
+}
+
+@supports (text-box: trim-both cap alphabetic) {
+  .q-btn .block {
+    margin-block: 0;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
 // Standard (non-dense, non-fab) buttons: MD3E height is 40px at default (14px) size.
 // Uses em so Quasar's font-size-based size system (xs=8px, sm=10px, etc.) still scales properly.
 .q-btn:not(.q-btn--dense):not(.q-btn--fab):not(.q-btn--fab-mini) {
@@ -169,10 +183,14 @@
   font-size: $md3-fab-font-size;
 }
 
-// Extended FAB: extra trailing padding to visually balance the icon gap on the leading side
+// Extended FAB: when a visible label is present, use wider horizontal padding.
+// Applies regardless of whether icon is present or not.
+// QBtn uses .block; QFab uses .q-fab__label.
 .q-btn--fab:has(.block),
-.q-btn--fab-mini:has(.block) {
-  padding-right: calc(#{$md3-button-round-padding} + #{$md3-button-icon-gap});
+.q-btn--fab:has(.q-fab__label:not(.q-fab__label--internal-hidden)),
+.q-btn--fab-mini:has(.block),
+.q-btn--fab-mini:has(.q-fab__label:not(.q-fab__label--internal-hidden)) {
+  padding: $md3-button-round-padding calc(#{$md3-button-round-padding} + #{$md3-button-icon-gap});
 }
 
 // FAB mini: md size (14px font-size, inherited — no override needed)

@@ -569,11 +569,13 @@ body.desktop {
 .bg-on-secondary-container { background-color: var(--md3-on-secondary-container) !important; color: var(--md3-secondary-container) !important; }
 
 // --- Tertiary ---
+.bg-tertiary { background-color: var(--md3-tertiary) !important; color: var(--md3-on-tertiary) !important; }
 .bg-on-tertiary { background-color: var(--md3-on-tertiary) !important; color: var(--md3-tertiary) !important; }
 .bg-tertiary-container { background-color: var(--md3-tertiary-container) !important; color: var(--md3-on-tertiary-container) !important; }
 .bg-on-tertiary-container { background-color: var(--md3-on-tertiary-container) !important; color: var(--md3-tertiary-container) !important; }
 
 // --- Error ---
+.bg-error { background-color: var(--md3-error) !important; color: var(--md3-on-error) !important; }
 .bg-on-error { background-color: var(--md3-on-error) !important; color: var(--md3-error) !important; }
 .bg-error-container { background-color: var(--md3-error-container) !important; color: var(--md3-on-error-container) !important; }
 .bg-on-error-container { background-color: var(--md3-on-error-container) !important; color: var(--md3-error-container) !important; }
@@ -618,10 +620,11 @@ body.desktop {
 .text-on-secondary { color: var(--md3-on-secondary) !important; }
 .text-secondary-container { color: var(--md3-secondary-container) !important; }
 .text-on-secondary-container { color: var(--md3-on-secondary-container) !important; }
-.text-tertiary { color: var(--md3-tertiary) !important; }
+.text-tertiary, .text-accent { color: var(--md3-tertiary) !important; }
 .text-on-tertiary { color: var(--md3-on-tertiary) !important; }
 .text-tertiary-container { color: var(--md3-tertiary-container) !important; }
 .text-on-tertiary-container { color: var(--md3-on-tertiary-container) !important; }
+.text-error, .text-negative { color: var(--md3-error) !important; }
 .text-on-error { color: var(--md3-on-error) !important; }
 .text-error-container { color: var(--md3-error-container) !important; }
 .text-on-error-container { color: var(--md3-on-error-container) !important; }

@@ -1,53 +1,170 @@
 // MD3 Expressive QFab Overrides
 // Appended to QFab.sass via the Sass importer.
 //
-// Covers: FAB container shape, colors, elevation, icon transitions,
-// actions animation, and shape morphing.
+// MD3E FAB menu: closed = identical to standalone FAB (square, tonal);
+// opened = morphs to circle, color shifts from tonal to filled.
+// Only primary, secondary, tertiary color families are supported.
 
 // =============================================================================
-// 1. FORM SHAPE
+// 1. FORM SHAPE — neutralize Quasar's form classes
 // =============================================================================
-
-// MD3E FABs use extra-large corners (28px), not large (16px).
-// Both "rounded" and "square" form variants use the same 28px corner in MD3E.
-.q-fab--form-rounded {
-  border-radius: $md3-corner-extra-large; // 28px
+// Quasar adds q-fab--form-rounded / q-fab--form-square to BOTH the wrapper
+// div AND the inner QBtn. These set border-radius which conflicts with our
+// FAB shape. Neutralize on the wrapper, and force correct shape on the button.
+.q-fab.q-fab--form-rounded,
+.q-fab.q-fab--form-square {
+  border-radius: 0; // wrapper is layout only, not a visual container
 }
 
-.q-fab--form-square {
-  border-radius: $md3-corner-extra-large; // 28px -- MD3E does not have a truly square FAB
+// On the button, the form class overrides QBtn.scss's FAB radius (source order).
+// Re-apply our square shape.
+.q-fab > .q-btn--fab.q-fab--form-rounded,
+.q-fab > .q-btn--fab.q-fab--form-square,
+.q-fab > .q-btn--fab-mini.q-fab--form-rounded,
+.q-fab > .q-btn--fab-mini.q-fab--form-square {
+  border-radius: $md3-corner-medium; // match standalone FAB square shape
 }
 
 // =============================================================================
-// 2. FAB BUTTON COLORS
+// 2. FAB BUTTON — closed state (identical to standalone FAB)
 // =============================================================================
+// Closed QFab button looks exactly like a standalone q-btn--fab:
+// square shape, tonal colors, same elevation (handled in QBtn.scss).
+// Default color is primary-container (tonal) when no color prop is set.
 
-// QFab menu button: extra-large corners (28px), overriding the square default from QBtn.scss.
-.q-fab > .q-btn--fab {
-  border-radius: $md3-corner-extra-large; // 28px
-}
-
-// Default FAB color: primary-container bg, on-primary-container text/icon.
-// Uses !important because Quasar's color prop sets inline background-color.
 .q-fab > .q-btn--fab,
 .q-fab > .q-btn--fab-mini {
+  // Transition for open/close morph
+  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
+              background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
+              box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+// Closed state: always tonal (container colors).
+// Default (no color or primary)
+.q-fab:not(.q-fab--opened) > .q-btn--fab:not([class*="bg-"]),
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini:not([class*="bg-"]),
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-primary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-primary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-primary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-primary-container {
   background-color: var(--md3-primary-container) !important;
   color: var(--md3-on-primary-container) !important;
 }
 
+// Closed: secondary → tonal
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-secondary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-secondary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-secondary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-secondary-container {
+  background-color: var(--md3-secondary-container) !important;
+  color: var(--md3-on-secondary-container) !important;
+}
+
+// Closed: tertiary → tonal
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-tertiary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-tertiary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-tertiary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-tertiary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-accent,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-accent {
+  background-color: var(--md3-tertiary-container) !important;
+  color: var(--md3-on-tertiary-container) !important;
+}
+
+// Closed: error → tonal
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-negative,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-negative,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-error,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-error,
+.q-fab:not(.q-fab--opened) > .q-btn--fab.bg-error-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-error-container {
+  background-color: var(--md3-error-container) !important;
+  color: var(--md3-on-error-container) !important;
+}
+
 // =============================================================================
-// 3. FAB ELEVATION — handled in QBtn.scss (applies to all FABs, standalone and menu)
+// 3. FAB BUTTON — opened state (circle, filled colors)
+// =============================================================================
+// Shape morphs to pill. Color shifts from tonal to filled for brand colors.
+
+.q-fab--opened > .q-btn--fab,
+.q-fab--opened > .q-btn--fab-mini {
+  border-radius: $md3-button-pill-radius !important;
+}
+
+// Default: no explicit color → primary filled
+.q-fab--opened > .q-btn--fab:not([class*="bg-"]),
+.q-fab--opened > .q-btn--fab-mini:not([class*="bg-"]) {
+  background-color: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
+}
+
+// Primary tonal → primary filled
+.q-fab--opened > .q-btn--fab.bg-primary-container,
+.q-fab--opened > .q-btn--fab-mini.bg-primary-container {
+  background-color: var(--md3-primary) !important;
+  color: var(--md3-on-primary) !important;
+}
+
+// Secondary (tonal or filled) → secondary filled
+.q-fab--opened > .q-btn--fab.bg-secondary-container,
+.q-fab--opened > .q-btn--fab-mini.bg-secondary-container,
+.q-fab--opened > .q-btn--fab.bg-secondary,
+.q-fab--opened > .q-btn--fab-mini.bg-secondary {
+  background-color: var(--md3-secondary) !important;
+  color: var(--md3-on-secondary) !important;
+}
+
+// Tertiary (tonal or filled) → tertiary filled
+.q-fab--opened > .q-btn--fab.bg-tertiary-container,
+.q-fab--opened > .q-btn--fab-mini.bg-tertiary-container,
+.q-fab--opened > .q-btn--fab.bg-tertiary,
+.q-fab--opened > .q-btn--fab-mini.bg-tertiary,
+.q-fab--opened > .q-btn--fab.bg-accent,
+.q-fab--opened > .q-btn--fab-mini.bg-accent {
+  background-color: var(--md3-tertiary) !important;
+  color: var(--md3-on-tertiary) !important;
+}
+
+// Error (tonal or filled) → error filled
+.q-fab--opened > .q-btn--fab.bg-error-container,
+.q-fab--opened > .q-btn--fab-mini.bg-error-container,
+.q-fab--opened > .q-btn--fab.bg-error,
+.q-fab--opened > .q-btn--fab-mini.bg-error,
+.q-fab--opened > .q-btn--fab.bg-negative,
+.q-fab--opened > .q-btn--fab-mini.bg-negative {
+  background-color: var(--md3-error) !important;
+  color: var(--md3-on-error) !important;
+}
+
+// =============================================================================
+// 4. FAB ELEVATION — handled in QBtn.scss (applies to all FABs)
 // =============================================================================
 
 // =============================================================================
-// 4. ICON TRANSITIONS
+// 5. ICON TRANSITIONS
 // =============================================================================
+
+// Icon holder: match QBtn icon sizing so em-based gaps resolve correctly.
+// Quasar hardcodes min-width/min-height to 24px ($button-fab-icon-font-size).
+// Set font-size to match the icon (1.429em), so margin em values resolve
+// against the same base as QBtn's .on-left/.on-right margins.
+.q-fab__icon-holder {
+  font-size: $md3-button-icon-size;
+  min-width: 1em; // = $md3-button-icon-size resolved
+  min-height: 1em;
+}
 
 // MD3E uses expressive spatial spring for icon rotation (bouncy overshoot).
-// These elements use `absolute-full` (position: absolute, inset: 0) and
-// `display: block`, which causes an inline-flex icon child to sit on the
-// text baseline — pushing it ~1.3px below vertical center. Adding flex
-// centering fixes icon/label misalignment in labelled FABs.
+// Fix baseline alignment: add flex centering to absolute-positioned icon holders.
+// Reset icon font-size inside holder: the holder sets 1.429em, so the
+// q-icon inside should be 1em to avoid compounding with QBtn's .q-icon rule.
+.q-fab__icon-holder .q-icon {
+  font-size: 1em;
+}
+
 .q-fab__icon,
 .q-fab__active-icon {
   display: flex;
@@ -58,25 +175,65 @@
 }
 
 // =============================================================================
-// 5. ACTIONS CONTAINER ANIMATION
+// 6. ACTIONS CONTAINER ANIMATION
 // =============================================================================
 
-// MD3E uses emphasized easing for the actions expand/collapse
 .q-fab__actions {
-  transition: transform $md3-spring-effects-slow-duration $md3-easing-emphasized, opacity $md3-spring-effects-slow-duration $md3-easing-emphasized;
+  padding: 0;
+  transition: transform $md3-spring-effects-slow-duration $md3-easing-emphasized,
+              opacity $md3-spring-effects-slow-duration $md3-easing-emphasized;
 }
 
+
 // =============================================================================
-// 6. EXTERNAL LABEL TRANSITION
+// 7. LABEL TRANSITIONS
 // =============================================================================
+
+// Internal label: match QBtn label alignment.
+// Quasar uses max-height:30px and custom padding — override to match
+// the icon gap used by standalone extended FABs.
+.q-fab__label--internal {
+  max-height: none;
+}
+
+// Gap: put it on the icon holder (same font-size context as the icon),
+// matching how QBtn uses .on-left { margin-right } on the icon element.
+.q-fab__label--internal-right:not(.q-fab__label--internal-hidden) ~ .q-fab__icon-holder,
+.q-fab__icon-holder:has(~ .q-fab__label--internal-right:not(.q-fab__label--internal-hidden)) {
+  margin-right: $md3-button-icon-gap;
+}
+
+.q-fab__label--internal-left:not(.q-fab__label--internal-hidden) ~ .q-fab__icon-holder,
+.q-fab__icon-holder:has(~ .q-fab__label--internal-left:not(.q-fab__label--internal-hidden)) {
+  margin-left: $md3-button-icon-gap;
+}
+
+// Vertical text centering fix (same as QBtn .block)
+.q-fab__label {
+  margin-block: calc(0.5cap - 0.5lh);
+}
+
+@supports (text-box: trim-both cap alphabetic) {
+  .q-fab__label {
+    margin-block: 0;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+// Remove Quasar's label padding
+.q-fab__label--internal-right {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.q-fab__label--internal-left {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 .q-fab__label--external {
   transition: opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
 }
-
-// =============================================================================
-// 7. INTERNAL LABEL TRANSITION
-// =============================================================================
 
 .q-fab__label--internal {
   transition: font-size $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
@@ -85,26 +242,95 @@
 }
 
 // =============================================================================
-// 8. ACTIONS CHILD BUTTON STYLING
+// 8. ACTIONS CHILD BUTTON STYLING (menu items)
 // =============================================================================
+// MD3E FAB menu items = lg-size tonal buttons with icon + label.
+// QFabAction renders as q-btn--fab-mini (14px). Override to lg (20px)
+// with pill shape, tonal colors, and standard button padding.
 
-// Action buttons in the FAB menu inherit smaller sizing
 .q-fab__actions .q-btn {
-  margin: 4px;
+  margin: 4px 0;
+  font-size: $md3-fab-font-size; // lg size (20px)
+  padding: $button-padding;
+  border-radius: $md3-button-pill-radius;
+  min-width: 0;
+  min-height: $md3-button-min-height;
+
+  background-image: none !important; // remove any glossy sheen
+
+  // Explicit color on action item: force tonal
+  &.bg-secondary-container, &.bg-secondary {
+    background-color: var(--md3-secondary-container) !important;
+    color: var(--md3-on-secondary-container) !important;
+  }
+  &.bg-tertiary-container, &.bg-tertiary, &.bg-accent {
+    background-color: var(--md3-tertiary-container) !important;
+    color: var(--md3-on-tertiary-container) !important;
+  }
+  &.bg-error-container, &.bg-error, &.bg-negative {
+    background-color: var(--md3-error-container) !important;
+    color: var(--md3-on-error-container) !important;
+  }
+  &.bg-primary-container, &.bg-primary {
+    background-color: var(--md3-primary-container) !important;
+    color: var(--md3-on-primary-container) !important;
+  }
 }
+
+// Default action item color: inherit from parent QFab's color family.
+// Falls back to primary if no color is set on either QFab or action item.
+.q-fab .q-fab__actions .q-btn:not([class*="bg-"]) {
+  background-color: var(--md3-primary-container) !important;
+  color: var(--md3-on-primary-container) !important;
+}
+
+.q-fab:has(> .q-btn.bg-secondary):not(:has(> .q-btn.bg-secondary-container)) .q-fab__actions .q-btn:not([class*="bg-"]),
+.q-fab:has(> .q-btn.bg-secondary-container) .q-fab__actions .q-btn:not([class*="bg-"]) {
+  background-color: var(--md3-secondary-container) !important;
+  color: var(--md3-on-secondary-container) !important;
+}
+
+.q-fab:has(> .q-btn.bg-tertiary) .q-fab__actions .q-btn:not([class*="bg-"]),
+.q-fab:has(> .q-btn.bg-tertiary-container) .q-fab__actions .q-btn:not([class*="bg-"]),
+.q-fab:has(> .q-btn.bg-accent) .q-fab__actions .q-btn:not([class*="bg-"]) {
+  background-color: var(--md3-tertiary-container) !important;
+  color: var(--md3-on-tertiary-container) !important;
+}
+
+.q-fab:has(> .q-btn.bg-negative) .q-fab__actions .q-btn:not([class*="bg-"]),
+.q-fab:has(> .q-btn.bg-error) .q-fab__actions .q-btn:not([class*="bg-"]),
+.q-fab:has(> .q-btn.bg-error-container) .q-fab__actions .q-btn:not([class*="bg-"]) {
+  background-color: var(--md3-error-container) !important;
+  color: var(--md3-on-error-container) !important;
+}
+
+// Action item icon: standard button icon size
+.q-fab__actions .q-btn .q-icon {
+  font-size: $md3-button-icon-size; // 1.429em
+}
+
+// Icon-to-label gap: only when label is present
+// Right label (default): icon is on the left, gap on the right
+.q-fab__actions .q-btn:has(.q-fab__label--internal-right:not(.q-fab__label--internal-hidden)) .q-icon {
+  margin-right: $md3-button-icon-gap;
+}
+
+// Left label: icon is on the right, gap on the left
+.q-fab__actions .q-btn:has(.q-fab__label--internal-left:not(.q-fab__label--internal-hidden)) .q-icon {
+  margin-left: $md3-button-icon-gap;
+}
+
 
 // =============================================================================
 // 9. DISABLED STATE
 // =============================================================================
 
-// Disabled FAB: no shadow, muted colors
 .q-fab > .q-btn.disabled {
   &.q-btn--fab:before,
   &.q-btn--fab-mini:before {
     box-shadow: none !important;
   }
 
-  // Override the forced colors with disabled treatment
   background-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity) !important;
   color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity) !important;
 }
