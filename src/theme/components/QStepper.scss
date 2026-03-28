@@ -59,9 +59,9 @@
 // === Step Title ===
 // MD3E title-medium: 14pt / weight 500 / 0.1pt tracking
 .q-stepper__title {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
+  font-size: $md3-type-title-small-size;
+  line-height: $md3-type-title-small-line-height;
+  font-weight: $md3-type-title-small-weight;
   letter-spacing: 0.00714em;
   color: currentColor; // inherits tab color (primary when active, variant when inactive)
 }

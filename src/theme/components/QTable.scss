@@ -22,8 +22,8 @@
 // MD3E label-large: 14pt / weight 500 / 0.1pt tracking
 .q-table thead th {
   color: var(--md3-on-surface-variant);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: $md3-type-title-small-size;
+  font-weight: $md3-type-title-small-weight;
   letter-spacing: 0.00714em;
 }
 

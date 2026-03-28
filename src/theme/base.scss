@@ -284,94 +284,94 @@ body.desktop {
 // === MD3E Typography Utility Classes ===
 // Baseline type scale (15 roles)
 .text-display-large {
-  font-size: 3.5625rem;
-  font-weight: 400;
-  line-height: 4rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-large-size;
+  font-weight: $md3-type-display-large-weight;
+  line-height: $md3-type-display-large-line-height;
+  letter-spacing: $md3-type-display-large-letter-spacing;
 }
 .text-display-medium {
-  font-size: 2.8125rem;
-  font-weight: 400;
-  line-height: 3.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-medium-size;
+  font-weight: $md3-type-display-medium-weight;
+  line-height: $md3-type-display-medium-line-height;
+  letter-spacing: $md3-type-display-medium-letter-spacing;
 }
 .text-display-small {
-  font-size: 2.25rem;
-  font-weight: 400;
-  line-height: 2.75rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-small-size;
+  font-weight: $md3-type-display-small-weight;
+  line-height: $md3-type-display-small-line-height;
+  letter-spacing: $md3-type-display-small-letter-spacing;
 }
 .text-headline-large {
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 2.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-large-size;
+  font-weight: $md3-type-headline-large-weight;
+  line-height: $md3-type-headline-large-line-height;
+  letter-spacing: $md3-type-headline-large-letter-spacing;
 }
 .text-headline-medium {
-  font-size: 1.75rem;
-  font-weight: 400;
-  line-height: 2.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-medium-size;
+  font-weight: $md3-type-headline-medium-weight;
+  line-height: $md3-type-headline-medium-line-height;
+  letter-spacing: $md3-type-headline-medium-letter-spacing;
 }
 .text-headline-small {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 2rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-small-size;
+  font-weight: $md3-type-headline-small-weight;
+  line-height: $md3-type-headline-small-line-height;
+  letter-spacing: $md3-type-headline-small-letter-spacing;
 }
 .text-title-large {
-  font-size: 1.375rem;
-  font-weight: 400;
-  line-height: 1.75rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-large-size;
+  font-weight: $md3-type-title-large-weight;
+  line-height: $md3-type-title-large-line-height;
+  letter-spacing: $md3-type-title-large-letter-spacing;
 }
 .text-title-medium {
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-medium-size;
+  font-weight: $md3-type-title-medium-weight;
+  line-height: $md3-type-title-medium-line-height;
+  letter-spacing: $md3-type-title-medium-letter-spacing;
 }
 .text-title-small {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-small-size;
+  font-weight: $md3-type-title-small-weight;
+  line-height: $md3-type-title-small-line-height;
+  letter-spacing: $md3-type-title-small-letter-spacing;
 }
 .text-body-large {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-body-large-size;
+  font-weight: $md3-type-body-large-weight;
+  line-height: $md3-type-body-large-line-height;
+  letter-spacing: $md3-type-body-large-letter-spacing;
 }
 .text-body-medium {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-body-medium-size;
+  font-weight: $md3-type-body-medium-weight;
+  line-height: $md3-type-body-medium-line-height;
+  letter-spacing: $md3-type-body-medium-letter-spacing;
 }
 .text-body-small {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1rem;
-  letter-spacing: 0.00833em; // 0.1pt / 12sp
+  font-size: $md3-type-body-small-size;
+  font-weight: $md3-type-body-small-weight;
+  line-height: $md3-type-body-small-line-height;
+  letter-spacing: $md3-type-body-small-letter-spacing;
 }
 .text-label-large {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-label-large-size;
+  font-weight: $md3-type-label-large-weight;
+  line-height: $md3-type-label-large-line-height;
+  letter-spacing: $md3-type-label-large-letter-spacing;
 }
 .text-label-medium {
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: 0.00833em; // 0.1pt / 12sp
+  font-size: $md3-type-label-medium-size;
+  font-weight: $md3-type-label-medium-weight;
+  line-height: $md3-type-label-medium-line-height;
+  letter-spacing: $md3-type-label-medium-letter-spacing;
 }
 .text-label-small {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: 0.00909em; // 0.1pt / 11sp
+  font-size: $md3-type-label-small-size;
+  font-weight: $md3-type-label-small-weight;
+  line-height: $md3-type-label-small-line-height;
+  letter-spacing: $md3-type-label-small-letter-spacing;
 }
 
 // === Emphasized Typography (NEW in MD3E) ===
@@ -379,94 +379,94 @@ body.desktop {
 // title-medium/small and labels +200 (500→700)
 // body +100 (400→500)
 .text-emph-display-large {
-  font-size: 3.5625rem;
-  font-weight: 500;
-  line-height: 4rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-large-size;
+  font-weight: $md3-type-display-large-weight-emph;
+  line-height: $md3-type-display-large-line-height;
+  letter-spacing: $md3-type-display-large-letter-spacing;
 }
 .text-emph-display-medium {
-  font-size: 2.8125rem;
-  font-weight: 500;
-  line-height: 3.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-medium-size;
+  font-weight: $md3-type-display-medium-weight-emph;
+  line-height: $md3-type-display-medium-line-height;
+  letter-spacing: $md3-type-display-medium-letter-spacing;
 }
 .text-emph-display-small {
-  font-size: 2.25rem;
-  font-weight: 500;
-  line-height: 2.75rem;
-  letter-spacing: 0;
+  font-size: $md3-type-display-small-size;
+  font-weight: $md3-type-display-small-weight-emph;
+  line-height: $md3-type-display-small-line-height;
+  letter-spacing: $md3-type-display-small-letter-spacing;
 }
 .text-emph-headline-large {
-  font-size: 2rem;
-  font-weight: 500;
-  line-height: 2.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-large-size;
+  font-weight: $md3-type-headline-large-weight-emph;
+  line-height: $md3-type-headline-large-line-height;
+  letter-spacing: $md3-type-headline-large-letter-spacing;
 }
 .text-emph-headline-medium {
-  font-size: 1.75rem;
-  font-weight: 500;
-  line-height: 2.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-medium-size;
+  font-weight: $md3-type-headline-medium-weight-emph;
+  line-height: $md3-type-headline-medium-line-height;
+  letter-spacing: $md3-type-headline-medium-letter-spacing;
 }
 .text-emph-headline-small {
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 2rem;
-  letter-spacing: 0;
+  font-size: $md3-type-headline-small-size;
+  font-weight: $md3-type-headline-small-weight-emph;
+  line-height: $md3-type-headline-small-line-height;
+  letter-spacing: $md3-type-headline-small-letter-spacing;
 }
 .text-emph-title-large {
-  font-size: 1.375rem;
-  font-weight: 500;
-  line-height: 1.75rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-large-size;
+  font-weight: $md3-type-title-large-weight-emph;
+  line-height: $md3-type-title-large-line-height;
+  letter-spacing: $md3-type-title-large-letter-spacing;
 }
 .text-emph-title-medium {
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-medium-size;
+  font-weight: $md3-type-title-medium-weight-emph;
+  line-height: $md3-type-title-medium-line-height;
+  letter-spacing: $md3-type-title-medium-letter-spacing;
 }
 .text-emph-title-small {
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-title-small-size;
+  font-weight: $md3-type-title-small-weight-emph;
+  line-height: $md3-type-title-small-line-height;
+  letter-spacing: $md3-type-title-small-letter-spacing;
 }
 .text-emph-body-large {
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.5rem;
-  letter-spacing: 0;
+  font-size: $md3-type-body-large-size;
+  font-weight: $md3-type-body-large-weight-emph;
+  line-height: $md3-type-body-large-line-height;
+  letter-spacing: $md3-type-body-large-letter-spacing;
 }
 .text-emph-body-medium {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-body-medium-size;
+  font-weight: $md3-type-body-medium-weight-emph;
+  line-height: $md3-type-body-medium-line-height;
+  letter-spacing: $md3-type-body-medium-letter-spacing;
 }
 .text-emph-body-small {
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: 0;
+  font-size: $md3-type-body-small-size;
+  font-weight: $md3-type-body-small-weight-emph;
+  line-height: $md3-type-body-small-line-height;
+  letter-spacing: $md3-type-body-small-letter-spacing;
 }
 .text-emph-label-large {
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.25rem;
-  letter-spacing: 0;
+  font-size: $md3-type-label-large-size;
+  font-weight: $md3-type-label-large-weight-emph;
+  line-height: $md3-type-label-large-line-height;
+  letter-spacing: $md3-type-label-large-letter-spacing;
 }
 .text-emph-label-medium {
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.00833em; // 0.1pt / 12sp
+  font-size: $md3-type-label-medium-size;
+  font-weight: $md3-type-label-medium-weight-emph;
+  line-height: $md3-type-label-medium-line-height;
+  letter-spacing: $md3-type-label-medium-letter-spacing;
 }
 .text-emph-label-small {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.00909em; // 0.1pt / 11sp
+  font-size: $md3-type-label-small-size;
+  font-weight: $md3-type-label-small-weight-emph;
+  line-height: $md3-type-label-small-line-height;
+  letter-spacing: $md3-type-label-small-letter-spacing;
 }
 
 // === MD3E Shape Utility Classes ===

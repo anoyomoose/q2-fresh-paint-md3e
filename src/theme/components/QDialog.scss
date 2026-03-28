@@ -29,9 +29,9 @@
 // 24px / 32px line-height / weight 400 / letter-spacing 0
 // (Also set via Sass variables in variables.scss, but reinforced here for specificity)
 .q-dialog__title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 2rem;
+  font-size: $md3-type-headline-small-size;
+  font-weight: $md3-type-headline-small-weight;
+  line-height: $md3-type-headline-small-line-height;
   letter-spacing: 0;
   // color: inherits from QLayout (on-surface) — no stock override to replace
 }
@@ -40,9 +40,9 @@
 // MD3E: body-medium — 14px / 20px / weight 400 / tracking 0.25px
 // Color: on-surface-variant
 .q-dialog__message {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.25rem;
+  font-size: $md3-type-body-medium-size;
+  font-weight: $md3-type-body-medium-weight;
+  line-height: $md3-type-body-medium-line-height;
   letter-spacing: 0.015625rem;
   color: var(--md3-on-surface-variant); // intentional: differentiate supporting text from heading (on-surface-variant vs inherited on-surface)
 }

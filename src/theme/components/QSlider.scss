@@ -162,8 +162,8 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
 .q-slider__text-container {
   background: var(--md3-inverse-surface);
   border-radius: $md3-corner-full;
-  min-height: 44px;
-  padding: 0 16px;
+  min-height: $md3-slider-pin-height;
+  padding: $md3-slider-pin-padding;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,9 +171,9 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
 
 .q-slider__text {
   color: var(--md3-inverse-on-surface); // replaces stock color: #fff
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
+  font-size: $md3-slider-pin-font-size;
+  font-weight: $md3-type-label-large-weight;
+  line-height: $md3-slider-pin-line-height;
   letter-spacing: 0.00625rem;
 }
 

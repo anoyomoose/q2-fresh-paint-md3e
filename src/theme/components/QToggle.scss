@@ -48,7 +48,7 @@
 // ============================================================
 
 .q-toggle__inner {
-  font-size: 40px;
+  font-size: $md3-toggle-font-size;
   // Track is 1.3em, state layer is 1em centered on thumb (at most 0.7em).
   // State layer overhang beyond thumb: (1em - 0.7em)/2 = 0.15em per side.
   // Thumb extends from ~0.175em to ~1.375em. State layer extends from ~0.025em to ~1.525em.

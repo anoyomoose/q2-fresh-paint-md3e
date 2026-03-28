@@ -42,9 +42,9 @@
 // === Menu Item Typography ===
 // MD3E menu labels: label-large (14px, weight 500, 20px lh, 0.1pt tracking)
 .q-menu .q-item__label {
-  font-size: 0.875rem;   // 14px
-  font-weight: 500;       // label-large weight
-  line-height: 1.25rem;   // 20px
+  font-size: $md3-type-label-large-size;   // 14px
+  font-weight: $md3-type-label-large-weight;       // label-large weight
+  line-height: $md3-type-label-large-line-height;   // 20px
   letter-spacing: 0.00714em; // 0.1pt / 14sp
 }
 

@@ -166,7 +166,7 @@
 // FAB standard: lg size (20px font-size)
 // QFab menu overrides border-radius to extra-large in QFab.scss.
 .q-btn--fab {
-  font-size: 20px;
+  font-size: $md3-fab-font-size;
 }
 
 // Extended FAB: extra trailing padding to visually balance the icon gap on the leading side

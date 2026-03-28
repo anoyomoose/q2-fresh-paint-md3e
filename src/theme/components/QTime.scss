@@ -30,10 +30,10 @@
 // MD3E display-large: 57pt / weight 400 / tracking -0.25pt
 // Approximation within Quasar's layout constraints
 .q-time__header-label {
-  font-size: 3.5625rem; // 57pt
-  line-height: 4rem;    // 64pt
-  font-weight: 400;
-  letter-spacing: -0.00439em; // -0.25pt / 57sp
+  font-size: $md3-type-display-large-size; // 57pt
+  line-height: $md3-type-display-large-line-height; // 64pt
+  font-weight: $md3-type-display-large-weight;
+  letter-spacing: -0.00439em; // -0.25pt / 57sp (custom, not standard role)
   color: var(--md3-on-surface); // intentional: differentiate HH:MM from header's on-surface-variant
 }
 
@@ -58,8 +58,8 @@
 // === AM/PM Toggle ===
 // MD3E label-large (16pt / weight 500); inherits on-surface-variant from header
 .q-time__header-ampm {
-  font-size: 1rem;   // 16pt
-  font-weight: 500;
+  font-size: $md3-type-body-large-size;   // 16pt
+  font-weight: $md3-type-title-medium-weight;
   letter-spacing: 0;
   // color: inherits from header (on-surface-variant) — redundant
 }

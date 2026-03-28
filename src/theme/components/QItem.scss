@@ -31,18 +31,18 @@
 // === Label Typography ===
 // Label text = body-large: 16px, 400, 24px lh, 0.03125rem tracking
 .q-item__label {
-  line-height: 1.5rem !important; // 24px (override Quasar's 1.2em !important)
-  font-size: 1rem;
-  font-weight: 400;
+  line-height: $md3-type-body-large-line-height !important; // 24px (override Quasar's 1.2em !important)
+  font-size: $md3-type-body-large-size;
+  font-weight: $md3-type-body-large-weight;
   letter-spacing: 0.03125rem;
 }
 
 // Supporting text (caption) = body-medium: 14px, 400, 20px lh
 .q-item__label--caption {
   color: var(--md3-on-surface-variant);
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.25rem !important; // 20px
+  font-size: $md3-type-body-medium-size;
+  font-weight: $md3-type-body-medium-weight;
+  line-height: $md3-type-body-medium-line-height !important; // 20px
   letter-spacing: 0.015625rem;
 }
 
@@ -50,9 +50,9 @@
 .q-item__label--overline {
   color: var(--md3-on-surface-variant);
   text-transform: none; // MD3E removes uppercase
-  font-size: 0.6875rem;
-  font-weight: 500;
-  line-height: 1rem !important; // 16px
+  font-size: $md3-type-label-small-size;
+  font-weight: $md3-type-label-small-weight;
+  line-height: $md3-type-label-small-line-height !important; // 16px
   letter-spacing: 0.03125rem;
 }
 

@@ -14,14 +14,14 @@
   border-radius: $md3-corner-full; // pill shape
 
   // === Sizing ===
-  min-height: 16px;
-  min-width: 16px; // circle for single digit
-  padding: 0 4px; // MD3E: 4dp horizontal padding
+  min-height: $md3-badge-height;
+  min-width: $md3-badge-height; // circle for single digit
+  padding: $md3-badge-padding; // MD3E: 4dp horizontal padding
   text-align: center;
 
   // === Typography: Label Small ===
   // 11px, weight 500, line-height 16px, tracking 0.1pt
-  font-size: 11px;
+  font-size: $md3-badge-font-size;
   font-weight: 500;
   line-height: 1rem; // 16px
   letter-spacing: 0.00909em; // 0.1pt / 11sp
@@ -34,12 +34,12 @@
 // Empty badge or explicit dot class renders as 6x6dp circle
 .q-badge:empty,
 .q-badge--dot {
-  width: 6px;
-  height: 6px;
-  min-height: 6px;
-  min-width: 6px;
+  width: $md3-badge-dot-size;
+  height: $md3-badge-dot-size;
+  min-height: $md3-badge-dot-size;
+  min-width: $md3-badge-dot-size;
   padding: 0;
-  border-radius: 3px; // circle for 6dp element
+  border-radius: calc(#{$md3-badge-dot-size} / 2); // circle
 }
 
 // === Outline Badge ===
