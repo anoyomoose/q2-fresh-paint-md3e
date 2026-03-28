@@ -71,10 +71,10 @@ export const Md3eBtnGroup = defineComponent({
         ...restAttrs,
         // Standard is default; connected disables stretch
         stretch: props.connected ? undefined : true,
-        // Variant shortcuts (merge with direct attrs)
-        glossy: props.tonal || attrGlossy || undefined,
-        flat: props.text || attrFlat || undefined,
-        unelevated: props.elevated ? false : (attrUnelevated ?? undefined),
+        // Variant shortcuts (attrs are "" for boolean HTML attrs, use != null to detect presence)
+        glossy: props.tonal || (attrGlossy != null && attrGlossy !== false) || undefined,
+        flat: props.text || (attrFlat != null && attrFlat !== false) || undefined,
+        unelevated: props.elevated ? false : (attrUnelevated != null ? attrUnelevated !== false : undefined),
         class: [
           attrClass,
           props.noWidening ? 'no-widening' : null,

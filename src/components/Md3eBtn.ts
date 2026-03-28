@@ -196,10 +196,10 @@ export const Md3eBtn = defineComponent({
         // Color: computed from our logic
         color: computedColor.value,
 
-        // Variant merging
-        flat: props.text || attrFlat || undefined,
-        glossy: props.tonal || attrGlossy || undefined,
-        unelevated: props.elevated ? false : (attrUnelevated ?? undefined),
+        // Variant merging (attrs are "" for boolean HTML attrs, use != null to detect presence)
+        flat: props.text || (attrFlat != null && attrFlat !== false) || undefined,
+        glossy: props.tonal || (attrGlossy != null && attrGlossy !== false) || undefined,
+        unelevated: props.elevated ? false : (attrUnelevated != null ? attrUnelevated !== false : undefined),
 
         // Icon: swap when selected
         icon: (isSelected.value && props.selectedIcon)
