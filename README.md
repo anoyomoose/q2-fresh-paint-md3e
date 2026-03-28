@@ -21,7 +21,7 @@ This is an attempt to (partially) provide a Material Design 3 Expressive theme t
 - **Toggle switches**: completely redesigned to follow MD3E specification with expanding handles
 - **Sliders**: similarly updated - **NOTE**: I am not quite happy with them, might change/revert
 - **Outlined inputs**: labels now animated and positioned to intersect the border as per MD3E specification
-- **FABs**: TODO needs review
+- **FABs**: adjusted to MD3E standards; FAB menus: TODO
 - **Toolbars, headers and footers**: Now use MD3E specification mandated palette entries
 
 30+ Quasar built-in components have received styling changes, so this summary is by no means exhaustive. This is still a work-in-progress and likely several components will need further tweaking.
@@ -220,6 +220,7 @@ Must-know in short:
 - You can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
 - Toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
 - Morph transition can be disabled with `no-morph` attribute or class
+- FABs: `fab-mini` = `md`, `fab` = `lg` in `size`; shape is `square`; only default and `tonal` variants should be used; label is converted to tooltip if present (wrapper only)
 
 For full documentation including all props, selection modes, color system, variant shortcuts, and migration guide, see [docs/Md3eBtn.md](docs/Md3eBtn.md).
 

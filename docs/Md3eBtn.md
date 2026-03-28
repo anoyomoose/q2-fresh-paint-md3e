@@ -66,6 +66,16 @@ All `QBtn` props pass through to the underlying button. The following props are 
 | `noMorph`      | Boolean | `false` | Disable shape morphing on press. The button keeps its resting shape when pressed. Toggle selection still swaps pill↔square but instantly. Can also be applied as a `no-morph` CSS class on any `QBtn`. |
 | `selectedIcon` | String | `undefined` | Icon to display when the button is in the selected state. Replaces the `icon` prop when selected.                                                                                           |
 
+## FABs
+
+`fab-mini` is the same size as a `size="md"` button; `fab` is the same size a `size="lg"` button.
+
+Per the MD3E spec, the shape is square.
+
+Only default and `tonal` variants are supported.
+
+MD3E FABs should not have labels, if a label is set, it is converted to a tooltip (only if the button doesn't already have subcontent).
+
 ## Selection Modes
 
 The `modelValue` prop drives all toggle behavior. There are four modes depending on the value types involved.

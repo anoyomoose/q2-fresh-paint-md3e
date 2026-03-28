@@ -31,9 +31,14 @@
 .q-btn--dense .on-left { margin-right: 0.212em; }
 .q-btn--dense .on-right { margin-left: 0.212em; }
 
-// Icon size: Quasar's default 1.715em (24dp at 14px base) scales well with the
-// em-based size system. MD3E specifies 20dp for standard buttons at the native level,
-// but on web, keeping the em-based default produces better results across all sizes.
+// Icon size: MD3E specifies 20dp for label buttons, 24dp for icon-only buttons.
+// Label buttons: 20/14 = 1.429em. Icon-only (round): use $button-line-height (1.715em = 24px).
+.q-btn .q-icon, .q-btn .q-spinner {
+  font-size: 1.429em;
+}
+.q-btn--round .q-icon, .q-btn--round .q-spinner {
+  font-size: 1.715em;
+}
 
 // =============================================================================
 // 2. OUTLINED BUTTON
@@ -132,32 +137,24 @@
 }
 
 // =============================================================================
-// 4. FAB SHAPE
+// 4. FAB SIZING & SHAPE
 // =============================================================================
 
-// FAB standard (56px): MD3E uses extra-large (28px), NOT large (16px)
-.q-btn--fab {
-  border-radius: $md3-corner-extra-large; // 28px
-  transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
-              box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+// Convert FABs from fixed px to em-based sizing via font-size override.
+// FAB = lg size (20px font-size), FAB mini = md size (14px, default).
+// Both use the same em values as regular buttons — just at different scales.
 
-  // Shape morph: FAB press goes from 28px to medium (12px)
-  &.q-btn--actionable:not(.no-morph) {
-    &:active,
-    &.q-btn--active {
-      border-radius: $md3-corner-medium; // 12px pressed
-    }
-  }
-}
-
-// FAB mini (40px): MD3E uses medium (12px).
-// Note: Small FAB is deprecated in MD3E but kept for compatibility.
+// Shared FAB styling: square shape, morph, shadow transition
+.q-btn--fab,
 .q-btn--fab-mini {
-  border-radius: $md3-corner-medium; // 12px
+  padding: 0.571em; // equal padding = square base for circular appearance
+  min-height: 2.857em; // standard button height in em
+  min-width: 2.857em;
+  border-radius: $md3-corner-medium; // 12px — square shape
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
               box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
 
-  // Shape morph: mini FAB press goes from 12px to small (8px)
+  // Shape morph: press from 12px to 8px
   &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
@@ -166,9 +163,44 @@
   }
 }
 
+// FAB standard: lg size (20px font-size)
+// QFab menu overrides border-radius to extra-large in QFab.scss.
+.q-btn--fab {
+  font-size: 20px;
+}
+
+// FAB mini: md size (14px font-size, inherited — no override needed)
+
 // =============================================================================
-// 5. FAB ELEVATION — handled in QFab.scss (not here, to avoid specificity conflicts)
+// 5. FAB ELEVATION
 // =============================================================================
+// All FAB buttons (standalone and QFab menu) get level 3 resting, level 4 hover.
+// QFab.scss has additional rules for the QFab context; these cover standalone usage.
+
+.q-btn--fab:before,
+.q-btn--fab-mini:before {
+  box-shadow: $md3-elevation-3;
+  transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
+}
+
+body.desktop {
+  .q-btn--fab.q-btn--actionable:hover:before,
+  .q-btn--fab-mini.q-btn--actionable:hover:before {
+    box-shadow: $md3-elevation-4;
+  }
+}
+
+.q-btn--fab.q-btn--actionable:active:before,
+.q-btn--fab.q-btn--actionable.q-btn--active:before,
+.q-btn--fab-mini.q-btn--actionable:active:before,
+.q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
+  box-shadow: $md3-elevation-3;
+}
+
+.q-btn--fab.disabled:before,
+.q-btn--fab-mini.disabled:before {
+  box-shadow: none !important;
+}
 
 // =============================================================================
 // 6. HOVER ELEVATION

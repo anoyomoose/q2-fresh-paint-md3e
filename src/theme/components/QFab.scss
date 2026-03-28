@@ -22,6 +22,11 @@
 // 2. FAB BUTTON COLORS
 // =============================================================================
 
+// QFab menu button: extra-large corners (28px), overriding the square default from QBtn.scss.
+.q-fab > .q-btn--fab {
+  border-radius: $md3-corner-extra-large; // 28px
+}
+
 // Default FAB color: primary-container bg, on-primary-container text/icon.
 // Uses !important because Quasar's color prop sets inline background-color.
 .q-fab > .q-btn--fab,
@@ -31,34 +36,8 @@
 }
 
 // =============================================================================
-// 3. FAB ELEVATION
+// 3. FAB ELEVATION — handled in QBtn.scss (applies to all FABs, standalone and menu)
 // =============================================================================
-
-// FAB resting elevation: Level 3 (6dp)
-// The shadow lives on the :before pseudo of the inner .q-btn
-.q-fab > .q-btn--fab:before,
-.q-fab > .q-btn--fab-mini:before {
-  box-shadow: $md3-elevation-3;
-  transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
-}
-
-// Hover: Level 3 -> Level 4 (desktop only)
-body.desktop {
-  .q-fab > .q-btn--fab.q-btn--actionable:hover:before,
-  .q-fab > .q-btn--fab-mini.q-btn--actionable:hover:before {
-    // Level 4 hover shadow
-    box-shadow: $md3-elevation-4;
-  }
-}
-
-// Pressed: back to Level 3
-.q-fab > .q-btn--fab.q-btn--actionable:active:before,
-.q-fab > .q-btn--fab.q-btn--actionable.q-btn--active:before,
-.q-fab > .q-btn--fab-mini.q-btn--actionable:active:before,
-.q-fab > .q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
-  // Pressed: return to Level 3
-  box-shadow: $md3-elevation-3;
-}
 
 // =============================================================================
 // 4. ICON TRANSITIONS

@@ -38,7 +38,7 @@
  */
 
 import { h, computed, defineComponent } from 'vue'
-import { QBtn } from 'quasar'
+import { QBtn, QTooltip } from 'quasar'
 
 export const Md3eBtn = defineComponent({
   name: 'Md3eBtn',
@@ -175,10 +175,16 @@ export const Md3eBtn = defineComponent({
         glossy: attrGlossy,
         unelevated: attrUnelevated,
         icon: attrIcon,
+        label: attrLabel,
         class: attrClass,
         onClick: attrOnClick,
         ...restAttrs
       } = attrs
+
+      // FABs: convert label to tooltip (MD3E FABs are icon-only)
+      const isFab = restAttrs.fab !== undefined || restAttrs[ 'fab-mini' ] !== undefined
+      const hasDefaultSlot = slots.default && slots.default().length > 0
+      const labelAsTooltip = isFab && attrLabel && !hasDefaultSlot
 
       // Build the merged onClick handler array
       const onClickHandlers: Array<(e: Event) => void> = []
@@ -205,8 +211,9 @@ export const Md3eBtn = defineComponent({
           ? props.selectedIcon
           : (attrIcon as string | undefined),
 
-        // Accessibility: communicate toggle state to screen readers
+        // Accessibility
         'aria-pressed': isToggle.value ? (isSelected.value ? 'true' : 'false') : undefined,
+        'aria-label': labelAsTooltip ? (attrLabel as string) : undefined,
 
         // Classes: merge user classes with toggle/selected/no-morph
         class: [
@@ -216,9 +223,15 @@ export const Md3eBtn = defineComponent({
           props.noMorph ? 'no-morph' : null,
         ].filter(Boolean),
 
+        // Label: strip for FABs (MD3E FABs are icon-only)
+        label: isFab ? undefined : (attrLabel as string | undefined),
+
         // Click: our handler + user's handler
         onClick: onClickHandlers,
-      }, slots)
+      }, labelAsTooltip
+        ? { default: () => [ h(QTooltip, {}, () => attrLabel as string) ] }
+        : slots
+      )
     }
   },
 })
