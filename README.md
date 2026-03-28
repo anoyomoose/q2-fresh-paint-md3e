@@ -240,9 +240,9 @@ import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
 ```
 
 Must-know in short: 
-- Md3eBtnGroup uses the standard group look and behavior by default (which translates to a repurposed `stretch` on the underlying QBtnGroup), use the `connected` attribute to get the connected group look and behavior. This is inverse to QBtnGroup, which is connected by default and standard by attribute.
-- You can indeed just use QBtn instead of Md3eBtn
-- Shape definitions do not inherit properly (nor do they on QBtnGroup anymore), due to a combination of how Quasar's CSS rules work and the MD3E specification. You should not use them on the group at all; rather you should specify each button's shape and style explicitly if you want to depart from MD3E's default behavior, in so far as the design will actually allow it (some things are just forced by the specification). Particularly in connected groups, look and feel is probably initially different from what you'd expect!
+- `Md3eBtnGroup` uses the standard group look and behavior by default (which translates to a repurposed `stretch` on the underlying `QBtnGroup`), use the `connected` attribute to get the connected group look and behavior. This is inverse to `QBtnGroup`, which is connected by default and standard by attribute.
+- You can indeed just use `QBtn` instead of `Md3eBtn`
+- Shape definitions do not inherit properly (nor do they on `QBtnGroup` anymore), due to a combination of how Quasar's CSS rules work and the MD3E specification. You should not use them on the group at all; rather you should specify each button's shape and style explicitly if you want to depart from MD3E's default behavior, in so far as the design will actually allow it (some things are just forced by the specification). Particularly in connected groups, look and feel is probably initially different from what you'd expect!
 - Transitions do not work on dense buttons
 - You should not mix sizes and dense in the same group
 - Widening transition can be disabled with `no-widening` attribute or class
@@ -251,7 +251,7 @@ For full documentation including group variants, shape morphing, design props, a
 
 ### `Md3eFab` / `Md3eFabAction`
 
-QFab / QFabAction wrappers that default to MD3E FAB menus.
+`QFab` / `QFabAction` wrappers that default to MD3E FAB menus.
 
 MD3E FAB Menus are much more restricted than all the options Quasar provides. Implementation and testing has been limited to the spec:
 - Only `primary`, `secondary`, `tertiary` and `error` colors are supported. Others at your own risk
