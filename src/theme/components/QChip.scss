@@ -210,10 +210,10 @@ body.desktop.body--dark .q-chip--clickable:focus {
 
   .q-chip__content,
   .q-chip__icon {
-    opacity: 0.38;
+    opacity: $md3-disabled-content-opacity;
   }
 }
 
 .q-chip--outline.disabled {
-  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+  border-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
 }

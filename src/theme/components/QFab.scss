@@ -105,6 +105,6 @@
   }
 
   // Override the forced colors with disabled treatment
-  background-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
-  color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+  background-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity) !important;
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity) !important;
 }

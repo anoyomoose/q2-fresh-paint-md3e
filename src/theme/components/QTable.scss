@@ -40,7 +40,7 @@
 // $table-hover-background: rgba(0, 0, 0, 0.08) is set in variables.scss.
 // Here we override with the token-based value so dark mode flips correctly.
 body.desktop .q-table > tbody > tr:not(.q-tr--no-hover):hover > td:not(.q-td--no-hover)::before {
-  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.08);
+  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), $md3-state-hover-opacity);
 }
 
 // === Selected Row ===

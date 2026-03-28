@@ -44,11 +44,11 @@
 
 // === Disabled Step ===
 .q-stepper__tab--disabled .q-stepper__dot {
-  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.12);
+  background: rgba(var(--md3-on-surface-rgb, 0, 0, 0), $md3-disabled-container-opacity);
 }
 
 .q-stepper__tab--disabled .q-stepper__label {
-  color: rgba(var(--md3-on-surface-rgb, 0, 0, 0), 0.38); // replaces stock rgba(0,0,0,.32)
+  color: rgba(var(--md3-on-surface-rgb, 0, 0, 0), $md3-disabled-content-opacity); // replaces stock rgba(0,0,0,.32)
 }
 
 // === Error Step ===

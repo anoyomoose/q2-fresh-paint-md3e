@@ -140,3 +140,41 @@ $body2: (size: .875rem, line-height: 1.25rem, letter-spacing: 0, weight: 400) !d
 // overline = label-small, caption = body-small (0.1pt tracking = 0.00625rem)
 $overline: (size: .6875rem, line-height: 1rem, letter-spacing: .00625rem, weight: 500) !default;
 $caption: (size: .75rem, line-height: 1rem, letter-spacing: .00625rem, weight: 400) !default;
+
+// =============================================================================
+// INTERNAL VARIABLES
+// =============================================================================
+// Used by component overrides. Extracted here for consistency and overridability.
+// These are not part of the public API but can be overridden via user variable files.
+
+// === State Layer Opacities ===
+$md3-state-hover-opacity: 0.08 !default;
+$md3-state-focus-opacity: 0.12 !default;
+$md3-state-pressed-opacity: 0.12 !default;
+$md3-state-dragged-opacity: 0.16 !default;
+$md3-disabled-content-opacity: 0.38 !default;
+$md3-disabled-container-opacity: 0.12 !default;
+
+// === Scrim ===
+$md3-scrim-opacity: 0.32 !default;
+
+// === Button Sizing (em-based, scales with font-size/size prop) ===
+$md3-button-min-height: 2.857em !default;
+$md3-button-pill-radius: 1.5em !default;
+$md3-button-pressed-radius: 0.571em !default;
+$md3-button-round-padding: 0.571em !default;
+$md3-button-icon-size: 1.429em !default;        // 20px at 14px base (label buttons)
+$md3-button-icon-size-round: 1.715em !default;   // 24px at 14px base (icon-only buttons)
+$md3-button-icon-gap: 0.283em !default;           // relative to icon font-size
+$md3-button-icon-gap-dense: 0.212em !default;
+
+// === Button Group ===
+$md3-button-group-standard-gap: 12px !default;
+$md3-button-group-connected-gap: 2px !default;
+$md3-button-group-widen-middle: 1.43em !default;
+$md3-button-group-widen-edge: 1.29em !default;
+$md3-button-group-shrink: 1.0em !default;
+// Round button widening (same deltas applied to different base padding)
+$md3-button-group-round-widen-middle: 0.861em !default;
+$md3-button-group-round-widen-edge: 0.721em !default;
+$md3-button-group-round-shrink: 0.431em !default;

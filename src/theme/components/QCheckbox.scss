@@ -39,7 +39,7 @@
 // Hover: 8% (using currentColor which auto-adapts: on-surface-variant
 // when unchecked, primary when checked)
 body.desktop .q-checkbox:not(.disabled) .q-checkbox__inner:before {
-  opacity: 0.08;
+  opacity: $md3-state-hover-opacity;
   transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
@@ -61,13 +61,13 @@ body.desktop .q-checkbox:not(.disabled):hover .q-checkbox__inner:not(.q-checkbox
 
 // Disabled unchecked: on-surface at 38%
 .q-checkbox.disabled .q-checkbox__inner {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled selected container: on-surface at 38%
 .q-checkbox.disabled .q-checkbox__inner--truthy .q-checkbox__bg,
 .q-checkbox.disabled .q-checkbox__inner--indet .q-checkbox__bg {
-  background: rgba(var(--md3-on-surface-rgb), 0.38);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled selected checkmark: surface color (not on-primary)
@@ -82,6 +82,6 @@ body.desktop .q-checkbox:not(.disabled):hover .q-checkbox__inner:not(.q-checkbox
 // own dark values apply correctly when --dark is set.
 .q-checkbox--dark .q-checkbox__inner {
   &:before {
-    opacity: 0.08 !important;
+    opacity: $md3-state-hover-opacity !important;
   }
 }

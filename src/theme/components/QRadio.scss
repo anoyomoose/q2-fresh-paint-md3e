@@ -23,7 +23,7 @@
 // === State Layers ===
 // Hover: 8% (currentColor auto-adapts per selection state)
 body.desktop .q-radio:not(.disabled) .q-radio__inner:before {
-  opacity: 0.08;
+  opacity: $md3-state-hover-opacity;
   transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 }
 
@@ -45,11 +45,11 @@ body.desktop .q-radio:not(.disabled):hover .q-radio__inner:not(.q-radio__inner--
 
 // Disabled color: on-surface at 38% (both selected and unselected)
 .q-radio.disabled .q-radio__inner {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 .q-radio.disabled .q-radio__inner--truthy {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // === Dark Mode ===
@@ -58,6 +58,6 @@ body.desktop .q-radio:not(.disabled):hover .q-radio__inner:not(.q-radio__inner--
 // own dark values apply correctly when --dark is set.
 .q-radio--dark .q-radio__inner {
   &:before {
-    opacity: 0.08 !important;
+    opacity: $md3-state-hover-opacity !important;
   }
 }

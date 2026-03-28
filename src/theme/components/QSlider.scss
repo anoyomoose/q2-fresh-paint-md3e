@@ -136,12 +136,12 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
 .q-slider--focus .q-slider__thumb:after,
 body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__thumb:after {
   transform: translate(-50%, -50%) scale3d(1, 1, 1);
-  opacity: 0.08;
+  opacity: $md3-state-hover-opacity;
 }
 
 // Focus: 12% state layer
 .q-slider--focus .q-slider__thumb:after {
-  opacity: 0.12;
+  opacity: $md3-state-focus-opacity;
 }
 
 // ============================================================
@@ -188,17 +188,17 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
 
 // Disabled active track: on-surface at 38%
 .q-slider:not(.q-slider--enabled) .q-slider__selection {
-  background: rgba(var(--md3-on-surface-rgb), 0.38);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled inactive track: on-surface at 12%
 .q-slider:not(.q-slider--enabled) .q-slider__inner {
-  background: rgba(var(--md3-on-surface-rgb), 0.12);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
 }
 
 // Disabled handle: on-surface at 38%
 .q-slider:not(.q-slider--enabled) .q-slider__thumb:before {
-  background: rgba(var(--md3-on-surface-rgb), 0.38);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // ============================================================

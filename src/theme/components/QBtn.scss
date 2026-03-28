@@ -19,25 +19,25 @@
 // Standard (non-dense, non-fab) buttons: MD3E height is 40px at default (14px) size.
 // Uses em so Quasar's font-size-based size system (xs=8px, sm=10px, etc.) still scales properly.
 .q-btn:not(.q-btn--dense):not(.q-btn--fab):not(.q-btn--fab-mini) {
-  min-height: 2.857em; // 40px / 14px = 2.857em
+  min-height: $md3-button-min-height; // 40px / 14px = 2.857em
 }
 
 // Icon-to-text gap: em-based for proper scaling across button sizes.
 // The .on-left/.on-right class is on the icon element, whose font-size is
 // 1.715em (24px at 14px base). So em values here are relative to 24px, not 14px.
 // Icon-to-text gap: 0.283em ≈ 6.8px at md (14px), 9.7px at lg (20px)
-.q-btn .on-left { margin-right: 0.283em; }
-.q-btn .on-right { margin-left: 0.283em; }
-.q-btn--dense .on-left { margin-right: 0.212em; }
-.q-btn--dense .on-right { margin-left: 0.212em; }
+.q-btn .on-left { margin-right: $md3-button-icon-gap; }
+.q-btn .on-right { margin-left: $md3-button-icon-gap; }
+.q-btn--dense .on-left { margin-right: $md3-button-icon-gap-dense; }
+.q-btn--dense .on-right { margin-left: $md3-button-icon-gap-dense; }
 
 // Icon size: MD3E specifies 20dp for label buttons, 24dp for icon-only buttons.
 // Label buttons: 20/14 = 1.429em. Icon-only (round): use $button-line-height (1.715em = 24px).
 .q-btn .q-icon, .q-btn .q-spinner {
-  font-size: 1.429em;
+  font-size: $md3-button-icon-size;
 }
 .q-btn--round .q-icon, .q-btn--round .q-spinner {
-  font-size: 1.715em;
+  font-size: $md3-button-icon-size-round;
 }
 
 // =============================================================================
@@ -68,26 +68,26 @@
 //
 // Excludes buttons inside button groups (they have group-controlled radii).
 .q-btn--rounded:not(.q-btn--fab):not(.q-btn--fab-mini):not(.q-btn-group .q-btn) {
-  border-radius: 1.5em; // ~21px at 14px, ~12px at 8px — always a pill
+  border-radius: $md3-button-pill-radius; // ~21px at 14px, ~12px at 8px — always a pill
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
   &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
-      border-radius: 0.571em; // ~8px at 14px, ~4.6px at 8px — scales with size
+      border-radius: $md3-button-pressed-radius; // ~8px at 14px, ~4.6px at 8px — scales with size
     }
   }
 }
 
 // Rectangle buttons (non-rounded, non-square) also morph (outside groups).
 .q-btn--rectangle:not(.q-btn--rounded):not(.q-btn--square):not(.q-btn-group .q-btn) {
-  border-radius: 1.5em;
+  border-radius: $md3-button-pill-radius;
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
   &.q-btn--actionable:not(.no-morph) {
     &:active,
     &.q-btn--active {
-      border-radius: 0.571em;
+      border-radius: $md3-button-pressed-radius;
     }
   }
 }
@@ -121,9 +121,9 @@
 // No !important — our rules come after Quasar's in source order, so they win.
 // This also allows group widening rules to override padding without fighting.
 .q-btn--round {
-  border-radius: 1.5em; // same as pill buttons — circle on a square element,
-  // and small enough delta to 0.571em that spring overshoot doesn't flash to 0
-  padding: 0.571em; // (2.857em - 1.715em icon) / 2 — makes button square
+  border-radius: $md3-button-pill-radius; // same as pill buttons — circle on a square element,
+  // and small enough delta to $md3-button-pressed-radius that spring overshoot doesn't flash to 0
+  padding: $md3-button-round-padding; // ($md3-button-min-height - $md3-button-icon-size-round) / 2 — makes button square
   min-width: 0; // remove Quasar's fixed min-width, let padding size it
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
@@ -131,7 +131,7 @@
   &.q-btn--actionable:not(.no-morph):not(.q-btn-group .q-btn) {
     &:active,
     &.q-btn--active {
-      border-radius: 0.571em;
+      border-radius: $md3-button-pressed-radius;
     }
   }
 }
@@ -147,9 +147,9 @@
 // Shared FAB styling: square shape, morph, shadow transition
 .q-btn--fab,
 .q-btn--fab-mini {
-  padding: 0.571em; // equal padding = square base for circular appearance
-  min-height: 2.857em; // standard button height in em
-  min-width: 2.857em;
+  padding: $md3-button-round-padding; // equal padding = square base for circular appearance
+  min-height: $md3-button-min-height; // standard button height in em
+  min-width: $md3-button-min-height;
   border-radius: $md3-corner-medium; // 12px — square shape
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
               box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
@@ -220,21 +220,21 @@ body.desktop {
 
   // Filled/tonal/elevated buttons: colored container + dimmed text
   &:not(.q-btn--flat):not(.q-btn--outline) {
-    background-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
-    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+    background-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity) !important;
+    color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity) !important;
   }
 
   // Flat/text buttons: just dim the text, no container color
   &.q-btn--flat {
-    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+    color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity) !important;
   }
 
   // Outlined buttons: dim text and use reduced-opacity outline
   &.q-btn--outline {
-    color: rgba(var(--md3-on-surface-rgb), 0.38) !important;
+    color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity) !important;
 
     &:before {
-      border-color: rgba(var(--md3-on-surface-rgb), 0.12) !important;
+      border-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity) !important;
     }
   }
 
@@ -259,7 +259,7 @@ body.desktop {
 
 // MD3E icon buttons: min-height for touch target, width controlled by padding
 .q-btn--round:not(.q-btn--dense) {
-  min-height: 2.857em; // 40px / 14px — scales with size prop
+  min-height: $md3-button-min-height; // 40px / 14px — scales with size prop
 }
 
 // =============================================================================
@@ -554,7 +554,7 @@ body.desktop {
 
 // Square → pill when selected (still applies with no-morph, just instantly)
 .q-btn--selected.q-btn--square:not(.q-btn-group .q-btn) {
-  border-radius: 1.5em !important; // pill shape
+  border-radius: $md3-button-pill-radius !important; // pill shape
 
   &.q-btn--actionable:not(.no-morph):active,
   &.q-btn--actionable:not(.no-morph).q-btn--active {

@@ -57,7 +57,7 @@
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
   &[aria-expanded="true"] {
-    border-radius: 1.5em !important;
+    border-radius: $md3-button-pill-radius !important;
   }
 }
 

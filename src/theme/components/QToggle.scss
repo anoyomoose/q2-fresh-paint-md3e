@@ -185,7 +185,7 @@ body.desktop .q-toggle:not(.disabled) .q-toggle__thumb:before {
   width: 1em;       // 40dp state layer
   height: 1em;
   transform: translate(-50%, -50%) scale3d(0, 0, 1);
-  opacity: 0.08;
+  opacity: $md3-state-hover-opacity;
   transition: transform $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-default,
               opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
 }
@@ -193,7 +193,7 @@ body.desktop .q-toggle:not(.disabled) .q-toggle__thumb:before {
 // Hover: show state layer (scale to 1, not 2 — it's already 1em = 40dp)
 body.desktop .q-toggle:not(.disabled):hover .q-toggle__thumb:before {
   transform: translate(-50%, -50%) scale3d(1, 1, 1);
-  opacity: 0.08;
+  opacity: $md3-state-hover-opacity;
 }
 
 // Focus: 10% (MD3E spec)
@@ -212,19 +212,19 @@ body.desktop .q-toggle:not(.disabled):focus .q-toggle__thumb:before {
 
 // Disabled unselected track: on-surface at 12%
 .q-toggle.disabled .q-toggle__track {
-  background: rgba(var(--md3-on-surface-rgb), 0.12);
-  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
+  border-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
 }
 
 // Disabled selected track: on-surface at 12%, no border
 .q-toggle.disabled .q-toggle__inner--truthy .q-toggle__track {
-  background: rgba(var(--md3-on-surface-rgb), 0.12);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
   border-color: transparent;
 }
 
 // Disabled unselected handle: on-surface at 38%
 .q-toggle.disabled .q-toggle__thumb:after {
-  background: rgba(var(--md3-on-surface-rgb), 0.38);
+  background: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled selected handle: surface (white) at 100%
@@ -235,7 +235,7 @@ body.desktop .q-toggle:not(.disabled):focus .q-toggle__thumb:before {
 
 // Disabled icon
 .q-toggle.disabled .q-toggle__thumb .q-icon {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // ============================================================
@@ -336,5 +336,5 @@ body.desktop .q-toggle--dense:not(.disabled):focus .q-toggle__thumb:before {
 }
 
 .q-toggle--dark .q-toggle__thumb:before {
-  opacity: 0.08 !important;
+  opacity: $md3-state-hover-opacity !important;
 }

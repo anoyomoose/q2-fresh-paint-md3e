@@ -13,7 +13,7 @@
 
 // Disabled dropdown icon
 .q-field--disabled .q-select__dropdown-icon {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // === Dialog Background ===

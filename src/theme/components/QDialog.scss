@@ -56,7 +56,7 @@
 // === Scrim / Backdrop ===
 // MD3E spec: scrim at 32% opacity (Quasar default is 40%)
 .q-dialog__backdrop {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, $md3-scrim-opacity);
 }
 
 // === Maximized (Full-Screen) Dialog ===

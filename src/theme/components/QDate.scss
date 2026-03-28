@@ -79,7 +79,7 @@
 // === Outside-Month Dates ===
 // MD3E: 38% opacity (Quasar default: 18%)
 .q-date__calendar-item--out {
-  opacity: 0.38;
+  opacity: $md3-disabled-content-opacity;
 }
 
 // === Today Indicator ===

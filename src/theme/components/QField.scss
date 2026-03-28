@@ -129,7 +129,7 @@
 
 // Hover: 8% state layer + border becomes on-surface
 .q-field--filled:not(.q-field--highlighted) .q-field__control:hover:before {
-  background: rgba(var(--md3-on-surface-rgb), 0.08);
+  background: rgba(var(--md3-on-surface-rgb), $md3-state-hover-opacity);
   border-bottom-color: var(--md3-on-surface);
 }
 
@@ -140,7 +140,7 @@
 
 // Focused: 12% state layer
 .q-field--highlighted.q-field--filled .q-field__control:before {
-  background: rgba(var(--md3-on-surface-rgb), 0.12);
+  background: rgba(var(--md3-on-surface-rgb), $md3-state-focus-opacity);
 }
 
 // ============================================================
@@ -386,7 +386,7 @@ $_notch: '.q-field--outlined[data-notch]';
 }
 
 .q-field--dark.q-field--filled .q-field__control:before {
-  background: rgba(var(--md3-on-surface-rgb), 0.08);
+  background: rgba(var(--md3-on-surface-rgb), $md3-state-hover-opacity);
 }
 
 // Standard dark mode (same as filled in MD3E)
@@ -449,22 +449,22 @@ $_notch: '.q-field--outlined[data-notch]';
 .q-field--disabled .q-field__prefix,
 .q-field--disabled .q-field__suffix,
 .q-field--disabled .q-field__input {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled label
 .q-field--disabled .q-field__label {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled helper text
 .q-field--disabled .q-field__bottom {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled icons
 .q-field--disabled .q-field__marginal {
-  color: rgba(var(--md3-on-surface-rgb), 0.38);
+  color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled filled/standard container: on-surface at 4%
@@ -476,12 +476,12 @@ $_notch: '.q-field--outlined[data-notch]';
 // Disabled active indicator
 .q-field--disabled.q-field--filled .q-field__control:before,
 .q-field--disabled.q-field--standard .q-field__control:before {
-  border-bottom-color: rgba(var(--md3-on-surface-rgb), 0.38);
+  border-bottom-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
 }
 
 // Disabled outlined border: on-surface at 12%
 .q-field--disabled.q-field--outlined .q-field__control:before {
-  border-color: rgba(var(--md3-on-surface-rgb), 0.12);
+  border-color: rgba(var(--md3-on-surface-rgb), $md3-disabled-container-opacity);
 }
 
 // ============================================================

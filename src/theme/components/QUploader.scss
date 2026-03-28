@@ -68,5 +68,5 @@
 
 .q-uploader--dark .q-uploader__dnd,
 .q-uploader--dark .q-uploader__overlay {
-  background: rgba(var(--md3-on-surface-rgb, 255, 255, 255), 0.08);
+  background: rgba(var(--md3-on-surface-rgb, 255, 255, 255), $md3-state-hover-opacity);
 }

@@ -259,11 +259,11 @@ body.desktop {
   // MD3E wants 8% hover, 12% focus. Override the helper's own opacity.
   .q-focusable:hover > .q-focus-helper,
   .q-hoverable:hover > .q-focus-helper {
-    opacity: 0.08 !important; // MD3E hover = 8%
+    opacity: $md3-state-hover-opacity !important; // MD3E hover = 8%
   }
   .q-focusable:focus > .q-focus-helper,
   .q-manual-focusable--focused > .q-focus-helper {
-    opacity: 0.12 !important; // MD3E focus = 12%
+    opacity: $md3-state-focus-opacity !important; // MD3E focus = 12%
   }
 }
 
