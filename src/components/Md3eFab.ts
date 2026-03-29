@@ -108,3 +108,5 @@ export const Md3eFab = defineComponent({
     }
   },
 })
+
+export { Md3eFab as MFab }

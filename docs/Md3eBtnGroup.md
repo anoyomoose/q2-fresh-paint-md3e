@@ -10,32 +10,6 @@ Quasar's original `stretch` prop made buttons fill their container's height (`al
 
 The MD3E theme changes `QBtnGroup` behavior whether you use this wrapper or not — the `stretch` prop means "standard group" the moment the theme is active. `Md3eBtnGroup` simply gives you a cleaner API that matches what the theme is actually doing, so you don't have to remember that `stretch` no longer means what Quasar's docs say it does.
 
-## Installation
-
-Note: you can import `MBtnGroup` and use `m-btn-group` instead for convenience
-
-```ts
-import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
-```
-
-Register globally:
-
-```ts
-import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
-
-app.component('Md3eBtnGroup', Md3eBtnGroup)
-```
-
-Or locally:
-
-```ts
-import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
-
-export default {
-  components: { Md3eBtnGroup },
-}
-```
-
 ## Props
 
 | Prop | Type | Default | Description |

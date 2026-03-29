@@ -17,10 +17,25 @@
       "import": "./dist/theme/boot.js",
       "require": "./dist/theme/boot.cjs"
     },
-    "./components": {
-      "types": "./dist/components/index.d.ts",
-      "import": "./dist/components/index.js",
-      "require": "./dist/components/index.cjs"
+    "./components/Md3eBtn": {
+      "types": "./dist/components/Md3eBtn.d.ts",
+      "import": "./dist/components/Md3eBtn.js",
+      "require": "./dist/components/Md3eBtn.cjs"
+    },
+    "./components/Md3eBtnGroup": {
+      "types": "./dist/components/Md3eBtnGroup.d.ts",
+      "import": "./dist/components/Md3eBtnGroup.js",
+      "require": "./dist/components/Md3eBtnGroup.cjs"
+    },
+    "./components/Md3eFab": {
+      "types": "./dist/components/Md3eFab.d.ts",
+      "import": "./dist/components/Md3eFab.js",
+      "require": "./dist/components/Md3eFab.cjs"
+    },
+    "./components/Md3eFabAction": {
+      "types": "./dist/components/Md3eFabAction.d.ts",
+      "import": "./dist/components/Md3eFabAction.js",
+      "require": "./dist/components/Md3eFabAction.cjs"
     },
     "./palette": {
       "types": "./dist/palette.d.ts",
@@ -37,7 +52,7 @@
     "@material/material-color-utilities": "^0.4.0"
   },
   "peerDependencies": {
-    "@anoyomoose/q2-fresh-paint-core": "^0.1.2",
+    "@anoyomoose/q2-fresh-paint-core": "^0.1.3",
     "quasar": "^2.0.0",
     "vue": "^3.0.0"
   },

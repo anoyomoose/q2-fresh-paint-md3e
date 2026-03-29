@@ -15,38 +15,6 @@ All QBtn props and attributes pass through unchanged. The CSS classes that drive
 
 **Important**: Due to MD3E's design principles, not all variants support arbitrary colors. `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors! 
 
-## Installation
-
-Note: you can import `MBtn` and use `m-btn` instead for convenience
-
-```ts
-import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
-```
-
-Register globally in your app entry point:
-
-```ts
-import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
-
-app.component('Md3eBtn', Md3eBtn)
-```
-
-Or register locally in a component:
-
-```ts
-import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
-
-export default {
-  components: { Md3eBtn },
-}
-```
-
-In templates, use the kebab-case name:
-
-```html
-<md3e-btn label="Click me" />
-```
-
 ## Props Reference
 
 All `QBtn` props pass through to the underlying button. The following props are added by `Md3eBtn`:

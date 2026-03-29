@@ -197,15 +197,47 @@ See [docs/colors.md](docs/colors.md) for details.
 
 These are convenience wrappers and not required to be used.
 
-All `Md3e...` components have an `M...` alias for easier typing! We use the full name here for clarity.
+### Importing
+
+All `Md3e...` components have an `M...` alias for easier typing! The full name is always used in other examples. Both
+are shown in this section, though you would pick one to use.
+
+The import path is always `@anoyomoose/q2-fresh-paint-md3e/components/<fullname>`
+
+```ts
+import { Md3eBtn, MBtn } from '@anoyomoose/q2-fresh-paint-md3e/components/Md3eBtn'
+```
+
+Or register locally in a component:
+
+```ts
+import { Md3eBtn, MBtn } from '@anoyomoose/q2-fresh-paint-md3e/components/Md3eBtn'
+
+export default {
+  components: { Md3eBtn, MBtn },
+}
+```
+
+Register globally in your app entry point:
+
+```ts
+import { Md3eBtn, MBtn } from '@anoyomoose/q2-fresh-paint-md3e/components/Md3eBtn'
+
+app.component('Md3eBtn', Md3eBtn)
+app.component('MBtn', MBtn)
+```
+
+In templates, use the kebab-case name:
+
+```html
+<md3e-btn label="Click me" />
+```
+
+For tree-shaking purposes, you should import and/or register only what you use! 
 
 ### `Md3eBtn`
 
 A `QBtn` wrapper that adds MD3E toggle/selection behavior, color family shortcuts, and variant shortcuts.
-
-```ts
-import { Md3eBtn } from '@anoyomoose/q2-fresh-paint-md3e/components'
-```
 
 ```vue
 <md3e-btn v-model="isActive" label="Toggle me" />
@@ -227,10 +259,6 @@ For full documentation including all props, selection modes, color system, varia
 ### `Md3eBtnGroup`
 
 A `QBtnGroup` wrapper that defaults to the MD3E standard group variant (spaced buttons, individual pill shapes). Use `connected` for the connected variant.
-
-```ts
-import { Md3eBtnGroup } from '@anoyomoose/q2-fresh-paint-md3e/components'
-```
 
 ```vue
 <md3e-btn-group>
@@ -276,10 +304,6 @@ Using `Md3eFab` / `Md3eFabAction`:
 - Supports `primary` (default), `secondary`, `tertiary`, `error` attributes as well as `allow-color` (at your own risk), like `Md3eBtn` does
 - `label-position`, `vertical-actions-align`, `direction` automatically set if `left` attribute is used
 - `left` attribute automatically propagates to children
-
-```ts
-import { Md3eFab, Md3eFabAction } from '@anoyomoose/q2-fresh-paint-md3e/components'
-```
 
 ```vue
 <md3e-fab secondary left icon="sym_r_edit" label="Edit">

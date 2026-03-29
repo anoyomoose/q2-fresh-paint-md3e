@@ -65,3 +65,5 @@ export const Md3eFabAction = defineComponent({
     }
   },
 })
+
+export { Md3eFabAction as MFabAction }

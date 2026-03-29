@@ -226,3 +226,5 @@ export const Md3eBtn = defineComponent({
     }
   },
 })
+
+export { Md3eBtn as MBtn }

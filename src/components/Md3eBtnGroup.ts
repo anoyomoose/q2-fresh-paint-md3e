@@ -83,3 +83,5 @@ export const Md3eBtnGroup = defineComponent({
     }
   },
 })
+
+export { Md3eBtnGroup as MBtnGroup }
