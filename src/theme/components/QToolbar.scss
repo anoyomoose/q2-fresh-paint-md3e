@@ -9,18 +9,25 @@
 // MD3E app bars use surface color, not primary.
 // The background-color swap for .q-layout__section--marginal is in QLayout.scss,
 // but we also set it directly on the toolbar for standalone usage.
-// MD3E app bars use surface color, not primary. This is a deliberate departure
+// MD3E toolbars use surface-container. This is a deliberate departure
 // from MD2 where bg-primary was the default. Demo pages using bg-primary on
 // headers/footers are using the MD2 pattern.
 .q-toolbar {
-  background-color: var(--md3-surface);
+  background-color: var(--md3-surface-container);
+  box-shadow: none;
+  gap: 8px;
+  justify-content: space-between;
 }
 
-// === No Shadow ===
-// MD3E app bars have no drop shadow at rest. Elevation is communicated via
-// surface-container color change on scroll, not shadow.
-.q-toolbar {
-  box-shadow: none;
+// FABs inside docked toolbars: no shadow (toolbar surface provides the elevation context)
+.q-toolbar:not(.q-toolbar--floating) .q-btn--fab:before,
+.q-toolbar:not(.q-toolbar--floating) .q-btn--fab-mini:before {
+  box-shadow: none !important;
+}
+
+// Opt-out: remove gap when not desired
+.q-toolbar.q-toolbar--no-gap {
+  gap: 0;
 }
 
 // === Title Line Height ===
@@ -28,4 +35,105 @@
 // and letter-spacing are already set by variables.scss.
 .q-toolbar__title {
   line-height: 1.75rem; // 28px
+  margin-block: calc(0.5cap - 0.5lh);
+}
+
+// Quasar's ellipsis class sets overflow: hidden, which clips descenders
+// after the margin-block shift. overflow: clip (unlike hidden) allows
+// independent axis control — clip horizontally for ellipsis, visible
+// vertically for descenders.
+.q-toolbar__title.ellipsis {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+@supports (text-box: trim-both cap alphabetic) {
+  .q-toolbar__title {
+    margin-block: 0;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+// =============================================================================
+// FLOATING TOOLBAR
+// =============================================================================
+// MD3E floating toolbar: auto-sized to content, 16dp outside margin,
+// FAB-level elevation (level 3), pill-shaped corners.
+// Apply via class="q-toolbar--floating" on a QToolbar.
+.q-toolbar.q-toolbar--floating {
+  width: auto;
+  margin: 16px;
+  border-radius: $md3-corner-full;
+  box-shadow: $md3-elevation-3;
+}
+
+.q-toolbar.q-toolbar--floating.q-toolbar--floating--vibrant {
+  background-color: var(--md3-primary-container);
+  color: var(--md3-on-primary-container);
+}
+
+// Tonal buttons on vibrant: surface-container instead of secondary-container
+.q-toolbar.q-toolbar--floating.q-toolbar--floating--vibrant .q-btn.glossy.bg-secondary:not(.q-btn--selected):not(.disabled) {
+  background-color: var(--md3-surface-container) !important;
+  color: var(--md3-on-surface) !important;
+}
+
+// Filled buttons on vibrant: text color should match the container, not standalone primary
+.q-toolbar.q-toolbar--floating.q-toolbar--floating--vibrant .q-btn.text-primary:not(.q-btn--selected):not(.disabled) {
+  color: var(--md3-on-primary-container) !important;
+}
+
+// No shape morphing or toggle shape change in floating toolbars.
+// Pill buttons stay pill, round buttons stay round — on press and when selected.
+.q-toolbar.q-toolbar--floating .q-btn:not(.q-btn--square) {
+  &.q-btn--actionable:active,
+  &.q-btn--actionable.q-btn--active,
+  &.q-btn--selected,
+  &.q-btn--selected.q-btn--actionable:active,
+  &.q-btn--selected.q-btn--actionable.q-btn--active {
+    border-radius: $md3-button-pill-radius !important;
+  }
+}
+
+.q-toolbar.q-toolbar--floating .q-btn.q-btn--square {
+  &.q-btn--actionable:active,
+  &.q-btn--actionable.q-btn--active,
+  &.q-btn--selected,
+  &.q-btn--selected.q-btn--actionable:active,
+  &.q-btn--selected.q-btn--actionable.q-btn--active {
+    border-radius: $md3-corner-medium !important;
+  }
+}
+
+// =============================================================================
+// FLOATING TOOLBAR + FAB GROUP
+// =============================================================================
+// Wrapper for placing a FAB next to a floating toolbar.
+// Group owns the margin; toolbar margin is zeroed out inside the group.
+.q-toolbar-floating-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 16px;
+  gap: 8px;
+}
+
+.q-toolbar-floating-group > .q-toolbar.q-toolbar--floating {
+  margin: 0;
+}
+
+// =============================================================================
+// FLOATING VERTICAL TOOLBAR
+// =============================================================================
+// MD3E vertical floating toolbar: column layout, icon-only buttons.
+// Overrides QToolbar.js's hardcoded `row` class with !important.
+// Spec: min 24dp margin from window edge, position opposite navigation rail.
+.q-toolbar.q-toolbar--floating.q-toolbar--floating--vertical {
+  flex-direction: column !important; // override hardcoded `row` from QToolbar.js
+  width: auto;
+  min-width: $toolbar-min-height; // 64px — same dimension, now as width
+  min-height: unset;
+  padding: 12px 0;
+  margin-left: 24px;
+  margin-right: 24px;
 }

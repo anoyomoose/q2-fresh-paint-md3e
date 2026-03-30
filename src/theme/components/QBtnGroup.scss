@@ -38,7 +38,7 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
 // which only shows equal-width connected groups. inline-grid for default sizing,
 // grid (block-level) when spread prop is used to fill the container.
 // Exclude split dropdowns — the main button and arrow should NOT be equal width.
-.q-btn-group:not(.q-btn-group--stretch):not(.q-btn-dropdown--split) {
+.q-btn-group:not(.q-btn-group--stretch):not(.q-btn-dropdown--split):not(.q-btn-toggle) {
   display: inline-grid !important;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
@@ -49,7 +49,7 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
   }
 }
 
-.q-btn-group:not(.q-btn-group--stretch) {
+.q-btn-group:not(.q-btn-group--stretch):not(.q-btn-toggle) {
 
   // Override Quasar's border-radius: 0 on inner buttons.
   // Quasar sets border-radius: 0 via :not(:first-child) and :not(:last-child) selectors
@@ -119,7 +119,7 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
 // 2. STANDARD BUTTON GROUP (stretch prop repurposed)
 // =============================================================================
 
-.q-btn-group--stretch {
+.q-btn-group--stretch:not(.q-btn-toggle) {
   gap: $md3-button-group-standard-gap;
 
   // Undo Quasar's group border-radius zeroing — standard group buttons are
@@ -161,8 +161,8 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
 }
 
 // --- Standard group widening on press ---
-// Disabled by adding .no-widening to the group element.
-.q-btn-group--stretch:not(.no-widening) {
+// Disabled by .no-widening class or on QBtnToggle (segmented buttons never widen).
+.q-btn-group--stretch:not(.no-widening):not(.q-btn-toggle) {
 
   // --- Non-round buttons (base padding ~1.14em) ---
   // Dense buttons are excluded — widening is disabled for dense groups.
@@ -280,22 +280,23 @@ body.desktop .q-btn-group > .q-btn-item.q-btn--standard:not(.q-btn--push).q-btn-
 // Connected groups: selected buttons morph to PILL shape (fully round).
 // At rest, connected buttons have pill outer / 8dp inner corners.
 // When selected, all corners go pill — the selected button "pops out" visually.
-.q-btn-group:not(.q-btn-group--stretch) > .q-btn.q-btn--selected {
+.q-btn-group:not(.q-btn-group--stretch):not(.q-btn-toggle) > .q-btn.q-btn--selected {
   border-radius: $md3-button-pill-radius !important; // pill
 }
 
 // Standard (stretch) groups: selected buttons swap shape.
 // Pill buttons → square, square buttons → pill (same as standalone toggles).
-.q-btn-group--stretch > .q-btn.q-btn--selected:not(.q-btn--square) {
+// Excludes QBtnToggle (segmented buttons handle their own shapes).
+.q-btn-group--stretch:not(.q-btn-toggle) > .q-btn.q-btn--selected:not(.q-btn--square) {
   border-radius: $md3-corner-medium !important; // pill → 12dp square
 }
-.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--square {
+.q-btn-group--stretch:not(.q-btn-toggle) > .q-btn.q-btn--selected.q-btn--square {
   border-radius: $md3-button-pill-radius !important; // square → pill
 }
 
 // Press morph for selected buttons in standard groups.
 // Must come AFTER selected shape rules so !important + source order wins.
-.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph):active,
-.q-btn-group--stretch > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph).q-btn--active {
+.q-btn-group--stretch:not(.q-btn-toggle) > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph):active,
+.q-btn-group--stretch:not(.q-btn-toggle) > .q-btn.q-btn--selected.q-btn--actionable:not(.no-morph).q-btn--active {
   border-radius: $md3-button-pressed-radius !important;
 }

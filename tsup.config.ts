@@ -17,6 +17,7 @@ export default defineConfig([
       'components/Md3eBtnGroup': 'src/components/Md3eBtnGroup.ts',
       'components/Md3eFab': 'src/components/Md3eFab.ts',
       'components/Md3eFabAction': 'src/components/Md3eFabAction.ts',
+      'components/Md3eToolbar': 'src/components/Md3eToolbar.ts',
     },
     format: ['esm', 'cjs'],
     outDir: 'dist',

@@ -7,9 +7,9 @@
 // ============================================================
 
 // === Header/Footer Section Color ===
-// MD3E: app bars use surface background with on-surface text (not primary)
+// MD3E: app bars use surface-container background with on-surface text (not primary)
 .q-layout__section--marginal {
-  background-color: var(--md3-surface);
+  background-color: var(--md3-surface-container);
   color: var(--md3-on-surface);
 }
 
@@ -34,9 +34,9 @@
 // ============================================================
 
 // === Standard Drawer (docked, desktop) ===
-// MD3E standard side sheet: surface background, no shadow, no border-radius
+// MD3E navigation drawer: surface-container-low background
 .q-drawer {
-  background: var(--md3-surface);
+  background: var(--md3-surface-container-low);
 }
 
 // === Modal Drawer (mobile / overlay) ===
@@ -95,6 +95,17 @@ body.body--dark .q-header,
 body.body--dark .q-footer,
 body.body--dark .q-drawer {
   border-color: var(--md3-outline-variant);
+}
+
+// ============================================================
+// QPage
+// ============================================================
+// MD3E: page content area uses surface (lowest level in the surface hierarchy),
+// distinct from surface-container headers and surface-container-low drawers.
+// QPage has no .sass file, so this rule lives here with the layout family.
+.q-page {
+  background-color: var(--md3-surface);
+  color: var(--md3-on-surface);
 }
 
 // ============================================================

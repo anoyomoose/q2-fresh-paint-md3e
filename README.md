@@ -97,7 +97,7 @@ The recommended approach is to start with an empty `quasar.variables.scss`, conf
 
 ### Important: Remove `bg-primary` from toolbars, headers, and footers
 
-MD3E uses `surface`-colored app bars - not `primary`. The theme enforces this by setting `background-color: var(--md3-surface)` on `.q-toolbar`. If your layouts use the common MD2 pattern of `bg-primary text-white` on headers and footers, **remove those classes** - they'll fight the theme and produce incorrect text colors.
+MD3E uses `surface-container`-colored app bars - not `primary`. The theme enforces this by setting `background-color: var(--md3-surface-container)` on `.q-toolbar` and `.q-layout__section--marginal`. If your layouts use the common MD2 pattern of `bg-primary text-white` on headers and footers, **remove those classes** - they'll fight the theme and produce incorrect text colors.
 
 ```html
 <!-- Before (MD2 pattern) -->
@@ -116,6 +116,8 @@ MD3E uses `surface`-colored app bars - not `primary`. The theme enforces this by
 ```
 
 This also applies to `<q-footer>` and any other component where you manually set `bg-primary` on a toolbar or app bar. The theme uses `on-surface` for text and icons, which adapts correctly in both light and dark mode.
+
+Be sure to read the `Md3eToolbar` section below, it also applies to `QToolbar`.
 
 ## Options
 
@@ -248,6 +250,7 @@ A `QBtn` wrapper that adds MD3E toggle/selection behavior, color family shortcut
 Must-know in short:
 - The wrapper ignores most coloring settings (unless `allow-color` is set); you should generally only use `primary` (mostly), and `secondary`, `tertiary` and `error` (scarcely), as these move with the theme. Per the spec, if no color is specified for a `tonal` button, it uses `secondary` rather than `primary`. Only default, `rounded`, `square`, and `text` buttons support other colors in practise.
 - `tonal` maps to `glossy`, which has been repurposed
+- `text` maps to `flat`, they're the same thing, the MD3E spec just calls them `text`
 - `elevated` similarly maps to `:unelevated=false`
 - You can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
 - Toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
@@ -276,6 +279,60 @@ Must-know in short:
 - Widening transition can be disabled with `no-widening` attribute or class
 
 For full documentation including group variants, shape morphing, design props, and known limitations, see [docs/Md3eBtnGroup.md](docs/Md3eBtnGroup.md).
+
+### `Md3eToolbar`
+
+A `QToolbar` wrapper with MD3E variant shortcuts for docked and floating toolbars.
+
+```vue
+<!-- use tonal for toggle buttons! -->
+
+<!-- AppBar (docked toolbar) -->
+<md3e-toolbar>
+  <!-- buttons SHOULD be (round) square, and SHOULD NOT be either dense nor stretch -->
+  <md3e-btn round square text icon="sym_r_menu" />
+  <q-toolbar-title>My App</q-toolbar-title>
+  <md3e-btn square text icon="sym_r_search" />
+</md3e-toolbar>
+
+<!-- Docked toolbar -->
+<md3e-toolbar between><!-- between: spreads buttons evenly -->
+  <!-- buttons SHOULD be (round) square, and SHOULD NOT be either dense nor stretch -->
+  <md3e-btn round square tonal icon="sym_r_format_bold" v-model="myToggle" />
+  <md3e-btn square text icon="sym_r_brush" />
+  <md3e-btn round square icon="sym_r_palette" />
+</md3e-toolbar>
+
+<!-- Floating toolbar -->
+<md3e-toolbar floating>
+  <!-- buttons MAY NOT be square when floating, PREFER round, NO label -->
+  <md3e-btn round tonal icon="sym_r_format_bold" v-model="myToggle" />
+  <md3e-btn round text icon="sym_r_brush" />
+  <md3e-btn round icon="sym_r_palette" />
+</md3e-toolbar>
+
+<!-- Floating vertical vibrant toolbar -->
+<md3e-toolbar floating vertical vibrant>
+  <!-- buttons MAY NOT be square when floating, PREFER round, NO label -->
+  <md3e-btn round tonal icon="sym_r_format_bold" v-model="myToggle" />
+  <md3e-btn round text icon="sym_r_brush" />
+  <md3e-btn round icon="sym_r_palette" />
+</md3e-toolbar>
+```
+
+Must-know in short:
+- Toolbars are slightly larger now: Quasar's examples use `dense` icons and `stretch` buttons - remove both attributes from your existing code for a better look
+- Your toolbar probably uses something like `class="bg-primary text-white"` - this should likewise be removed as it fights the theme
+- Avoid setting toolbar color and/or button colors
+- Toolbars now use `gap` (8px), so all your `q-m...` classes inside it are wrong, and should probably just be removed. Use `no-gap` to disable.
+- For docked toolbars (including the app bar), buttons should be `round square` or `square`, and optionally `flat`, or `tonal` for toggle buttons
+- For floating toolbars, buttons should be icon-only, `round square` (preferred) or `square`, and optionally `flat`, or `tonal` for toggle buttons
+- `floating` makes the toolbar auto-sized, pill-shaped, with FAB-level elevation and 16dp margin (`.q-toolbar--floating`)
+- `vibrant` (requires `floating`) uses `primary-container` background for higher emphasis (`.q-toolbar--floating--vibrant`)
+- `vertical` (requires `floating`) switches to column layout (`.q-toolbar--floating--vertical`)
+- `surface` overrides the background to `surface`, if you want the toolbar (usually the app bar) to have the same color as the body (`.bg-surface`)
+
+For full documentation, see [docs/Md3eToolbar.md](docs/Md3eToolbar.md).
 
 ### `Md3eFab` / `Md3eFabAction`
 
@@ -361,7 +418,7 @@ See the [core package documentation](https://github.com/anoyomoose/q2-fresh-pain
 - **Segmented buttons** MD3E's deprecated "segmented buttons" are implemented via Quasar's QBtnToggle component (themed in QBtnToggle.scss). The default variant (no design prop) is styled as a segmented button with checkmark icon via CSS mask. Consider if you don't mean to use a connected button group instead.
 - **text-white/black** to maintain correct contrast in light and dark modes, the basic background colors have their text colors overridden from Quasar's forced `text-white` and `text-black`. This may cause your own usage of these to be blocked in some cases, and you should use the closest grey (or define your CSS class you add) instead
 - **Outlined text field notch** the MD3E outlined text field label-on-border notch is implemented using a CSS `mask-image` on the `::before`/`::after` border pseudo-elements, with JS (`boot.ts`) measuring the label width via `ResizeObserver` and `MutationObserver` to set `--notch-left`/`--notch-width` custom properties. Add the `.no-input-notch` class to a `<q-input>` or any ancestor element to disable the notch and revert to standard Quasar outlined behavior (label floats inside the box). 
-- **MD3E app bars use `surface`, not `primary`** MD3E top app bars use `surface` background with `on-surface` text/icons, transitioning to `surface-container` on scroll. This is a deliberate departure from MD2 where `bg-primary text-white` was the standard toolbar pattern. Apps migrating from MD2 to MD3E will need to remove `bg-primary`/`text-white` from their headers and footers. Our theme sets `background-color: var(--md3-surface)` unconditionally on `.q-toolbar` per the spec. Components placed on colored surfaces (e.g. via `bg-primary`) will need manual token remapping - the MD3E spec has no auto-adapt mechanism for this; it defines separate token sets per surface color (e.g. "vibrant toolbar" with `primary-container` background has its own child component tokens).
+- **MD3E app bars use `surface-container`, not `primary`** MD3E toolbars, headers, and footers use `surface-container` background with `on-surface` text/icons. This is a deliberate departure from MD2 where `bg-primary text-white` was the standard toolbar pattern. Apps migrating from MD2 to MD3E will need to remove `bg-primary`/`text-white` from their headers and footers. Floating toolbars support a `vibrant` variant with `secondary-container` background and its own child component token remapping. The vertical floating toolbar overrides QToolbar's hardcoded `flex-direction: row` with `!important`.
 - **Shape morphing** uses CSS `:active` which may not trigger reliably on all mobiles browsers
 - **QSlider** handle is approximated with CSS pseudo-element, stop indicators not implemented
 - **Surface tint deprecated** we use tone-based surface containers (correct per Feb 2023 spec update)

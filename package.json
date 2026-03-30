@@ -37,6 +37,11 @@
       "import": "./dist/components/Md3eFabAction.js",
       "require": "./dist/components/Md3eFabAction.cjs"
     },
+    "./components/Md3eToolbar": {
+      "types": "./dist/components/Md3eToolbar.d.ts",
+      "import": "./dist/components/Md3eToolbar.js",
+      "require": "./dist/components/Md3eToolbar.cjs"
+    },
     "./palette": {
       "types": "./dist/palette.d.ts",
       "import": "./dist/palette.js",

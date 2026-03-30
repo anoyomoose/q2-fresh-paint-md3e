@@ -166,3 +166,40 @@ $_md3e-check-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
     border-left: 0 !important;
   }
 }
+
+// =============================================================================
+// 4. FLAT VARIANT: Pill shape, selected overlay
+// =============================================================================
+// Flat QBtnToggle (e.g., in toolbars): all buttons are pill-shaped,
+// selected state uses a subtle on-surface overlay instead of a color fill.
+
+.q-btn-group.q-btn-toggle.q-btn-group--flat {
+  gap: $md3-button-group-standard-gap;
+
+  // All buttons: pill shape (overrides section 1's first/middle/last corners)
+  > .q-btn,
+  > .q-btn:first-child,
+  > .q-btn:last-child,
+  > .q-btn:only-child,
+  > .q-btn:not(:first-child):not(:last-child) {
+    border-radius: $md3-button-pill-radius !important;
+  }
+
+  // Anti-morph: repeat pill radius on press (overrides section 1's 9999px/0 values).
+  // Needs high specificity to beat section 1's :not(:first-child):not(:last-child) selectors.
+  > .q-btn.q-btn--actionable:first-child:active,
+  > .q-btn.q-btn--actionable:first-child.q-btn--active,
+  > .q-btn.q-btn--actionable:last-child:active,
+  > .q-btn.q-btn--actionable:last-child.q-btn--active,
+  > .q-btn.q-btn--actionable:only-child:active,
+  > .q-btn.q-btn--actionable:only-child.q-btn--active,
+  > .q-btn.q-btn--actionable:not(:first-child):not(:last-child):active,
+  > .q-btn.q-btn--actionable:not(:first-child):not(:last-child).q-btn--active {
+    border-radius: $md3-button-pill-radius !important;
+  }
+
+  // Selected: tinted overlay using the button's own text color (matches hover tint)
+  > .q-btn[aria-pressed="true"] {
+    background-color: color-mix(in srgb, currentColor 12%, transparent) !important;
+  }
+}
