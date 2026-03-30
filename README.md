@@ -347,6 +347,7 @@ MD3E FAB Menus are much more restricted than all the options Quasar provides. Im
 - A `QFabAction` corresponds to a `<q-btn size="lg" />`
 - `QFabAction`s **require** *both* an icon *and* a label
 - `QFabAction` automatically use the right `tonal` color (supported colors only)
+- The spec removes shadows from the popups, but that just looks bad, so they're kept
 
 Using `QFab`:
 
@@ -361,6 +362,7 @@ Using `Md3eFab` / `Md3eFabAction`:
 - Supports `primary` (default), `secondary`, `tertiary`, `error` attributes as well as `allow-color` (at your own risk), like `Md3eBtn` does
 - `label-position`, `vertical-actions-align`, `direction` automatically set if `left` attribute is used
 - `left` attribute automatically propagates to children
+- `mini` supported (`q-fab--mini`) - note this only changes the size of the FAB, not of the popups
 
 ```vue
 <md3e-fab secondary left icon="sym_r_edit" label="Edit">

@@ -252,10 +252,6 @@
   margin: 4px 0;
   font-size: $md3-fab-font-size; // lg size (20px)
 
-  // Action items are tonal — no shadow (override FAB elevation from QBtn.scss)
-  &:before {
-    box-shadow: none !important;
-  }
   padding: $button-padding;
   border-radius: $md3-button-pill-radius;
   min-width: 0;
@@ -327,7 +323,16 @@
 
 
 // =============================================================================
-// 9. DISABLED STATE
+// 9. MINI FAB MENU (via Md3eFab mini prop)
+// =============================================================================
+// QFab always renders its button as q-btn--fab (font-size: 20px).
+// The mini class downsizes it to match q-btn--fab-mini (font-size: 14px).
+.q-fab.q-fab--mini > .q-btn--fab {
+  font-size: 14px;
+}
+
+// =============================================================================
+// 10. DISABLED STATE
 // =============================================================================
 
 .q-fab > .q-btn.disabled {

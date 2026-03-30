@@ -38,6 +38,9 @@ export const Md3eFab = defineComponent({
     /** FAB label (optional — extended FAB when set). */
     label: String,
 
+    /** Mini FAB (smaller size, matches fab-mini/md button size). */
+    mini: Boolean,
+
     /** Place labels on the left side (also aligns actions left). */
     left: Boolean,
 
@@ -97,7 +100,10 @@ export const Md3eFab = defineComponent({
 
       return h(QFab, {
         ...restAttrs,
-        class: attrClass,
+        class: [
+          attrClass,
+          props.mini ? 'q-fab--mini' : null,
+        ].filter(Boolean),
         color: computedColor.value,
         icon: resolvedIcon.value,
         label: props.label,

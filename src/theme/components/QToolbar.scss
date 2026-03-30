@@ -19,9 +19,12 @@
   justify-content: space-between;
 }
 
-// FABs inside docked toolbars: no shadow (toolbar surface provides the elevation context)
-.q-toolbar:not(.q-toolbar--floating) .q-btn--fab:before,
-.q-toolbar:not(.q-toolbar--floating) .q-btn--fab-mini:before {
+// FABs inside docked toolbars: no shadow (toolbar surface provides the elevation context).
+// Only target the direct QFab button, not action items in the popup.
+.q-toolbar:not(.q-toolbar--floating) > .q-btn--fab:before,
+.q-toolbar:not(.q-toolbar--floating) > .q-btn--fab-mini:before,
+.q-toolbar:not(.q-toolbar--floating) > .q-fab > .q-btn--fab:before,
+.q-toolbar:not(.q-toolbar--floating) > .q-fab > .q-btn--fab-mini:before {
   box-shadow: none !important;
 }
 
