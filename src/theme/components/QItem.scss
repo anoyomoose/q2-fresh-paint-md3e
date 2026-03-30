@@ -62,17 +62,22 @@
 }
 
 // === Active / Selected State ===
-// MD3E: secondary-container bg, on-secondary-container text (replaces Quasar's primary text)
-.q-item--active,
-.q-item.q-router-link--active {
+// MD3E default: secondary-container bg, on-secondary-container text.
+// Only apply when no explicit bg-*/text-* class is set, so user's active-class wins.
+.q-item--active:not([class*="bg-"]),
+.q-item.q-router-link--active:not([class*="bg-"]) {
   background: var(--md3-secondary-container);
+}
+
+.q-item--active:not([class*="text-"]),
+.q-item.q-router-link--active:not([class*="text-"]) {
   color: var(--md3-on-secondary-container);
 }
 
-// Icons and sections within active items inherit selected color
+// Icons and sections within active items: inherit from parent color.
 .q-item--active .q-item__section--side,
 .q-item.q-router-link--active .q-item__section--side {
-  color: var(--md3-on-secondary-container);
+  color: inherit;
 }
 
 // Caption and overline within active items
@@ -80,7 +85,7 @@
 .q-item--active .q-item__label--overline,
 .q-item.q-router-link--active .q-item__label--caption,
 .q-item.q-router-link--active .q-item__label--overline {
-  color: var(--md3-on-secondary-container);
+  color: inherit;
 }
 
 // === Dark Mode ===
