@@ -21,24 +21,40 @@ body, body.body--dark {
 :root, body.body--light {
   // Primary
   --md3-primary: #{$md3-primary};
+  --md3-primary-dim: #{$md3-primary-dim};
   --md3-on-primary: #{$md3-on-primary};
   --md3-primary-container: #{$md3-primary-container};
   --md3-on-primary-container: #{$md3-on-primary-container};
+  --md3-primary-fixed: #{$md3-primary-fixed};
+  --md3-primary-fixed-dim: #{$md3-primary-fixed-dim};
+  --md3-on-primary-fixed: #{$md3-on-primary-fixed};
+  --md3-on-primary-fixed-variant: #{$md3-on-primary-fixed-variant};
 
   // Secondary
   --md3-secondary: #{$md3-secondary};
+  --md3-secondary-dim: #{$md3-secondary-dim};
   --md3-on-secondary: #{$md3-on-secondary};
   --md3-secondary-container: #{$md3-secondary-container};
   --md3-on-secondary-container: #{$md3-on-secondary-container};
+  --md3-secondary-fixed: #{$md3-secondary-fixed};
+  --md3-secondary-fixed-dim: #{$md3-secondary-fixed-dim};
+  --md3-on-secondary-fixed: #{$md3-on-secondary-fixed};
+  --md3-on-secondary-fixed-variant: #{$md3-on-secondary-fixed-variant};
 
   // Tertiary
   --md3-tertiary: #{$md3-tertiary};
+  --md3-tertiary-dim: #{$md3-tertiary-dim};
   --md3-on-tertiary: #{$md3-on-tertiary};
   --md3-tertiary-container: #{$md3-tertiary-container};
   --md3-on-tertiary-container: #{$md3-on-tertiary-container};
+  --md3-tertiary-fixed: #{$md3-tertiary-fixed};
+  --md3-tertiary-fixed-dim: #{$md3-tertiary-fixed-dim};
+  --md3-on-tertiary-fixed: #{$md3-on-tertiary-fixed};
+  --md3-on-tertiary-fixed-variant: #{$md3-on-tertiary-fixed-variant};
 
   // Error
   --md3-error: #{$md3-error};
+  --md3-error-dim: #{$md3-error-dim};
   --md3-on-error: #{$md3-on-error};
   --md3-error-container: #{$md3-error-container};
   --md3-on-error-container: #{$md3-on-error-container};
@@ -52,6 +68,7 @@ body, body.body--dark {
   --md3-on-surface: #{$md3-on-surface};
   --md3-surface-variant: #{$md3-surface-variant};
   --md3-on-surface-variant: #{$md3-on-surface-variant};
+  --md3-surface-tint: #{$md3-surface-tint};
 
   // Outline
   --md3-outline: #{$md3-outline};
@@ -116,32 +133,58 @@ body, body.body--dark {
 // override the fallback background via their own rules which load later in source order.
 body.body--light .q-dark,
 body.body--dark {
+  // Primary
   --md3-primary: #{$md3-dark-primary};
+  --md3-primary-dim: #{$md3-dark-primary-dim};
   --md3-on-primary: #{$md3-dark-on-primary};
   --md3-primary-container: #{$md3-dark-primary-container};
   --md3-on-primary-container: #{$md3-dark-on-primary-container};
+  --md3-primary-fixed: #{$md3-dark-primary-fixed};
+  --md3-primary-fixed-dim: #{$md3-dark-primary-fixed-dim};
+  --md3-on-primary-fixed: #{$md3-dark-on-primary-fixed};
+  --md3-on-primary-fixed-variant: #{$md3-dark-on-primary-fixed-variant};
+  // Secondary
   --md3-secondary: #{$md3-dark-secondary};
+  --md3-secondary-dim: #{$md3-dark-secondary-dim};
   --md3-on-secondary: #{$md3-dark-on-secondary};
   --md3-secondary-container: #{$md3-dark-secondary-container};
   --md3-on-secondary-container: #{$md3-dark-on-secondary-container};
+  --md3-secondary-fixed: #{$md3-dark-secondary-fixed};
+  --md3-secondary-fixed-dim: #{$md3-dark-secondary-fixed-dim};
+  --md3-on-secondary-fixed: #{$md3-dark-on-secondary-fixed};
+  --md3-on-secondary-fixed-variant: #{$md3-dark-on-secondary-fixed-variant};
+  // Tertiary
   --md3-tertiary: #{$md3-dark-tertiary};
+  --md3-tertiary-dim: #{$md3-dark-tertiary-dim};
   --md3-on-tertiary: #{$md3-dark-on-tertiary};
   --md3-tertiary-container: #{$md3-dark-tertiary-container};
   --md3-on-tertiary-container: #{$md3-dark-on-tertiary-container};
+  --md3-tertiary-fixed: #{$md3-dark-tertiary-fixed};
+  --md3-tertiary-fixed-dim: #{$md3-dark-tertiary-fixed-dim};
+  --md3-on-tertiary-fixed: #{$md3-dark-on-tertiary-fixed};
+  --md3-on-tertiary-fixed-variant: #{$md3-dark-on-tertiary-fixed-variant};
+  // Error
   --md3-error: #{$md3-dark-error};
+  --md3-error-dim: #{$md3-dark-error-dim};
   --md3-on-error: #{$md3-dark-on-error};
   --md3-error-container: #{$md3-dark-error-container};
   --md3-on-error-container: #{$md3-dark-on-error-container};
+  // Background
   --md3-background: #{$md3-dark-background};
   --md3-on-background: #{$md3-dark-on-background};
+  // Surface
   --md3-surface: #{$md3-dark-surface};
   --md3-on-surface: #{$md3-dark-on-surface};
   --md3-surface-variant: #{$md3-dark-surface-variant};
   --md3-on-surface-variant: #{$md3-dark-on-surface-variant};
+  --md3-surface-tint: #{$md3-dark-surface-tint};
+  // Outline
   --md3-outline: #{$md3-dark-outline};
   --md3-outline-variant: #{$md3-dark-outline-variant};
+  // Utility
   --md3-shadow: #{$md3-dark-shadow};
   --md3-scrim: #{$md3-dark-scrim};
+  // Inverse
   --md3-inverse-surface: #{$md3-dark-inverse-surface};
   --md3-inverse-on-surface: #{$md3-dark-inverse-on-surface};
   --md3-inverse-primary: #{$md3-dark-inverse-primary};
@@ -149,6 +192,7 @@ body.body--dark {
   --md3-inverse-secondary: #{$md3-secondary};
   --md3-inverse-tertiary: #{$md3-tertiary};
   --md3-inverse-error: #{$md3-error};
+  // Surface containers
   --md3-surface-dim: #{$md3-dark-surface-dim};
   --md3-surface-bright: #{$md3-dark-surface-bright};
   --md3-surface-container-lowest: #{$md3-dark-surface-container-lowest};
@@ -156,11 +200,13 @@ body.body--dark {
   --md3-surface-container: #{$md3-dark-surface-container};
   --md3-surface-container-high: #{$md3-dark-surface-container-high};
   --md3-surface-container-highest: #{$md3-dark-surface-container-highest};
+  // RGB triplets
   --md3-primary-rgb: #{hex-to-rgb-values($md3-dark-primary)};
   --md3-on-surface-rgb: #{hex-to-rgb-values($md3-dark-on-surface)};
   --md3-on-primary-rgb: #{hex-to-rgb-values($md3-dark-on-primary)};
   --md3-error-rgb: #{hex-to-rgb-values($md3-dark-error)};
   --md3-shadow-rgb: #{hex-to-rgb-values($md3-dark-shadow)};
+  // Quasar brand
   --q-primary: #{$md3-dark-primary};
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
@@ -523,17 +569,29 @@ body.desktop {
 .bg-on-primary { background-color: var(--md3-on-primary) !important; color: var(--md3-primary) !important; }
 .bg-primary-container { background-color: var(--md3-primary-container) !important; color: var(--md3-on-primary-container) !important; }
 .bg-on-primary-container { background-color: var(--md3-on-primary-container) !important; color: var(--md3-primary-container) !important; }
+.bg-primary-fixed { background-color: var(--md3-primary-fixed) !important; color: var(--md3-on-primary-fixed) !important; }
+.bg-primary-fixed-dim { background-color: var(--md3-primary-fixed-dim) !important; color: var(--md3-on-primary-fixed) !important; }
+.bg-on-primary-fixed { background-color: var(--md3-on-primary-fixed) !important; color: var(--md3-primary-fixed) !important; }
+.bg-on-primary-fixed-variant { background-color: var(--md3-on-primary-fixed-variant) !important; color: var(--md3-primary-fixed) !important; }
 
 // --- Secondary ---
 .bg-on-secondary { background-color: var(--md3-on-secondary) !important; color: var(--md3-secondary) !important; }
 .bg-secondary-container { background-color: var(--md3-secondary-container) !important; color: var(--md3-on-secondary-container) !important; }
 .bg-on-secondary-container { background-color: var(--md3-on-secondary-container) !important; color: var(--md3-secondary-container) !important; }
+.bg-secondary-fixed { background-color: var(--md3-secondary-fixed) !important; color: var(--md3-on-secondary-fixed) !important; }
+.bg-secondary-fixed-dim { background-color: var(--md3-secondary-fixed-dim) !important; color: var(--md3-on-secondary-fixed) !important; }
+.bg-on-secondary-fixed { background-color: var(--md3-on-secondary-fixed) !important; color: var(--md3-secondary-fixed) !important; }
+.bg-on-secondary-fixed-variant { background-color: var(--md3-on-secondary-fixed-variant) !important; color: var(--md3-secondary-fixed) !important; }
 
 // --- Tertiary ---
 .bg-tertiary { background-color: var(--md3-tertiary) !important; color: var(--md3-on-tertiary) !important; }
 .bg-on-tertiary { background-color: var(--md3-on-tertiary) !important; color: var(--md3-tertiary) !important; }
 .bg-tertiary-container { background-color: var(--md3-tertiary-container) !important; color: var(--md3-on-tertiary-container) !important; }
 .bg-on-tertiary-container { background-color: var(--md3-on-tertiary-container) !important; color: var(--md3-tertiary-container) !important; }
+.bg-tertiary-fixed { background-color: var(--md3-tertiary-fixed) !important; color: var(--md3-on-tertiary-fixed) !important; }
+.bg-tertiary-fixed-dim { background-color: var(--md3-tertiary-fixed-dim) !important; color: var(--md3-on-tertiary-fixed) !important; }
+.bg-on-tertiary-fixed { background-color: var(--md3-on-tertiary-fixed) !important; color: var(--md3-tertiary-fixed) !important; }
+.bg-on-tertiary-fixed-variant { background-color: var(--md3-on-tertiary-fixed-variant) !important; color: var(--md3-tertiary-fixed) !important; }
 
 // --- Error ---
 .bg-error { background-color: var(--md3-error) !important; color: var(--md3-on-error) !important; }
@@ -560,6 +618,9 @@ body.desktop {
 .bg-surface-container-high { background-color: var(--md3-surface-container-high) !important; color: var(--md3-on-surface) !important; }
 .bg-surface-container-highest { background-color: var(--md3-surface-container-highest) !important; color: var(--md3-on-surface) !important; }
 
+// --- Surface Tint ---
+.bg-surface-tint { background-color: var(--md3-surface-tint) !important; color: var(--md3-on-surface) !important; }
+
 // --- Outline ---
 .bg-outline { background-color: var(--md3-outline) !important; color: var(--md3-surface) !important; }
 .bg-outline-variant { background-color: var(--md3-outline-variant) !important; color: var(--md3-on-surface) !important; }
@@ -576,19 +637,36 @@ body.desktop {
 // --- Text-only classes (defined AFTER bg- classes so they win by source order) ---
 // Use with Quasar's text-color prop or as standalone utility classes.
 .text-on-primary { color: var(--md3-on-primary) !important; }
+.text-primary-dim { color: var(--md3-primary-dim) !important; }
 .text-primary-container { color: var(--md3-primary-container) !important; }
 .text-on-primary-container { color: var(--md3-on-primary-container) !important; }
+.text-primary-fixed { color: var(--md3-primary-fixed) !important; }
+.text-primary-fixed-dim { color: var(--md3-primary-fixed-dim) !important; }
+.text-on-primary-fixed { color: var(--md3-on-primary-fixed) !important; }
+.text-on-primary-fixed-variant { color: var(--md3-on-primary-fixed-variant) !important; }
 .text-on-secondary { color: var(--md3-on-secondary) !important; }
+.text-secondary-dim { color: var(--md3-secondary-dim) !important; }
 .text-secondary-container { color: var(--md3-secondary-container) !important; }
 .text-on-secondary-container { color: var(--md3-on-secondary-container) !important; }
+.text-secondary-fixed { color: var(--md3-secondary-fixed) !important; }
+.text-secondary-fixed-dim { color: var(--md3-secondary-fixed-dim) !important; }
+.text-on-secondary-fixed { color: var(--md3-on-secondary-fixed) !important; }
+.text-on-secondary-fixed-variant { color: var(--md3-on-secondary-fixed-variant) !important; }
 .text-tertiary, .text-accent { color: var(--md3-tertiary) !important; }
 .text-on-tertiary { color: var(--md3-on-tertiary) !important; }
+.text-tertiary-dim { color: var(--md3-tertiary-dim) !important; }
 .text-tertiary-container { color: var(--md3-tertiary-container) !important; }
 .text-on-tertiary-container { color: var(--md3-on-tertiary-container) !important; }
+.text-tertiary-fixed { color: var(--md3-tertiary-fixed) !important; }
+.text-tertiary-fixed-dim { color: var(--md3-tertiary-fixed-dim) !important; }
+.text-on-tertiary-fixed { color: var(--md3-on-tertiary-fixed) !important; }
+.text-on-tertiary-fixed-variant { color: var(--md3-on-tertiary-fixed-variant) !important; }
 .text-error, .text-negative { color: var(--md3-error) !important; }
 .text-on-error { color: var(--md3-on-error) !important; }
+.text-error-dim { color: var(--md3-error-dim) !important; }
 .text-error-container { color: var(--md3-error-container) !important; }
 .text-on-error-container { color: var(--md3-on-error-container) !important; }
+.text-surface-tint { color: var(--md3-surface-tint) !important; }
 .text-background { color: var(--md3-background) !important; }
 .text-on-background { color: var(--md3-on-background) !important; }
 .text-surface { color: var(--md3-surface) !important; }

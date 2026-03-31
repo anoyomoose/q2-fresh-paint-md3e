@@ -147,6 +147,7 @@ Controls how the palette is derived from the source color. Each variant produces
 | `'neutral'` | Subdued, low chroma |
 | `'rainbow'` | Full hue range |
 | `'fruitSalad'` | Playful, high variety |
+| `'cmf'` | Color, Material, Finish — hardware-oriented, uses 2026 spec exclusively |
 
 Both light and dark scheme tokens are generated from every variant (as `$md3-<token>` and `$md3-dark-<token>` Sass variables). The SCSS layer then maps these to Quasar brand colors and CSS custom properties for light/dark switching.
 

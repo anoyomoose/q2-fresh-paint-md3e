@@ -19,15 +19,21 @@ Sass variables `$md3-<token>` and `$md3-dark-<token>` exist as compile-time hex 
 
 ### Token List
 
-**Primary:** `primary`, `on-primary`, `primary-container`, `on-primary-container`
+**Primary:** `primary`, `primary-dim`, `on-primary`, `primary-container`, `on-primary-container`
 
-**Secondary:** `secondary`, `on-secondary`, `secondary-container`, `on-secondary-container`
+**Primary Fixed:** `primary-fixed`, `primary-fixed-dim`, `on-primary-fixed`, `on-primary-fixed-variant`
 
-**Tertiary:** `tertiary`, `on-tertiary`, `tertiary-container`, `on-tertiary-container`
+**Secondary:** `secondary`, `secondary-dim`, `on-secondary`, `secondary-container`, `on-secondary-container`
 
-**Error:** `error`, `on-error`, `error-container`, `on-error-container`
+**Secondary Fixed:** `secondary-fixed`, `secondary-fixed-dim`, `on-secondary-fixed`, `on-secondary-fixed-variant`
 
-**Surface:** `surface`, `on-surface`, `surface-variant`, `on-surface-variant`
+**Tertiary:** `tertiary`, `tertiary-dim`, `on-tertiary`, `tertiary-container`, `on-tertiary-container`
+
+**Tertiary Fixed:** `tertiary-fixed`, `tertiary-fixed-dim`, `on-tertiary-fixed`, `on-tertiary-fixed-variant`
+
+**Error:** `error`, `error-dim`, `on-error`, `error-container`, `on-error-container`
+
+**Surface:** `surface`, `on-surface`, `surface-variant`, `on-surface-variant`, `surface-tint`
 
 **Surface containers:** `surface-dim`, `surface-bright`, `surface-container-lowest`, `surface-container-low`, `surface-container`, `surface-container-high`, `surface-container-highest`
 
