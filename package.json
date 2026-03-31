@@ -57,7 +57,7 @@
     "@material/material-color-utilities": "^0.4.0"
   },
   "peerDependencies": {
-    "@anoyomoose/q2-fresh-paint-core": "^0.1.3",
+    "@anoyomoose/q2-fresh-paint-core": "^0.1.5",
     "quasar": "^2.0.0",
     "vue": "^3.0.0"
   },

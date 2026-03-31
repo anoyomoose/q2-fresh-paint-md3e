@@ -77,9 +77,9 @@ Both entries are required:
 
 ### Important: Check your `quasar.variables.scss`
 
-The md3e theme manages brand colors, border radii, typography, and many other Quasar variables via its own variable system. If your project's `src/css/quasar.variables.scss` (or `.sass`) defines any of these with hard assignments (no `!default`), **those will silently override the theme** - because Quasar loads that file before any theme variables.
+The md3e theme manages brand colors, border radii, typography, and many other Quasar variables via its own variable system. Quasar loads `quasar.variables.scss` **before** any theme variables, and it typically uses hard assignments (no `!default`). Any color variable defined there (e.g., `$primary: #1976D2`) will override the theme's `var()` mapping and **break runtime palette switching**.
 
-At minimum, **remove these brand color definitions** from `quasar.variables.scss` (the theme derives them from your `sourceColor`):
+**Remove all color definitions** from `quasar.variables.scss`:
 
 ```scss
 // REMOVE these - the md3e theme manages them via palette generation:
@@ -89,11 +89,12 @@ At minimum, **remove these brand color definitions** from `quasar.variables.scss
 // $negative  : #C10015;
 // $dark      : #1d1d1d;
 // $dark-page : #121212;
+// $separator-color: rgba(0, 0, 0, .12);
 ```
 
-The theme also overrides shape tokens (`$generic-border-radius`, `$button-border-radius`, `$button-padding`), typography (`$h1`–`$h6`, `$body1`, `$body2`), and component variables (`$separator-color`, `$toolbar-*`, `$tooltip-*`, `$table-*`, `$menu-*`, `$input-*`, `$dialog-*`). If you've customized any of these, they'll take precedence over the theme. Check the theme's [`variables.scss`](src/theme/variables.scss) for the full list of managed variables.
+Non-color variables (sizing, spacing, etc.) are still safe in `quasar.variables.scss`. The theme also manages shape tokens (`$generic-border-radius`, `$button-border-radius`, `$button-padding`), typography (`$h1`–`$h6`, `$body1`, `$body2`), and component variables (`$toolbar-*`, `$tooltip-*`, `$table-*`, `$menu-*`, `$input-*`, `$dialog-*`). If you've customized any of these, they'll take precedence over the theme. Check the theme's [`variables.scss`](src/theme/variables.scss) for the full list of managed variables.
 
-The recommended approach is to start with an empty `quasar.variables.scss`, configure your base color via the `sourceColor` option in the plugin configuration, and then selectively re-add variable overrides one at a time to see their effect. This way you're building on top of the theme rather than fighting it.
+The recommended approach is to start with an empty `quasar.variables.scss`, configure your base color via the `sourceColor` option in the plugin configuration, and then selectively re-add non-color variable overrides one at a time to see their effect. For color customization, override `$md3-*` palette tokens in `src/theme/md3e/variables.pre.scss` in your local tree instead, i.e. instead of `$primary` modify `$md3-primary` there. 
 
 ### Important: Remove `bg-primary` from toolbars, headers, and footers
 
@@ -388,24 +389,24 @@ The boot file (`~@anoyomoose/q2-fresh-paint-md3e/boot`) must be registered in th
 
 ## User Overrides
 
-Simple variable overrides with literal values (e.g., `$button-padding: 8px 24px`) can go in your project's standard `src/css/quasar.variables.scss` - that file has the highest priority since Quasar loads it before everything else.
+Non-color variable overrides (e.g., `$button-padding: 8px 24px`) can go in `src/css/quasar.variables.scss` — that file has the highest priority since Quasar loads it before any theme variables. **Do not put color overrides there** — they break runtime palette switching. See [the colors documentation](docs/colors.md#user-overrides) for details.
 
-For overrides that need to reference theme tokens, place files in `src/theme/md3e/`. Three variable override files are available, each at a different point in the import chain:
+For color and theme token overrides, place files in `src/theme/md3e/`. Three variable override files are available, each at a different point in the import chain:
 
-- **`variables.pre.scss`** - before the generated palette. Override individual palette tokens:
+- **`variables.pre.scss`** - before the generated palette. Override individual `$md3-*` palette tokens:
   ```scss
   $md3-primary: #ff0000 !default;  // force primary, let rest of palette generate
   ```
 
-- **`variables.scss`** - after the generated palette, before the package's own variables. Reference palette tokens to remap how they're applied:
+- **`variables.scss`** - after the generated palette, before the package's own variables. Remap palette tokens or override non-color theme variables:
   ```scss
-  $primary: $md3-tertiary !default;  // swap primary to use tertiary palette
+  $md3-primary: $md3-tertiary !default;  // remap primary to tertiary palette
   $button-border-radius: $md3-corner-large !default;  // reference a shape token
   ```
 
 - **`variables.post.scss`** - after everything. Can reference all tokens. Use hard assignments (no `!default`):
   ```scss
-  $separator-color: $md3-outline;  // all tokens are available here
+  $generic-border-radius: 16px;  // force a specific shape
   ```
 
 Variable files **extend** the theme (all are imported, yours just has higher priority). Component overrides (`components/QBtn.scss`) and `base.scss` **replace** the theme's files entirely.
@@ -427,5 +428,5 @@ See the [core package documentation](https://github.com/anoyomoose/q2-fresh-pain
 - **Dense variants** of QToggle and QSlider are proportionally scaled approximations
 - **QCarousel** is fundamentally different from MD3E carousel and not themed
 - **QToggle three-state animation** When transitioning from indeterminate (middle) to ON, the thumb briefly snaps to the OFF position before animating to ON. This is caused by Quasar's JS removing the `--indet` class (resetting `left` to the base OFF value) before adding `--truthy` in the same frame. The CSS transition then animates from OFF to ON instead of middle to ON. This is a Quasar core behavior that cannot be fixed via CSS theming alone.
-- **Per-component dark mode** `body.body--light [class*="--dark"] > *:not([class*="--dark"])` re-injects light tokens on direct children so child components (toggles, checkboxes) keep light-mode appearance. Edge case: non-dark items inside dark lists (`.q-list--dark > .q-item` without `q-item--dark`) may still have sub-element colors resolve incorrectly.
+- **Per-component dark mode** Quasar's base `.q-dark` rule is stripped via `stripRules`. The theme replaces it with `body.body--light .q-dark` which sets all dark `--md3-*` tokens on the element, plus a fallback `background: var(--md3-surface)` and `color: var(--md3-on-surface)` for unthemed components. Themed components override the fallback background via source order. This shares the same token block as `body.body--dark` via a merged CSS selector.
 - **Claude** has been a massive help getting all of this done

@@ -127,6 +127,11 @@ function buildTokenBlock(tokens: Record<string, string>, inverseTokens?: Record<
   css += `  --q-secondary: ${tokens.secondary};\n`
   css += `  --q-accent: ${tokens.tertiary};\n`
   css += `  --q-negative: ${tokens.error};\n`
+  // --q-positive: no MD3E mapping
+  // --q-info: no MD3E mapping
+  // --q-warning: no MD3E mapping
+  css += `  --q-dark-page: ${tokens.surface};\n`
+  css += `  --q-dark: ${tokens['surface-container']};\n`
   return css
 }
 
@@ -153,16 +158,15 @@ export function applyPalette(tokens: PaletteTokens): void {
   css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
-  // Dark mode — matches base.scss `body.body--dark`
-  // Inverse tokens use light mode values
-  css += 'body.body--dark {\n'
+  // Dark mode (global + per-component) — merged selector, same dark tokens
+  css += 'body.body--light .q-dark,\nbody.body--dark {\n'
   css += buildTokenBlock(tokens.dark, tokens.light)
   css += '}\n\n'
 
-  // Per-component dark mode fix — matches base.scss rule that re-injects
-  // light tokens on children of dark-scoped elements in light mode
-  css += 'body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {\n'
-  css += buildTokenBlock(tokens.light, tokens.dark)
+  // Per-component dark mode: fallback background/color for unthemed components
+  css += 'body.body--light .q-dark {\n'
+  css += '  background: var(--md3-surface);\n'
+  css += '  color: var(--md3-on-surface);\n'
   css += '}\n'
 
   styleEl.textContent = css
@@ -205,14 +209,15 @@ function buildScopedCss(className: string, tokens: PaletteTokens): string {
   css += buildTokenBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
-  // Dark mode
-  css += `body.body--dark ${sel} {\n`
+  // Dark mode (global + per-component) within scope
+  css += `body.body--light ${sel} .q-dark,\nbody.body--dark ${sel} {\n`
   css += buildTokenBlock(tokens.dark, tokens.light)
   css += '}\n\n'
 
-  // Per-component dark mode fix
-  css += `body.body--light ${sel} [class*="--dark"]:not(body) > *:not([class*="--dark"]) {\n`
-  css += buildTokenBlock(tokens.light, tokens.dark)
+  // Per-component dark mode: fallback background/color for unthemed components
+  css += `body.body--light ${sel} .q-dark {\n`
+  css += '  background: var(--md3-surface);\n'
+  css += '  color: var(--md3-on-surface);\n'
   css += '}\n'
 
   return css

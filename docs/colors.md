@@ -9,11 +9,13 @@ The MD3E theme generates a full Material Design 3 color palette from a single `s
 | Vue template (Quasar props) | `color="token"` / `text-color="token"` | `<q-btn color="primary-container" />` |
 | Vue template (classes) | `class="bg-token text-token"` | `<div class="bg-surface-container text-on-surface">` |
 | CSS / `<style>` blocks | `var(--md3-token)` | `background: var(--md3-primary-container);` |
-| Sass / SCSS | `$md3-token` | `background: $md3-primary-container;` |
+| Sass / SCSS | `var(--md3-token)` | `background: var(--md3-primary-container);` |
 
 ## Available Tokens
 
-All tokens are generated in both light and dark variants. The CSS custom properties (`var(--md3-*)`) switch automatically between light and dark based on Quasar's `body.body--light` / `body.body--dark` classes. The Sass variables (`$md3-*`) are compile-time values for the light scheme; dark variants are available as `$md3-dark-*`.
+All tokens are generated in both light and dark variants. The CSS custom properties (`var(--md3-*)`) switch automatically between light and dark based on Quasar's `body.body--light` / `body.body--dark` classes. Use `var(--md3-*)` in both CSS and Sass for runtime-correct values.
+
+Sass variables `$md3-<token>` and `$md3-dark-<token>` exist as compile-time hex values for the generated palette. These are used internally by `base.scss` to set the initial CSS custom property values. **Do not use `$md3-*` or `$md3-dark-*` directly in your component styles** — they are static values that don't respond to runtime palette changes or light/dark switching. Use `var(--md3-*)` instead.
 
 ### Token List
 
@@ -33,7 +35,7 @@ All tokens are generated in both light and dark variants. The CSS custom propert
 
 **Outline:** `outline`, `outline-variant`
 
-**Inverse:** `inverse-surface`, `inverse-on-surface`, `inverse-primary`
+**Inverse:** `inverse-surface`, `inverse-on-surface`, `inverse-primary`, `inverse-secondary`, `inverse-tertiary`, `inverse-error`
 
 **Utility:** `shadow`, `scrim`
 
@@ -69,12 +71,12 @@ If you want a different text color, set `text-color` explicitly — it overrides
 
 Quasar's brand colors are mapped to MD3 roles by the theme:
 
-| Quasar brand | MD3 role | Notes |
-|---|---|---|
-| `primary` | primary | |
-| `secondary` | secondary | |
-| `accent` | tertiary | `tertiary` also works as an alias |
-| `negative` | error | |
+| Quasar brand | MD3 role  | Notes                             |
+|--------------|-----------|-----------------------------------|
+| `primary`    | primary   |                                   |
+| `secondary`  | secondary |                                   |
+| `accent`     | tertiary  | `tertiary` also works as an alias |
+| `negative`   | error     | `error` also works as an alias    |
 
 These work with all Quasar components that accept a color prop. The theme also patches Quasar's automatic `text-white` / `text-black` on brand-colored elements to use the correct MD3 `on-*` token instead, so dark mode works correctly.
 
@@ -94,13 +96,14 @@ All tokens are available as utility classes for direct use in templates:
 </div>
 ```
 
-## Using Colors in CSS
+## Using Colors in CSS and Sass
 
-### CSS Custom Properties
+### CSS Custom Properties (recommended)
 
-All tokens are available as CSS custom properties that switch automatically between light and dark mode:
+All tokens are available as CSS custom properties that switch automatically between light and dark mode. **This is the recommended way to use colors in both CSS and Sass/SCSS:**
 
-```css
+```scss
+// Works in CSS, SCSS, and Sass — all produce runtime-correct values
 .my-component {
   background: var(--md3-surface-container);
   color: var(--md3-on-surface);
@@ -121,21 +124,28 @@ RGB triplets are available for use with `rgba()`:
 }
 ```
 
-Available RGB triplets: `--md3-primary-rgb`, `--md3-on-surface-rgb`, `--md3-on-primary-rgb`, `--md3-error-rgb`.
+Available RGB triplets: `--md3-primary-rgb`, `--md3-on-surface-rgb`, `--md3-on-primary-rgb`, `--md3-error-rgb`, `--md3-shadow-rgb`.
 
-### Sass Variables
+### Sass Variables (compile-time only)
 
-In SCSS/Sass files and `<style lang="scss">` blocks, use the `$md3-*` variables directly. These are compile-time values resolved from the generated palette:
+The theme generates `$md3-<token>` (light) and `$md3-dark-<token>` (dark) Sass variables as static hex values. These exist primarily for the theme's internal use — `base.scss` uses them to set the initial CSS custom property values.
+
+**Do not use `$md3-primary`, `$md3-dark-primary`, etc. directly in your component styles.** They are compile-time constants that:
+- Don't switch between light and dark mode
+- Don't respond to runtime palette changes via `applyPalette()`
+- Will silently show the wrong color in dark mode
+
+Use `var(--md3-primary)` instead — it resolves correctly in all contexts.
+
+The Sass variables are useful for non-color tokens that don't change at runtime:
 
 ```scss
 .my-component {
-  background: $md3-surface-container;
-  color: $md3-on-surface;
-  border-radius: $md3-corner-medium;
+  border-radius: $md3-corner-medium;        // shape tokens — safe
+  transition: all $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;  // motion — safe
+  background: var(--md3-surface-container);  // colors — use var()
 }
 ```
-
-Note: Sass variables are compile-time constants for the light scheme. For runtime light/dark switching, use CSS custom properties (`var(--md3-*)`) instead. The theme's `base.scss` sets up the `var(--md3-*)` properties with both light and dark values.
 
 ## How It Works
 
@@ -147,15 +157,19 @@ The `sourceColor` option is fed to `@material/material-color-utilities` which ge
 
 ### 2. Variable Mapping (Sass compilation)
 
-The theme's `variables.scss` maps generated palette tokens to Quasar's variable system:
+The theme's `variables.scss` maps palette tokens to Quasar's variable system using `var()` references so that runtime palette switching works:
 
 ```scss
-$primary: $md3-primary !default;
-$secondary: $md3-secondary !default;
-$accent: $md3-tertiary !default;
+$primary: var(--md3-primary) !default;
+$secondary: var(--md3-secondary) !default;
+$accent: var(--md3-tertiary) !default;
+$separator-color: var(--md3-outline-variant) !default;
+// etc.
 ```
 
-This is where Quasar brand colors, shape tokens, typography, and component variables are all connected to the MD3 palette.
+When Quasar's Sass compiles, these `var()` strings are passed through to CSS as-is. This means Quasar's own component rules (separators, borders, tooltips, etc.) produce CSS that references the theme's custom properties, so they respond to runtime palette changes.
+
+**Important:** If you override a Quasar variable like `$primary` directly (e.g., `$primary: #ff0000` in `quasar.variables.scss`), you break the `var()` chain and that variable becomes a static value that doesn't respond to palette changes. Override `$md3-primary` in `src/theme/md3e/variables.pre.scss` instead — see [User Overrides](#user-overrides) below.
 
 ### 3. CSS Custom Properties (runtime)
 
@@ -163,9 +177,9 @@ The theme's `base.scss` creates CSS custom properties for all tokens, with light
 
 ```scss
 :root, body.body--light {
-  --md3-primary: #{$md3-primary};
+  --md3-primary: #{$md3-primary};       // hex value from generated palette
   --md3-on-primary: #{$md3-on-primary};
-  // ...
+  // ...all 30+ tokens
 }
 
 body.body--dark {
@@ -197,6 +211,77 @@ For Quasar's own brand colors (`primary`, `secondary`, `accent`/`tertiary`, `neg
 ```
 
 The `:not()` exclusions preserve text color handling for elevated buttons (`.q-btn--standard`), tonal buttons (`.glossy`), and disabled buttons, which each have their own color logic.
+
+## User Overrides
+
+### Override palette tokens, not Quasar variables
+
+When customizing colors, override the `$md3-*` palette tokens rather than Quasar's own variables (`$primary`, `$separator-color`, etc.). The theme maps Quasar variables to `var(--md3-*)` references — overriding them directly breaks the runtime palette chain.
+
+**Correct** — override the palette token in `variables.pre.scss`:
+```scss
+$md3-primary: #ff0000 !default;  // changes the build-time primary color
+```
+
+**Wrong** — overriding the Quasar variable breaks runtime switching:
+```scss
+$primary: #ff0000 !default;  // static hex — palette changes won't affect this
+```
+
+### Override points
+
+Three user override files are available (place in `src/theme/md3e/`):
+
+- **`variables.pre.scss`** — before the generated palette. Override individual palette tokens:
+  ```scss
+  $md3-primary: #ff0000 !default;  // force primary, rest generates normally
+  ```
+
+- **`variables.scss`** — after the palette, before theme variables. Reference palette tokens:
+  ```scss
+  // Remap primary to use the tertiary palette color
+  $md3-primary: $md3-tertiary !default;
+  ```
+
+- **`variables.post.scss`** — after everything. Hard assignments (no `!default`):
+  ```scss
+  // Force a specific shape token
+  $generic-border-radius: 16px;
+  ```
+
+### About `quasar.variables.scss`
+
+Quasar's standard user variable file (`src/css/quasar.variables.scss`) loads **before** all theme variables and typically uses hard assignments (no `!default`). Any color variable defined there (e.g., `$primary: #ff0000`) will override the theme's `var()` mapping and break runtime palette switching.
+
+**Remove all color definitions** from `quasar.variables.scss` — the theme manages them. This file is still safe for non-color overrides like sizing, spacing, or other Quasar variables that aren't part of the color system:
+
+```scss
+// Safe in quasar.variables.scss:
+$toolbar-min-height: 72px;
+$input-font-size: 18px;
+
+// NOT safe — remove these:
+// $primary: #1976D2;
+// $secondary: #26A69A;
+// $accent: #9C27B0;
+// $negative: #C10015;
+// $dark: #1d1d1d;
+// $dark-page: #121212;
+// $separator-color: rgba(0, 0, 0, .12);
+```
+
+For color customization, override the `$md3-*` palette tokens in `src/theme/md3e/variables.pre.scss` — not Quasar's own variables like `$primary`.
+
+### What's safe to override
+
+| Variable type | Override where | Runtime-safe? |
+|---|---|---|
+| `$md3-<token>` palette colors | `variables.pre.scss` | Yes — changes build-time default, `var()` chain intact |
+| `$md3-corner-*` shape tokens | `variables.scss` or `quasar.variables.scss` | N/A — shape doesn't change at runtime |
+| `$md3-type-*` typography | `variables.scss` or `quasar.variables.scss` | N/A — typography doesn't change at runtime |
+| `$md3-spring-*` motion | `variables.scss` or `quasar.variables.scss` | N/A — motion doesn't change at runtime |
+| Non-color Quasar vars (sizing, etc.) | `quasar.variables.scss` | N/A — not palette-dependent |
+| `$primary`, `$separator-color`, etc. | Avoid | No — breaks `var()` chain |
 
 ## Runtime Palette
 
@@ -299,7 +384,9 @@ Values are clamped to the [-1, 1] range.
 
 1. `:root, body.body--light` — light mode tokens
 2. `body.body--dark` — dark mode tokens
-3. `body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"])` — per-component dark mode fix
+3. `body.body--light .q-dark` — per-component dark mode (dark tokens + fallback background/color)
+
+It also updates Quasar's `--q-*` brand variables and `--q-dark` / `--q-dark-page` to match the new palette.
 
 Each call replaces the style element content (constant memory). `resetPalette()` removes the element entirely, reverting to build-time CSS.
 

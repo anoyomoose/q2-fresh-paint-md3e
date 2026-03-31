@@ -105,7 +105,15 @@ body, body.body--dark {
   --md3-elevation-5: #{$md3-elevation-5};
 }
 
-// === Dark Mode (Global) ===
+// === Dark Mode ===
+// Global dark mode (body.body--dark) and per-component dark mode (.q-dark in a
+// light page) share the same dark token block.
+//
+// Per-component: Quasar's base .q-dark rule (background: var(--q-dark); color: #fff)
+// is stripped via stripRules in index.ts. The body.body--light .q-dark selector below
+// replaces it with correct MD3E tokens. Themed components (QCard, QDrawer, etc.)
+// override the fallback background via their own rules which load later in source order.
+body.body--light .q-dark,
 body.body--dark {
   --md3-primary: #{$md3-dark-primary};
   --md3-on-primary: #{$md3-dark-on-primary};
@@ -136,7 +144,7 @@ body.body--dark {
   --md3-inverse-surface: #{$md3-dark-inverse-surface};
   --md3-inverse-on-surface: #{$md3-dark-inverse-on-surface};
   --md3-inverse-primary: #{$md3-dark-inverse-primary};
-  // Inverse brand colors (light-scheme values in dark mode, for use on inverse-surface)
+  // Inverse brand colors (light-scheme values, for use on inverse-surface in dark context)
   --md3-inverse-secondary: #{$md3-secondary};
   --md3-inverse-tertiary: #{$md3-tertiary};
   --md3-inverse-error: #{$md3-error};
@@ -156,63 +164,15 @@ body.body--dark {
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
   --q-negative: #{$md3-dark-error};
+  --q-dark-page: #{$md3-dark-surface};
+  --q-dark: #{$md3-dark-surface-container};
 }
 
-// === Per-Component Dark Mode Fix ===
-// Quasar components with a `dark` prop (q-item--dark, q-card--dark, etc.) set dark
-// tokens on themselves, but those cascade into child components (e.g. a toggle inside
-// a dark list item) breaking their light-mode appearance.
-//
-// Fix: re-inject light tokens on direct children of --dark elements that aren't
-// themselves dark. Scoped to body.body--light so global dark mode is unaffected.
-// Text colors in the dark element itself are handled by Quasar's own --dark rules
-// which have higher specificity (two classes) than our single-class token overrides.
-body.body--light [class*="--dark"]:not(body) > *:not([class*="--dark"]) {
-  --md3-primary: #{$md3-primary};
-  --md3-on-primary: #{$md3-on-primary};
-  --md3-primary-container: #{$md3-primary-container};
-  --md3-on-primary-container: #{$md3-on-primary-container};
-  --md3-secondary: #{$md3-secondary};
-  --md3-on-secondary: #{$md3-on-secondary};
-  --md3-secondary-container: #{$md3-secondary-container};
-  --md3-on-secondary-container: #{$md3-on-secondary-container};
-  --md3-tertiary: #{$md3-tertiary};
-  --md3-on-tertiary: #{$md3-on-tertiary};
-  --md3-tertiary-container: #{$md3-tertiary-container};
-  --md3-on-tertiary-container: #{$md3-on-tertiary-container};
-  --md3-error: #{$md3-error};
-  --md3-on-error: #{$md3-on-error};
-  --md3-error-container: #{$md3-error-container};
-  --md3-on-error-container: #{$md3-on-error-container};
-  --md3-background: #{$md3-background};
-  --md3-on-background: #{$md3-on-background};
-  --md3-surface: #{$md3-surface};
-  --md3-on-surface: #{$md3-on-surface};
-  --md3-surface-variant: #{$md3-surface-variant};
-  --md3-on-surface-variant: #{$md3-on-surface-variant};
-  --md3-outline: #{$md3-outline};
-  --md3-outline-variant: #{$md3-outline-variant};
-  --md3-shadow: #{$md3-shadow};
-  --md3-scrim: #{$md3-scrim};
-  --md3-inverse-surface: #{$md3-inverse-surface};
-  --md3-inverse-on-surface: #{$md3-inverse-on-surface};
-  --md3-inverse-primary: #{$md3-inverse-primary};
-  --md3-surface-dim: #{$md3-surface-dim};
-  --md3-surface-bright: #{$md3-surface-bright};
-  --md3-surface-container-lowest: #{$md3-surface-container-lowest};
-  --md3-surface-container-low: #{$md3-surface-container-low};
-  --md3-surface-container: #{$md3-surface-container};
-  --md3-surface-container-high: #{$md3-surface-container-high};
-  --md3-surface-container-highest: #{$md3-surface-container-highest};
-  --md3-primary-rgb: #{hex-to-rgb-values($md3-primary)};
-  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
-  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
-  --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
-  --md3-shadow-rgb: #{hex-to-rgb-values($md3-shadow)};
-  --q-primary: #{$md3-primary};
-  --q-secondary: #{$md3-secondary};
-  --q-accent: #{$md3-tertiary};
-  --q-negative: #{$md3-error};
+// Per-component dark mode: fallback background/color for unthemed components.
+// Themed components override this via source order (their rules load later).
+body.body--light .q-dark {
+  background: var(--md3-surface);
+  color: var(--md3-on-surface);
 }
 
 // === Brand Color Text Fix ===
