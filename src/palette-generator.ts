@@ -1,6 +1,7 @@
 import {
   argbFromHex,
   hexFromArgb,
+  Blend,
   Hct,
   MaterialDynamicColors,
   SchemeCmf,
@@ -13,6 +14,7 @@ import {
   SchemeRainbow,
   SchemeTonalSpot,
   SchemeVibrant,
+  TonalPalette,
 } from '@material/material-color-utilities'
 import type { DynamicScheme } from '@material/material-color-utilities'
 
@@ -39,6 +41,12 @@ export interface GenerateOptions {
   scheme?: ColorScheme
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
+  /** Seed color for harmonized "positive" role. Default: '#21BA45' */
+  positiveColor?: string
+  /** Seed color for harmonized "info" role. Default: '#31CCEC' */
+  infoColor?: string
+  /** Seed color for harmonized "warning" role. Default: '#F2C037' */
+  warningColor?: string
 }
 
 const schemeConstructors: Record<ColorScheme, new (...args: any[]) => DynamicScheme> = {
@@ -135,16 +143,83 @@ const tokenMethods: Array<[string, string]> = [
 // Exported for use by palette test page and docs
 export { tokenMethods as colorTokens }
 
+/** Default seed colors for harmonization (Quasar's originals) */
+const DEFAULT_POSITIVE = '#21BA45'
+const DEFAULT_INFO = '#31CCEC'
+const DEFAULT_WARNING = '#F2C037'
+
+/**
+ * Generate harmonized custom color tokens from a design color and source color.
+ * Uses Blend.harmonize to shift the hue, then extracts tones from a TonalPalette
+ * at standard MD3 tone levels.
+ */
+function generateHarmonizedTokens(
+  designColorArgb: number,
+  sourceColorArgb: number,
+  isDark: boolean,
+): Record<string, string> {
+  const harmonized = Blend.harmonize(designColorArgb, sourceColorArgb)
+  const hct = Hct.fromInt(harmonized)
+  const palette = TonalPalette.fromHueAndChroma(hct.hue, hct.chroma)
+
+  // Standard MD3 tone mappings
+  const color = isDark ? palette.tone(80) : palette.tone(40)
+  const onColor = isDark ? palette.tone(20) : palette.tone(100)
+  const container = isDark ? palette.tone(30) : palette.tone(90)
+  const onContainer = isDark ? palette.tone(90) : palette.tone(10)
+
+  return {
+    color: hexFromArgb(color),
+    onColor: hexFromArgb(onColor),
+    container: hexFromArgb(container),
+    onContainer: hexFromArgb(onContainer),
+  }
+}
+
+/**
+ * Add harmonized custom color tokens (positive, info, warning) to a result map.
+ */
+function addHarmonizedColors(
+  result: Record<string, string>,
+  sourceColorArgb: number,
+  isDark: boolean,
+  positiveHex: string,
+  infoHex: string,
+  warningHex: string,
+): void {
+  const positive = generateHarmonizedTokens(argbFromHex(positiveHex), sourceColorArgb, isDark)
+  result['positive'] = positive.color
+  result['on-positive'] = positive.onColor
+  result['positive-container'] = positive.container
+  result['on-positive-container'] = positive.onContainer
+
+  const info = generateHarmonizedTokens(argbFromHex(infoHex), sourceColorArgb, isDark)
+  result['info'] = info.color
+  result['on-info'] = info.onColor
+  result['info-container'] = info.container
+  result['on-info-container'] = info.onContainer
+
+  const warning = generateHarmonizedTokens(argbFromHex(warningHex), sourceColorArgb, isDark)
+  result['warning'] = warning.color
+  result['on-warning'] = warning.onColor
+  result['warning-container'] = warning.container
+  result['on-warning-container'] = warning.onContainer
+}
+
 /**
  * Extract MD3E color tokens from a DynamicScheme.
  * Uses MaterialDynamicColors instance methods (new API).
  * Tokens that return undefined (e.g. *Dim on older specs) are skipped.
+ * Also generates harmonized positive/info/warning tokens.
  */
 function extractDynamicScheme(
   sourceColorHct: Hct,
   isDark: boolean,
   schemeName: ColorScheme,
   contrastLevel: number,
+  positiveHex: string,
+  infoHex: string,
+  warningHex: string,
 ): Record<string, string> {
   const SchemeClass = schemeConstructors[schemeName]
   const contrast = Math.max(-1, Math.min(1, contrastLevel))
@@ -159,6 +234,9 @@ function extractDynamicScheme(
     }
   }
 
+  // Harmonized custom colors (positive/info/warning)
+  addHarmonizedColors(result, sourceColorHct.toInt(), isDark, positiveHex, infoHex, warningHex)
+
   return result
 }
 
@@ -168,15 +246,24 @@ function extractDynamicScheme(
  */
 export function generatePalette(
   hex: string,
-  options?: { scheme?: ColorScheme; contrastLevel?: number },
+  options?: {
+    scheme?: ColorScheme
+    contrastLevel?: number
+    positiveColor?: string
+    infoColor?: string
+    warningColor?: string
+  },
 ): PaletteTokens {
   const sourceColor = hex.startsWith('#') ? hex : `#${hex}`
   const schemeName = options?.scheme ?? 'tonalSpot'
   const contrastLevel = options?.contrastLevel ?? 0
+  const positiveHex = options?.positiveColor ?? DEFAULT_POSITIVE
+  const infoHex = options?.infoColor ?? DEFAULT_INFO
+  const warningHex = options?.warningColor ?? DEFAULT_WARNING
   const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
   return {
-    light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel),
-    dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel),
+    light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
+    dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
   }
 }
 
@@ -195,8 +282,17 @@ export function generateMd3eVariables(options: GenerateOptions): string {
   const sourceColor = options.sourceColor ?? '#6750a4'
   const schemeName = options.scheme ?? 'tonalSpot'
   const contrastLevel = options.contrastLevel ?? 0
+  const positiveColor = options.positiveColor ?? DEFAULT_POSITIVE
+  const infoColor = options.infoColor ?? DEFAULT_INFO
+  const warningColor = options.warningColor ?? DEFAULT_WARNING
 
-  const { light, dark } = generatePalette(sourceColor, { scheme: schemeName, contrastLevel })
+  const { light, dark } = generatePalette(sourceColor, {
+    scheme: schemeName,
+    contrastLevel,
+    positiveColor,
+    infoColor,
+    warningColor,
+  })
 
   const lines: string[] = [
     `// Auto-generated MD3 Expressive palette from source color: ${sourceColor}`,
@@ -208,6 +304,9 @@ export function generateMd3eVariables(options: GenerateOptions): string {
     `$md3-palette-scheme: ${schemeName} !default;`,
     `$md3-palette-contrast-level: ${contrastLevel} !default;`,
     `$md3-palette-spec-version: 2026 !default;`,
+    `$md3-palette-positive-seed: ${positiveColor} !default;`,
+    `$md3-palette-info-seed: ${infoColor} !default;`,
+    `$md3-palette-warning-seed: ${warningColor} !default;`,
     '',
     '// Light scheme',
   ]

@@ -164,6 +164,18 @@ Adjusts the contrast of the generated palette. Accepts a number from -1.0 to 1.0
 
 Default: `0`
 
+### `positiveColor`, `infoColor`, `warningColor`
+
+Seed colors for the harmonized custom color roles. These are blended toward the `sourceColor` using `Blend.harmonize` from Material Color Utilities, producing palette-cohesive variants of Quasar's positive/info/warning colors.
+
+| Option | Default | Quasar equivalent |
+|---|---|---|
+| `positiveColor` | `'#21BA45'` | `$positive` (green) |
+| `infoColor` | `'#31CCEC'` | `$info` (cyan) |
+| `warningColor` | `'#F2C037'` | `$warning` (yellow) |
+
+Each produces four tokens: `<role>`, `on-<role>`, `<role>-container`, `on-<role>-container`. To customize, pass seed colors to `md3eTheme()` — do **not** override `$positive`/`$info`/`$warning` in Sass, as that breaks the `var()` chain.
+
 ## Colors
 
 The theme generates 30+ MD3 color tokens from your `sourceColor` and makes them available in four ways:

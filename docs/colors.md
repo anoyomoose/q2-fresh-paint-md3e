@@ -33,6 +33,12 @@ Sass variables `$md3-<token>` and `$md3-dark-<token>` exist as compile-time hex 
 
 **Error:** `error`, `error-dim`, `on-error`, `error-container`, `on-error-container`
 
+**Positive (harmonized):** `positive`, `on-positive`, `positive-container`, `on-positive-container`
+
+**Info (harmonized):** `info`, `on-info`, `info-container`, `on-info-container`
+
+**Warning (harmonized):** `warning`, `on-warning`, `warning-container`, `on-warning-container`
+
 **Surface:** `surface`, `on-surface`, `surface-variant`, `on-surface-variant`, `surface-tint`
 
 **Surface containers:** `surface-dim`, `surface-bright`, `surface-container-lowest`, `surface-container-low`, `surface-container`, `surface-container-high`, `surface-container-highest`
@@ -41,7 +47,7 @@ Sass variables `$md3-<token>` and `$md3-dark-<token>` exist as compile-time hex 
 
 **Outline:** `outline`, `outline-variant`
 
-**Inverse:** `inverse-surface`, `inverse-on-surface`, `inverse-primary`, `inverse-secondary`, `inverse-tertiary`, `inverse-error`
+**Inverse:** `inverse-surface`, `inverse-on-surface`, `inverse-primary`, `inverse-secondary`, `inverse-tertiary`, `inverse-error`, `inverse-positive`, `inverse-info`, `inverse-warning`
 
 **Utility:** `shadow`, `scrim`
 

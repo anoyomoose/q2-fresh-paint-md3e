@@ -12,6 +12,12 @@ export interface Md3eThemeOptions {
   scheme?: ColorScheme
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 (standard) */
   contrastLevel?: number
+  /** Seed color for the harmonized "positive" role. Default: '#21BA45' (Quasar green) */
+  positiveColor?: string
+  /** Seed color for the harmonized "info" role. Default: '#31CCEC' (Quasar cyan) */
+  infoColor?: string
+  /** Seed color for the harmonized "warning" role. Default: '#F2C037' (Quasar yellow) */
+  warningColor?: string
 }
 
 export function md3eTheme(options?: Md3eThemeOptions): ThemeDescriptor {

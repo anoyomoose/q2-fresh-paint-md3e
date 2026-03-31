@@ -59,6 +59,24 @@ body, body.body--dark {
   --md3-error-container: #{$md3-error-container};
   --md3-on-error-container: #{$md3-on-error-container};
 
+  // Positive (harmonized)
+  --md3-positive: #{$md3-positive};
+  --md3-on-positive: #{$md3-on-positive};
+  --md3-positive-container: #{$md3-positive-container};
+  --md3-on-positive-container: #{$md3-on-positive-container};
+
+  // Info (harmonized)
+  --md3-info: #{$md3-info};
+  --md3-on-info: #{$md3-on-info};
+  --md3-info-container: #{$md3-info-container};
+  --md3-on-info-container: #{$md3-on-info-container};
+
+  // Warning (harmonized)
+  --md3-warning: #{$md3-warning};
+  --md3-on-warning: #{$md3-on-warning};
+  --md3-warning-container: #{$md3-warning-container};
+  --md3-on-warning-container: #{$md3-on-warning-container};
+
   // Background
   --md3-background: #{$md3-background};
   --md3-on-background: #{$md3-on-background};
@@ -85,6 +103,9 @@ body, body.body--dark {
   --md3-inverse-secondary: #{$md3-dark-secondary};
   --md3-inverse-tertiary: #{$md3-dark-tertiary};
   --md3-inverse-error: #{$md3-dark-error};
+  --md3-inverse-positive: #{$md3-dark-positive};
+  --md3-inverse-info: #{$md3-dark-info};
+  --md3-inverse-warning: #{$md3-dark-warning};
 
   // Surface containers
   --md3-surface-dim: #{$md3-surface-dim};
@@ -107,12 +128,18 @@ body, body.body--dark {
   --q-secondary: #{$md3-secondary};
   --q-accent: #{$md3-tertiary};
   --q-negative: #{$md3-error};
+  --q-positive: #{$md3-positive};
+  --q-info: #{$md3-info};
+  --q-warning: #{$md3-warning};
 
   // Palette metadata (for runtime palette API)
   --md3-palette-source-color: #{$md3-palette-source-color};
   --md3-palette-scheme: #{$md3-palette-scheme};
   --md3-palette-contrast-level: #{$md3-palette-contrast-level};
   --md3-palette-spec-version: #{$md3-palette-spec-version};
+  --md3-palette-positive-seed: #{$md3-palette-positive-seed};
+  --md3-palette-info-seed: #{$md3-palette-info-seed};
+  --md3-palette-warning-seed: #{$md3-palette-warning-seed};
 
   // Elevation shadows
   --md3-elevation-0: #{$md3-elevation-0};
@@ -169,6 +196,21 @@ body.body--dark {
   --md3-on-error: #{$md3-dark-on-error};
   --md3-error-container: #{$md3-dark-error-container};
   --md3-on-error-container: #{$md3-dark-on-error-container};
+  // Positive (harmonized)
+  --md3-positive: #{$md3-dark-positive};
+  --md3-on-positive: #{$md3-dark-on-positive};
+  --md3-positive-container: #{$md3-dark-positive-container};
+  --md3-on-positive-container: #{$md3-dark-on-positive-container};
+  // Info (harmonized)
+  --md3-info: #{$md3-dark-info};
+  --md3-on-info: #{$md3-dark-on-info};
+  --md3-info-container: #{$md3-dark-info-container};
+  --md3-on-info-container: #{$md3-dark-on-info-container};
+  // Warning (harmonized)
+  --md3-warning: #{$md3-dark-warning};
+  --md3-on-warning: #{$md3-dark-on-warning};
+  --md3-warning-container: #{$md3-dark-warning-container};
+  --md3-on-warning-container: #{$md3-dark-on-warning-container};
   // Background
   --md3-background: #{$md3-dark-background};
   --md3-on-background: #{$md3-dark-on-background};
@@ -192,6 +234,9 @@ body.body--dark {
   --md3-inverse-secondary: #{$md3-secondary};
   --md3-inverse-tertiary: #{$md3-tertiary};
   --md3-inverse-error: #{$md3-error};
+  --md3-inverse-positive: #{$md3-positive};
+  --md3-inverse-info: #{$md3-info};
+  --md3-inverse-warning: #{$md3-warning};
   // Surface containers
   --md3-surface-dim: #{$md3-dark-surface-dim};
   --md3-surface-bright: #{$md3-dark-surface-bright};
@@ -211,6 +256,9 @@ body.body--dark {
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
   --q-negative: #{$md3-dark-error};
+  --q-positive: #{$md3-dark-positive};
+  --q-info: #{$md3-dark-info};
+  --q-warning: #{$md3-dark-warning};
   --q-dark-page: #{$md3-dark-background};
   --q-dark: #{$md3-dark-surface-container};
 }
@@ -599,6 +647,24 @@ body.desktop {
 .bg-error-container { background-color: var(--md3-error-container) !important; color: var(--md3-on-error-container) !important; }
 .bg-on-error-container { background-color: var(--md3-on-error-container) !important; color: var(--md3-error-container) !important; }
 
+// --- Positive (harmonized) ---
+.bg-positive { background-color: var(--md3-positive) !important; color: var(--md3-on-positive) !important; }
+.bg-on-positive { background-color: var(--md3-on-positive) !important; color: var(--md3-positive) !important; }
+.bg-positive-container { background-color: var(--md3-positive-container) !important; color: var(--md3-on-positive-container) !important; }
+.bg-on-positive-container { background-color: var(--md3-on-positive-container) !important; color: var(--md3-positive-container) !important; }
+
+// --- Info (harmonized) ---
+.bg-info { background-color: var(--md3-info) !important; color: var(--md3-on-info) !important; }
+.bg-on-info { background-color: var(--md3-on-info) !important; color: var(--md3-info) !important; }
+.bg-info-container { background-color: var(--md3-info-container) !important; color: var(--md3-on-info-container) !important; }
+.bg-on-info-container { background-color: var(--md3-on-info-container) !important; color: var(--md3-info-container) !important; }
+
+// --- Warning (harmonized) ---
+.bg-warning { background-color: var(--md3-warning) !important; color: var(--md3-on-warning) !important; }
+.bg-on-warning { background-color: var(--md3-on-warning) !important; color: var(--md3-warning) !important; }
+.bg-warning-container { background-color: var(--md3-warning-container) !important; color: var(--md3-on-warning-container) !important; }
+.bg-on-warning-container { background-color: var(--md3-on-warning-container) !important; color: var(--md3-warning-container) !important; }
+
 // --- Background ---
 .bg-background { background-color: var(--md3-background) !important; color: var(--md3-on-background) !important; }
 .bg-on-background { background-color: var(--md3-on-background) !important; color: var(--md3-background) !important; }
@@ -666,6 +732,18 @@ body.desktop {
 .text-error-dim { color: var(--md3-error-dim) !important; }
 .text-error-container { color: var(--md3-error-container) !important; }
 .text-on-error-container { color: var(--md3-on-error-container) !important; }
+.text-positive { color: var(--md3-positive) !important; }
+.text-on-positive { color: var(--md3-on-positive) !important; }
+.text-positive-container { color: var(--md3-positive-container) !important; }
+.text-on-positive-container { color: var(--md3-on-positive-container) !important; }
+.text-info { color: var(--md3-info) !important; }
+.text-on-info { color: var(--md3-on-info) !important; }
+.text-info-container { color: var(--md3-info-container) !important; }
+.text-on-info-container { color: var(--md3-on-info-container) !important; }
+.text-warning { color: var(--md3-warning) !important; }
+.text-on-warning { color: var(--md3-on-warning) !important; }
+.text-warning-container { color: var(--md3-warning-container) !important; }
+.text-on-warning-container { color: var(--md3-on-warning-container) !important; }
 .text-surface-tint { color: var(--md3-surface-tint) !important; }
 .text-background { color: var(--md3-background) !important; }
 .text-on-background { color: var(--md3-on-background) !important; }

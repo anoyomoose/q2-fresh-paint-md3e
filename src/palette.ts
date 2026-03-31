@@ -19,6 +19,12 @@ export interface PaletteOptions {
   scheme?: ColorScheme
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
+  /** Seed color for harmonized "positive" role. Default: '#21BA45' */
+  positiveColor?: string
+  /** Seed color for harmonized "info" role. Default: '#31CCEC' */
+  infoColor?: string
+  /** Seed color for harmonized "warning" role. Default: '#F2C037' */
+  warningColor?: string
 }
 
 /**
@@ -32,6 +38,9 @@ export function generatePaletteFromHex(
   return generatePalette(hex, {
     scheme: options?.scheme ?? 'tonalSpot',
     contrastLevel: options?.contrastLevel ?? 0,
+    positiveColor: options?.positiveColor,
+    infoColor: options?.infoColor,
+    warningColor: options?.warningColor,
   })
 }
 
@@ -54,6 +63,9 @@ export interface PaletteConfig {
   sourceColor: string
   scheme: ColorScheme
   contrastLevel: number
+  positiveColor: string
+  infoColor: string
+  warningColor: string
 }
 
 /**
@@ -72,6 +84,9 @@ export function getDefaultPaletteConfig(): PaletteConfig {
     sourceColor: style.getPropertyValue('--md3-palette-source-color').trim() || '#6750a4',
     scheme: (style.getPropertyValue('--md3-palette-scheme').trim() || 'tonalSpot') as ColorScheme,
     contrastLevel: parseFloat(style.getPropertyValue('--md3-palette-contrast-level').trim()) || 0,
+    positiveColor: style.getPropertyValue('--md3-palette-positive-seed').trim() || '#21BA45',
+    infoColor: style.getPropertyValue('--md3-palette-info-seed').trim() || '#31CCEC',
+    warningColor: style.getPropertyValue('--md3-palette-warning-seed').trim() || '#F2C037',
   }
 }
 
@@ -90,6 +105,9 @@ export function getDefaultPalette(): PaletteTokens {
   cachedDefault = generatePaletteFromHex(config.sourceColor, {
     scheme: config.scheme,
     contrastLevel: config.contrastLevel,
+    positiveColor: config.positiveColor,
+    infoColor: config.infoColor,
+    warningColor: config.warningColor,
   })
   return cachedDefault
 }
@@ -121,15 +139,18 @@ function buildTokenBlock(tokens: Record<string, string>, inverseTokens?: Record<
     css += `  --md3-inverse-secondary: ${inverseTokens.secondary};\n`
     css += `  --md3-inverse-tertiary: ${inverseTokens.tertiary};\n`
     css += `  --md3-inverse-error: ${inverseTokens.error};\n`
+    css += `  --md3-inverse-positive: ${inverseTokens.positive};\n`
+    css += `  --md3-inverse-info: ${inverseTokens.info};\n`
+    css += `  --md3-inverse-warning: ${inverseTokens.warning};\n`
   }
   // Quasar brand mappings
   css += `  --q-primary: ${tokens.primary};\n`
   css += `  --q-secondary: ${tokens.secondary};\n`
   css += `  --q-accent: ${tokens.tertiary};\n`
   css += `  --q-negative: ${tokens.error};\n`
-  // --q-positive: no MD3E mapping
-  // --q-info: no MD3E mapping
-  // --q-warning: no MD3E mapping
+  css += `  --q-positive: ${tokens.positive};\n`
+  css += `  --q-info: ${tokens.info};\n`
+  css += `  --q-warning: ${tokens.warning};\n`
   css += `  --q-dark-page: ${tokens.background};\n`
   css += `  --q-dark: ${tokens['surface-container']};\n`
   return css

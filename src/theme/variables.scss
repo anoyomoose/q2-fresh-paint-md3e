@@ -13,9 +13,9 @@ $primary: var(--md3-primary) !default;
 $secondary: var(--md3-secondary) !default;
 $accent: var(--md3-tertiary) !default;
 $negative: var(--md3-error) !default;
-// $positive: var(--md3-positive) !default;  // No MD3E mapping — uncomment if you define --md3-positive
-// $info: var(--md3-info) !default;          // No MD3E mapping — uncomment if you define --md3-info
-// $warning: var(--md3-warning) !default;    // No MD3E mapping — uncomment if you define --md3-warning
+$positive: var(--md3-positive) !default;
+$info: var(--md3-info) !default;
+$warning: var(--md3-warning) !default;
 $dark-page: var(--md3-background) !default;
 $dark: var(--md3-surface-container) !default;
 
