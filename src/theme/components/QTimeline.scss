@@ -38,10 +38,17 @@
 // === Heading Title ===
 // color: inherits from QLayout (on-surface) — no stock override to replace
 
+// === Dot icon ===
+// White on primary-colored dot circle
+.q-timeline__dot .q-icon {
+  color: var(--md3-on-primary);
+}
+
 // === Dark Mode ===
-// color: overrides removed — tokens don't flip for per-component dark mode.
-// Stock Quasar's color: #fff on .q-timeline--dark applies correctly when --dark is set.
+// QTimeline doesn't add .q-dark — override explicitly.
 .q-timeline--dark {
+  color: var(--md3-on-surface);
+
   .q-timeline__subtitle {
     opacity: 1;
   }

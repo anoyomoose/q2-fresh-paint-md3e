@@ -11,10 +11,11 @@
 }
 
 // Default body text color: MD3E on-background (matches the background token)
-// Elements with bg-surface or surface-container classes get on-surface auto-paired.
+// Body base colors — background/on-background for the page itself.
 // Both selectors needed to beat Quasar's body.body--dark { color: #fff }.
 body, body.body--dark {
   color: var(--md3-on-background);
+  background: var(--md3-background);
 }
 
 :root, body.body--light {
@@ -164,7 +165,7 @@ body.body--dark {
   --q-secondary: #{$md3-dark-secondary};
   --q-accent: #{$md3-dark-tertiary};
   --q-negative: #{$md3-dark-error};
-  --q-dark-page: #{$md3-dark-surface};
+  --q-dark-page: #{$md3-dark-background};
   --q-dark: #{$md3-dark-surface-container};
 }
 

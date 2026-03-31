@@ -376,9 +376,20 @@ $_notch: '.q-field--outlined[data-notch]';
   border-color: var(--md3-on-surface);
 }
 
-// color: overrides on dark native/prefix/suffix/input removed — tokens don't flip
-// for per-component dark mode. Stock Quasar's color: #fff / rgba(255,255,255,.7)
-// apply correctly when --dark is set.
+// Dark text colors — QField doesn't add .q-dark, so our token injection doesn't
+// reach it. Override explicitly.
+.q-field--dark .q-field__native,
+.q-field--dark .q-field__prefix,
+.q-field--dark .q-field__suffix,
+.q-field--dark .q-field__input {
+  color: var(--md3-on-surface);
+}
+
+.q-field--dark:not(.q-field--highlighted) .q-field__label,
+.q-field--dark .q-field__marginal,
+.q-field--dark .q-field__bottom {
+  color: var(--md3-on-surface-variant);
+}
 
 // Filled dark mode background
 .q-field--dark.q-field--filled .q-field__control {
@@ -389,9 +400,71 @@ $_notch: '.q-field--outlined[data-notch]';
   background: rgba(var(--md3-on-surface-rgb), $md3-state-hover-opacity);
 }
 
+.q-field--dark.q-field--filled.q-field--highlighted .q-field__control:before {
+  background: rgba(var(--md3-on-surface-rgb), $md3-state-focus-opacity);
+}
+
 // Standard dark mode (same as filled in MD3E)
 .q-field--dark.q-field--standard .q-field__control {
   background: var(--md3-surface-container-highest);
+}
+
+// ============================================================
+// STANDOUT VARIANT
+// ============================================================
+// Standout uses a filled-style bg that inverts on focus.
+
+.q-field--standout .q-field__control {
+  background: var(--md3-surface-container-highest);
+}
+
+.q-field--standout .q-field__control:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.04);
+}
+
+.q-field--standout.q-field--highlighted .q-field__control {
+  background: var(--md3-on-surface);
+}
+
+.q-field--standout.q-field--highlighted .q-field__native,
+.q-field--standout.q-field--highlighted .q-field__prefix,
+.q-field--standout.q-field--highlighted .q-field__suffix,
+.q-field--standout.q-field--highlighted .q-field__prepend,
+.q-field--standout.q-field--highlighted .q-field__append,
+.q-field--standout.q-field--highlighted .q-field__input,
+.q-field--standout.q-field--highlighted .q-field__label {
+  color: var(--md3-surface);
+}
+
+.q-field--standout.q-field--readonly .q-field__control:before {
+  border: 1px dashed var(--md3-outline);
+}
+
+// Standout dark
+.q-field--standout.q-field--dark .q-field__control {
+  background: var(--md3-surface-container-highest);
+}
+
+.q-field--standout.q-field--dark .q-field__control:before {
+  background: rgba(var(--md3-on-surface-rgb), 0.04);
+}
+
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__control {
+  background: var(--md3-on-surface);
+}
+
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__native,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__prefix,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__suffix,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__prepend,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__append,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__input,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__label {
+  color: var(--md3-surface);
+}
+
+.q-field--standout.q-field--dark.q-field--readonly .q-field__control:before {
+  border-color: var(--md3-outline);
 }
 
 // ============================================================

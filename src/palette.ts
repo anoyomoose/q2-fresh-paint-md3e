@@ -130,7 +130,7 @@ function buildTokenBlock(tokens: Record<string, string>, inverseTokens?: Record<
   // --q-positive: no MD3E mapping
   // --q-info: no MD3E mapping
   // --q-warning: no MD3E mapping
-  css += `  --q-dark-page: ${tokens.surface};\n`
+  css += `  --q-dark-page: ${tokens.background};\n`
   css += `  --q-dark: ${tokens['surface-container']};\n`
   return css
 }

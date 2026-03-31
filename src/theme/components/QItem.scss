@@ -89,8 +89,24 @@
 }
 
 // === Dark Mode ===
-// Handled globally in base.scss via [class*="--dark"] selector.
+// QItem/QList don't add .q-dark, so our token injection doesn't reach them.
+// Override explicitly.
+.q-list--dark .q-item__section--side:not(.q-item__section--avatar),
+.q-item--dark .q-item__section--side:not(.q-item__section--avatar) {
+  color: var(--md3-on-surface-variant);
+}
 
+.q-list--dark .q-item__label--header,
+.q-item--dark .q-item__label--header {
+  color: var(--md3-on-surface-variant);
+}
+
+.q-list--dark .q-item__label--overline,
+.q-list--dark .q-item__label--caption,
+.q-item--dark .q-item__label--overline,
+.q-item--dark .q-item__label--caption {
+  color: var(--md3-on-surface-variant);
+}
 
 // === Hover State Layer ===
 // MD3E list items have a rounded container shape. The focus-helper inherits

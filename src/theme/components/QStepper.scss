@@ -109,11 +109,16 @@
     background: var(--md3-outline-variant);
   }
 
-  // color: on disabled label removed — token doesn't flip for per-component dark mode.
-  // Stock rgba(255,255,255,.54) applies correctly when --dark is set.
+  .q-stepper__dot span {
+    color: var(--md3-on-primary);
+  }
+
   .q-stepper__tab--disabled {
     .q-stepper__dot {
       background: var(--md3-outline-variant);
+    }
+    .q-stepper__label {
+      color: rgba(var(--md3-on-surface-rgb), $md3-disabled-content-opacity);
     }
   }
 }

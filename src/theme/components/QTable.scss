@@ -10,6 +10,11 @@
 //   • Selected row: secondary-container bg (MD3E; md3 base uses 12% on-surface)
 //   • Sort icon transition: emphasized easing
 
+// === Markup Table (standalone wrapper) ===
+.q-markup-table {
+  background: var(--md3-surface-container);
+}
+
 // === Card Wrapper ===
 .q-table__card {
   background: var(--md3-surface-container);

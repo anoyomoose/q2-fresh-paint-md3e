@@ -111,6 +111,7 @@
 // more-specific --left/--right/--remove margins win by source order.
 .q-chip__icon {
   font-size: 1.286em;
+  color: var(--md3-on-surface-variant);
   // Reset Quasar's base margin (-.2em all sides) — each variant sets its own
   margin: 0;
 }

@@ -214,8 +214,10 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
   background: var(--md3-secondary-container);
 }
 
-// color: on dark markers removed — token doesn't flip for per-component dark mode.
-// Stock rgba(#fff,.3) applies correctly when --dark is set.
+// Dark mode markers — QSlider doesn't add .q-dark.
+.q-slider--dark .q-slider__markers {
+  color: var(--md3-on-secondary-container);
+}
 
 // ============================================================
 // DENSE MODE

@@ -53,10 +53,10 @@ body.desktop .q-radio:not(.disabled):hover .q-radio__inner:not(.q-radio__inner--
 }
 
 // === Dark Mode ===
-// color: overrides removed — tokens don't flip for per-component dark mode.
-// Light-mode overrides above already replace the base colors; stock Quasar's
-// own dark values apply correctly when --dark is set.
+// QRadio doesn't add .q-dark, so our token injection doesn't reach it.
 .q-radio--dark .q-radio__inner {
+  color: var(--md3-on-surface-variant);
+
   &:before {
     opacity: $md3-state-hover-opacity !important;
   }

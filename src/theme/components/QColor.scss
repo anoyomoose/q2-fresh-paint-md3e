@@ -2,9 +2,11 @@
 // MD3E: color picker has no elevation — dialog supplies it when used modally.
 
 .q-color-picker {
+  background: var(--md3-surface-container-high);
   box-shadow: none;
 }
 
 .q-color-picker--dark {
+  background: var(--md3-surface-container-high);
   box-shadow: none;
 }

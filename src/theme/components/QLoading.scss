@@ -6,6 +6,11 @@
 //   - The backdrop (.__backdrop) = scrim at 32% opacity (MD3 modal overlay value)
 // The spinner inside the box inherits on-primary-container via color: inherit.
 
+// === Container text color ===
+.q-loading {
+  color: var(--md3-on-surface);
+}
+
 // === Backdrop / Scrim ===
 // MD3 modal scrim: neutral-0 (#000) at 32% opacity.
 // Quasar default is black at 50% — MD3 is lighter.

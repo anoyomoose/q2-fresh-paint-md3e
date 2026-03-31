@@ -2,5 +2,6 @@
 // Pull indicator floats above all content — level 5 elevation.
 
 .q-pull-to-refresh__puller {
+  background: var(--md3-surface);
   box-shadow: $md3-elevation-5;
 }

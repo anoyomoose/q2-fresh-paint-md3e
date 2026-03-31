@@ -1,0 +1,6 @@
+// MD3 Expressive QTabPanel Overrides
+// Replace hardcoded #fff background with surface token.
+
+.q-tab-panels {
+  background: var(--md3-surface);
+}

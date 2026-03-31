@@ -1,0 +1,6 @@
+// MD3 Expressive QSlideItem Overrides
+// Replace hardcoded white background with surface token.
+
+.q-slide-item {
+  background: var(--md3-surface);
+}

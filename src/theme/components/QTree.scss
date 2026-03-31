@@ -1,0 +1,11 @@
+// MD3 Expressive QTree Overrides
+// Replace hardcoded #000/#fff node text with on-surface token.
+
+.q-tree__node-header-content {
+  color: var(--md3-on-surface);
+}
+
+// Override Quasar's dark variant (higher specificity: two classes)
+.q-tree--dark .q-tree__node-header-content {
+  color: var(--md3-on-surface);
+}

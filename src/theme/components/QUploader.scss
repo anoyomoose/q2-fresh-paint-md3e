@@ -70,3 +70,7 @@
 .q-uploader--dark .q-uploader__overlay {
   background: rgba(var(--md3-on-surface-rgb, 255, 255, 255), $md3-state-hover-opacity);
 }
+
+.q-uploader--dark .q-uploader__overlay {
+  color: var(--md3-on-surface);
+}

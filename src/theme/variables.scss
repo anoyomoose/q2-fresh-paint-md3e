@@ -16,7 +16,7 @@ $negative: var(--md3-error) !default;
 // $positive: var(--md3-positive) !default;  // No MD3E mapping — uncomment if you define --md3-positive
 // $info: var(--md3-info) !default;          // No MD3E mapping — uncomment if you define --md3-info
 // $warning: var(--md3-warning) !default;    // No MD3E mapping — uncomment if you define --md3-warning
-$dark-page: var(--md3-surface) !default;
+$dark-page: var(--md3-background) !default;
 $dark: var(--md3-surface-container) !default;
 
 // === Quasar Variable Overrides (runtime-safe) ===

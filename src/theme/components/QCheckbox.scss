@@ -77,10 +77,11 @@ body.desktop .q-checkbox:not(.disabled):hover .q-checkbox__inner:not(.q-checkbox
 }
 
 // === Dark Mode ===
-// color: overrides removed — tokens don't flip for per-component dark mode.
-// Light-mode overrides above already replace the base colors; stock Quasar's
-// own dark values apply correctly when --dark is set.
+// Dark mode: QCheckbox doesn't add .q-dark, so our token injection doesn't reach it.
+// Override explicitly.
 .q-checkbox--dark .q-checkbox__inner {
+  color: var(--md3-on-surface-variant);
+
   &:before {
     opacity: $md3-state-hover-opacity !important;
   }

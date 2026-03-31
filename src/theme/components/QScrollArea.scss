@@ -1,0 +1,11 @@
+// MD3 Expressive QScrollArea Overrides
+// Replace hardcoded #000/#fff scrollbar thumb with surface-aware token.
+
+.q-scrollarea__thumb {
+  background: var(--md3-on-surface);
+}
+
+// Override Quasar's dark variant (higher specificity: two classes)
+.q-scrollarea--dark .q-scrollarea__thumb {
+  background: var(--md3-on-surface);
+}

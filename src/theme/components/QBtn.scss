@@ -409,11 +409,15 @@ body.desktop {
 // 13. PROGRESS INDICATOR
 // =============================================================================
 
-// MD3E uses a more subtle progress overlay
-.q-btn--flat .q-btn__progress-indicator,
-.q-btn--outline .q-btn__progress-indicator {
-  opacity: 0.2;
+// MD3E uses a more subtle progress overlay — token-based for all variants
+.q-btn__progress-indicator {
   background: currentColor;
+  opacity: 0.25;
+}
+
+.q-btn__progress--dark .q-btn__progress-indicator {
+  background: currentColor;
+  opacity: 0.2;
 }
 
 // =============================================================================

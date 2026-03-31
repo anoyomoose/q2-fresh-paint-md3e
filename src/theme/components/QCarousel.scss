@@ -1,0 +1,7 @@
+// MD3 Expressive QCarousel Overrides
+// QCarousel is not fully themed (see README), but the container background
+// should use surface instead of hardcoded #fff for dark mode compatibility.
+
+.q-carousel {
+  background-color: var(--md3-surface);
+}

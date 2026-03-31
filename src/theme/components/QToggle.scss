@@ -328,8 +328,10 @@ body.desktop .q-toggle--dense:not(.disabled):focus .q-toggle__thumb:before {
 // ============================================================
 // CSS custom properties auto-flip; override Quasar's hardcoded dark values
 
-// color: on dark inner removed — token doesn't flip for per-component dark mode.
-// Stock color: #fff / var(--q-primary) apply correctly when --dark is set.
+// Dark mode — QToggle doesn't add .q-dark.
+.q-toggle--dark .q-toggle__inner {
+  color: var(--md3-on-surface);
+}
 
 .q-toggle--dark .q-toggle__thumb:after {
   box-shadow: none;
