@@ -8,7 +8,7 @@ export default defineConfig([
     clean: true,
     sourcemap: true,
     shims: true,
-    noExternal: ['@material/material-color-utilities'],
+    noExternal: ['@material/material-color-utilities', 'ok-material-colors'],
     external: ['vue', 'quasar'],
   },
   {

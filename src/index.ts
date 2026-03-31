@@ -12,6 +12,8 @@ export interface Md3eThemeOptions {
   scheme?: ColorScheme
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 (standard) */
   contrastLevel?: number
+  /** Use OkLCH/OkHSL-based palette generation instead of Google's HCT. Default: false */
+  oklab?: boolean
   /** Seed color for the harmonized "positive" role. Default: '#21BA45' (Quasar green) */
   positiveColor?: string
   /** Seed color for the harmonized "info" role. Default: '#31CCEC' (Quasar cyan) */

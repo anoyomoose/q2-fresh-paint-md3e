@@ -62,6 +62,7 @@
   "devDependencies": {
     "@anoyomoose/q2-fresh-paint-core": "link:../q2-fresh-paint-core",
     "@material/material-color-utilities": "link:vendor/material-color-utilities/typescript",
+    "ok-material-colors": "link:../ok-material-colors",
     "@types/node": "^22.0.0",
     "quasar": "^2.0.0",
     "tsup": "^8.0.0",

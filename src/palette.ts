@@ -11,14 +11,18 @@ import {
 import type { PaletteTokens, ColorScheme } from './palette-generator.js'
 
 export type { PaletteTokens, ColorScheme }
+export type { SchemeConfig, RelativeSaturation } from './palette-generator.js'
+export { okPresets } from './palette-generator.js'
 
 // ── Public API ───────────────────────────────────────────────────────────
 
 export interface PaletteOptions {
-  /** Color scheme variant. Default: 'tonalSpot' */
-  scheme?: ColorScheme
+  /** Color scheme variant — string for preset name, SchemeConfig for custom (OkLAB only). Default: 'tonalSpot' */
+  scheme?: ColorScheme | import('./palette-generator.js').SchemeConfig
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
+  /** Use OkLCH/OkHSL-based palette generation instead of Google's HCT. Default: false */
+  oklab?: boolean
   /** Seed color for harmonized "positive" role. Default: '#21BA45' */
   positiveColor?: string
   /** Seed color for harmonized "info" role. Default: '#31CCEC' */
@@ -38,6 +42,7 @@ export function generatePaletteFromHex(
   return generatePalette(hex, {
     scheme: options?.scheme ?? 'tonalSpot',
     contrastLevel: options?.contrastLevel ?? 0,
+    oklab: options?.oklab,
     positiveColor: options?.positiveColor,
     infoColor: options?.infoColor,
     warningColor: options?.warningColor,
@@ -63,6 +68,7 @@ export interface PaletteConfig {
   sourceColor: string
   scheme: ColorScheme
   contrastLevel: number
+  oklab: boolean
   positiveColor: string
   infoColor: string
   warningColor: string
@@ -84,6 +90,7 @@ export function getDefaultPaletteConfig(): PaletteConfig {
     sourceColor: style.getPropertyValue('--md3-palette-source-color').trim() || '#6750a4',
     scheme: (style.getPropertyValue('--md3-palette-scheme').trim() || 'tonalSpot') as ColorScheme,
     contrastLevel: parseFloat(style.getPropertyValue('--md3-palette-contrast-level').trim()) || 0,
+    oklab: style.getPropertyValue('--md3-palette-oklab').trim() === 'true',
     positiveColor: style.getPropertyValue('--md3-palette-positive-seed').trim() || '#21BA45',
     infoColor: style.getPropertyValue('--md3-palette-info-seed').trim() || '#31CCEC',
     warningColor: style.getPropertyValue('--md3-palette-warning-seed').trim() || '#F2C037',
@@ -105,6 +112,7 @@ export function getDefaultPalette(): PaletteTokens {
   cachedDefault = generatePaletteFromHex(config.sourceColor, {
     scheme: config.scheme,
     contrastLevel: config.contrastLevel,
+    oklab: config.oklab,
     positiveColor: config.positiveColor,
     infoColor: config.infoColor,
     warningColor: config.warningColor,

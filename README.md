@@ -32,7 +32,7 @@ While the theme is *mostly* drop-in, in an existing project you will no doubt ha
 
 A version of Quasar's UI Playground with this theme loaded is available [on GitHub pages](https://anoyomoose.github.io/q2-fresh-paint-md3e/), with the default settings as described further below.
 
-Some pages of particular interest:
+Some pages of particular interest (not mobile friendly):
 - [MD3E Palette](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-palette-test) (interactive, with many component examples)
 - [MD3E Buttons](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-btn-test)
 - [Toggles](https://anoyomoose.github.io/q2-fresh-paint-md3e/form/toggle)
@@ -151,6 +151,20 @@ Controls how the palette is derived from the source color. Each variant produces
 
 Both light and dark scheme tokens are generated from every variant (as `$md3-<token>` and `$md3-dark-<token>` Sass variables). The SCSS layer then maps these to Quasar brand colors and CSS custom properties for light/dark switching.
 
+When `oklab` is enabled, `scheme` can also be a `SchemeConfig` object for full control over palette generation — see below.
+
+### `oklab`
+
+Use OkLCH/OkHSL-based palette generation instead of Google's HCT color space. OkLAB produces perceptually more uniform palettes with better saturation control, and is fully tweakable.
+
+Default: `false`
+
+When enabled, the `scheme` option accepts either a preset name (same list as above) or a custom `SchemeConfig` object for fine-grained control over hue offsets and saturation for each palette role. 
+
+See [`ok-material-colors` SchemeConfig](https://github.com/anoyomoose/ok-material-colors#schemeconfig) for the full type definition.
+
+The [Palette Demonstration](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-palette-test) page includes an interactive OkLAB scheme editor with a copy button that exports your chosen configuration to the clipboard.
+
 ### `contrastLevel`
 
 Adjusts the contrast of the generated palette. Accepts a number from -1.0 to 1.0.
@@ -166,7 +180,7 @@ Default: `0`
 
 ### `positiveColor`, `infoColor`, `warningColor`
 
-Seed colors for the harmonized custom color roles. These are blended toward the `sourceColor` using `Blend.harmonize` from Material Color Utilities, producing palette-cohesive variants of Quasar's positive/info/warning colors.
+Seed colors for the harmonized custom color roles. These are blended toward the `sourceColor` to produce palette-cohesive variants of Quasar's positive/info/warning colors. When `oklab` is enabled, harmonization uses OkLCH hue blending instead of HCT.
 
 | Option | Default | Quasar equivalent |
 |---|---|---|
@@ -202,6 +216,8 @@ The theme generates 30+ MD3 color tokens from your `sourceColor` and makes them 
 Quasar's brand colors (`primary`, `secondary`, `accent`, `negative`) are mapped to MD3 roles and work as usual. The theme also patches Quasar's hardcoded `text-white` fallback so that brand-colored and token-colored elements get the correct `on-*` text color automatically.
 
 For the full token list, dark mode details, and how the system works under the hood, see [docs/colors.md](docs/colors.md).
+
+Likely, none of this makes sense until you read the [Color Roles](https://m3.material.io/styles/color/roles) section of the Material Design 3 specification.
 
 ## Runtime Palette
 

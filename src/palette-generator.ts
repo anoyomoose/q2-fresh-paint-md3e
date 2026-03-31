@@ -17,6 +17,14 @@ import {
   TonalPalette,
 } from '@material/material-color-utilities'
 import type { DynamicScheme } from '@material/material-color-utilities'
+import {
+  generatePalette as okGeneratePalette,
+  harmonize as okHarmonize,
+  presets as okPresets,
+} from 'ok-material-colors'
+import type { SchemeConfig, RelativeSaturation } from 'ok-material-colors'
+export type { SchemeConfig, RelativeSaturation } from 'ok-material-colors'
+export { presets as okPresets } from 'ok-material-colors'
 
 export type ColorScheme =
   | 'tonalSpot'
@@ -41,6 +49,8 @@ export interface GenerateOptions {
   scheme?: ColorScheme
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
+  /** Use OkLCH/OkHSL-based palette generation instead of Google's HCT. Default: false */
+  oklab?: boolean
   /** Seed color for harmonized "positive" role. Default: '#21BA45' */
   positiveColor?: string
   /** Seed color for harmonized "info" role. Default: '#31CCEC' */
@@ -241,25 +251,110 @@ function extractDynamicScheme(
 }
 
 /**
+ * Generate harmonized tokens using ok-material-colors' harmonize function.
+ * Produces 4 tokens (color, onColor, container, onContainer) for one role.
+ */
+function generateOklabHarmonizedTokens(
+  designColorHex: string,
+  sourceColorHex: string,
+  isDark: boolean,
+): Record<string, string> {
+  const harmonized = okHarmonize(designColorHex, sourceColorHex)
+  // Use ok-material-colors to generate a mini palette from the harmonized color,
+  // then extract the standard tone levels for color roles.
+  // We generate a fidelity palette from the harmonized color to get its tonal ramp.
+  const miniPalette = okGeneratePalette(harmonized, { scheme: 'fidelity' })
+  const tokens = isDark ? miniPalette.dark : miniPalette.light
+  return {
+    color: tokens.primary,
+    onColor: tokens['on-primary'],
+    container: tokens['primary-container'],
+    onContainer: tokens['on-primary-container'],
+  }
+}
+
+/**
+ * Add harmonized custom color tokens using ok-material-colors backend.
+ */
+function addOklabHarmonizedColors(
+  result: Record<string, string>,
+  sourceColorHex: string,
+  isDark: boolean,
+  positiveHex: string,
+  infoHex: string,
+  warningHex: string,
+): void {
+  const positive = generateOklabHarmonizedTokens(positiveHex, sourceColorHex, isDark)
+  result['positive'] = positive.color
+  result['on-positive'] = positive.onColor
+  result['positive-container'] = positive.container
+  result['on-positive-container'] = positive.onContainer
+
+  const info = generateOklabHarmonizedTokens(infoHex, sourceColorHex, isDark)
+  result['info'] = info.color
+  result['on-info'] = info.onColor
+  result['info-container'] = info.container
+  result['on-info-container'] = info.onContainer
+
+  const warning = generateOklabHarmonizedTokens(warningHex, sourceColorHex, isDark)
+  result['warning'] = warning.color
+  result['on-warning'] = warning.onColor
+  result['warning-container'] = warning.container
+  result['on-warning-container'] = warning.onContainer
+}
+
+/**
+ * Generate a full palette using the ok-material-colors (OkLCH/OkHSL) backend.
+ */
+function generatePaletteOklab(
+  sourceColor: string,
+  schemeName: ColorScheme,
+  contrastLevel: number,
+  positiveHex: string,
+  infoHex: string,
+  warningHex: string,
+  rawConfig?: SchemeConfig,
+): PaletteTokens {
+  const base = okGeneratePalette(sourceColor, {
+    scheme: rawConfig ?? schemeName,
+    contrastLevel,
+  })
+
+  // Add harmonized custom colors
+  addOklabHarmonizedColors(base.light, sourceColor, false, positiveHex, infoHex, warningHex)
+  addOklabHarmonizedColors(base.dark, sourceColor, true, positiveHex, infoHex, warningHex)
+
+  return base
+}
+
+/**
  * Generate a full light+dark palette from a hex color.
  * Pure function — no DOM access.
  */
 export function generatePalette(
   hex: string,
   options?: {
-    scheme?: ColorScheme
+    scheme?: ColorScheme | SchemeConfig
     contrastLevel?: number
+    oklab?: boolean
     positiveColor?: string
     infoColor?: string
     warningColor?: string
   },
 ): PaletteTokens {
   const sourceColor = hex.startsWith('#') ? hex : `#${hex}`
-  const schemeName = options?.scheme ?? 'tonalSpot'
+  const scheme = options?.scheme ?? 'tonalSpot'
+  const schemeName: ColorScheme = typeof scheme === 'string' ? scheme : 'tonalSpot'
   const contrastLevel = options?.contrastLevel ?? 0
   const positiveHex = options?.positiveColor ?? DEFAULT_POSITIVE
   const infoHex = options?.infoColor ?? DEFAULT_INFO
   const warningHex = options?.warningColor ?? DEFAULT_WARNING
+
+  if (options?.oklab) {
+    const rawConfig = typeof scheme === 'object' ? scheme : undefined
+    return generatePaletteOklab(sourceColor, schemeName, contrastLevel, positiveHex, infoHex, warningHex, rawConfig)
+  }
+
   const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
   return {
     light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
@@ -282,13 +377,16 @@ export function generateMd3eVariables(options: GenerateOptions): string {
   const sourceColor = options.sourceColor ?? '#6750a4'
   const schemeName = options.scheme ?? 'tonalSpot'
   const contrastLevel = options.contrastLevel ?? 0
+  const oklab = options.oklab ?? false
   const positiveColor = options.positiveColor ?? DEFAULT_POSITIVE
   const infoColor = options.infoColor ?? DEFAULT_INFO
   const warningColor = options.warningColor ?? DEFAULT_WARNING
+  const specVersion = oklab ? 'oklab' : '2026'
 
   const { light, dark } = generatePalette(sourceColor, {
     scheme: schemeName,
     contrastLevel,
+    oklab,
     positiveColor,
     infoColor,
     warningColor,
@@ -296,14 +394,15 @@ export function generateMd3eVariables(options: GenerateOptions): string {
 
   const lines: string[] = [
     `// Auto-generated MD3 Expressive palette from source color: ${sourceColor}`,
-    `// Scheme: ${schemeName}, contrastLevel: ${contrastLevel}, specVersion: 2026`,
+    `// Scheme: ${schemeName}, contrastLevel: ${contrastLevel}, specVersion: ${specVersion}`,
     '// Do not edit — regenerated on every dev server start.',
     '',
     '// Palette metadata',
     `$md3-palette-source-color: ${sourceColor} !default;`,
     `$md3-palette-scheme: ${schemeName} !default;`,
     `$md3-palette-contrast-level: ${contrastLevel} !default;`,
-    `$md3-palette-spec-version: 2026 !default;`,
+    `$md3-palette-spec-version: ${specVersion} !default;`,
+    `$md3-palette-oklab: ${oklab} !default;`,
     `$md3-palette-positive-seed: ${positiveColor} !default;`,
     `$md3-palette-info-seed: ${infoColor} !default;`,
     `$md3-palette-warning-seed: ${warningColor} !default;`,
