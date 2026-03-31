@@ -53,9 +53,7 @@
     "build": "tsup && cp -r src/theme dist/",
     "dev": "tsup --watch"
   },
-  "dependencies": {
-    "@material/material-color-utilities": "^0.4.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@anoyomoose/q2-fresh-paint-core": "^0.1.5",
     "quasar": "^2.0.0",
@@ -63,6 +61,7 @@
   },
   "devDependencies": {
     "@anoyomoose/q2-fresh-paint-core": "link:../q2-fresh-paint-core",
+    "@material/material-color-utilities": "link:vendor/material-color-utilities/typescript",
     "@types/node": "^22.0.0",
     "quasar": "^2.0.0",
     "tsup": "^8.0.0",
