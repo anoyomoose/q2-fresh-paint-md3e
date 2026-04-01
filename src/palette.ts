@@ -8,17 +8,16 @@ import {
 import {
   generatePalette,
 } from './palette-generator.js'
-import type { PaletteTokens, ColorScheme } from './palette-generator.js'
+import type { PaletteTokens, ColorScheme, SchemeConfig, RelativeSaturation } from './palette-generator.js'
 
-export type { PaletteTokens, ColorScheme }
-export type { SchemeConfig, RelativeSaturation } from './palette-generator.js'
+export type { PaletteTokens, ColorScheme, SchemeConfig, RelativeSaturation }
 export { okPresets } from './palette-generator.js'
 
 // ── Public API ───────────────────────────────────────────────────────────
 
 export interface PaletteOptions {
   /** Color scheme variant — string for preset name, SchemeConfig for custom (OkLAB only). Default: 'tonalSpot' */
-  scheme?: ColorScheme | import('./palette-generator.js').SchemeConfig
+  scheme?: ColorScheme | SchemeConfig
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
   /** Use OkLCH/OkHSL-based palette generation instead of Google's HCT. Default: false */
@@ -66,12 +65,28 @@ export async function generatePaletteFromImage(
 
 export interface PaletteConfig {
   sourceColor: string
-  scheme: ColorScheme
+  scheme: ColorScheme | SchemeConfig
   contrastLevel: number
   oklab: boolean
   positiveColor: string
   infoColor: string
   warningColor: string
+}
+
+function parseSchemeValue(raw: string): ColorScheme | SchemeConfig {
+  if (!raw) return 'tonalSpot'
+  // Strip surrounding quotes from Sass string values
+  const trimmed = raw.replace(/^['"]|['"]$/g, '')
+  if (!trimmed) return 'tonalSpot'
+  // Try JSON parse — handles both object and plain string
+  if (trimmed.startsWith('{')) {
+    try {
+      return JSON.parse(trimmed) as SchemeConfig
+    } catch {
+      return 'tonalSpot'
+    }
+  }
+  return trimmed as ColorScheme
 }
 
 /**
@@ -88,7 +103,7 @@ export function getDefaultPaletteConfig(): PaletteConfig {
   const style = getComputedStyle(document.documentElement)
   return {
     sourceColor: style.getPropertyValue('--md3-palette-source-color').trim() || '#6750a4',
-    scheme: (style.getPropertyValue('--md3-palette-scheme').trim() || 'tonalSpot') as ColorScheme,
+    scheme: parseSchemeValue(style.getPropertyValue('--md3-palette-scheme').trim()),
     contrastLevel: parseFloat(style.getPropertyValue('--md3-palette-contrast-level').trim()) || 0,
     oklab: style.getPropertyValue('--md3-palette-oklab').trim() === 'true',
     positiveColor: style.getPropertyValue('--md3-palette-positive-seed').trim() || '#21BA45',

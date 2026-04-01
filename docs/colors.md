@@ -336,6 +336,76 @@ applyPalette(generatePaletteFromHex('#ff0000', {
 }))
 ```
 
+### PaletteOptions
+
+`generatePaletteFromHex` and `generatePaletteFromImage` accept the same options:
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `scheme` | `string` or `SchemeConfig` | `'tonalSpot'` | Preset name (see below) or custom OkLAB config object |
+| `contrastLevel` | `number` | `0` | Contrast from -1 (reduced) to 1 (high) |
+| `oklab` | `boolean` | `false` | Use OkLCH/OkHSL instead of HCT |
+| `positiveColor` | `string` | `'#21BA45'` | Seed for harmonized positive role |
+| `infoColor` | `string` | `'#31CCEC'` | Seed for harmonized info role |
+| `warningColor` | `string` | `'#F2C037'` | Seed for harmonized warning role |
+
+### Available Schemes
+
+| Scheme | Description |
+|---|---|
+| `'tonalSpot'` | Balanced, stays close to source hue (default) |
+| `'expressive'` | Intentionally detached from source, high color variety |
+| `'vibrant'` | Maximum colorfulness, stays on source hue |
+| `'fidelity'` | High fidelity to source color |
+| `'content'` | Based on source color content |
+| `'monochrome'` | Grayscale palette |
+| `'neutral'` | Subdued, low chroma |
+| `'rainbow'` | Full hue range |
+| `'fruitSalad'` | Playful, high variety |
+| `'cmf'` | Color, Material, Finish — hardware-oriented, 2026 spec |
+
+All presets are available in both HCT and OkLAB modes.
+
+### OkLAB Palette Generation
+
+When `oklab: true` is set, palette generation uses OkLCH/OkHSL color space instead of Google's HCT. The `scheme` option can be either a preset name (same presets as HCT mode) or a custom `SchemeConfig` object for fine-grained control:
+
+```ts
+applyPalette(generatePaletteFromHex('#6750a4', {
+  oklab: true,
+  scheme: {
+    name: 'custom',
+    primaryHueOffset: 0,
+    primarySaturation: 0.375,
+    secondaryHueOffset: 0,
+    secondarySaturation: { factor: 0.5, offset: -0.15 },
+    tertiaryHueOffset: 60,
+    tertiarySaturation: 0.33,
+    neutralHueOffset: 0,
+    neutralSaturation: 0.065,
+    neutralVariantHueOffset: 0,
+    neutralVariantSaturation: 0.11,
+    errorHue: 25,
+    errorSaturation: 0.64,
+  },
+}))
+```
+
+See [`ok-material-colors` SchemeConfig](https://github.com/anoyomoose/ok-material-colors#schemeconfig) for the full type definition. The [Palette Demonstration](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-palette-test) page includes an interactive editor with a copy button.
+
+### Custom Seed Colors
+
+The `positiveColor`, `infoColor`, and `warningColor` options control the harmonized custom color roles. These are blended toward the source color to produce palette-cohesive variants:
+
+```ts
+applyPalette(generatePaletteFromHex('#ff0000', {
+  positiveColor: '#00C853',  // custom green seed
+  warningColor: '#FF6D00',   // custom orange seed
+}))
+```
+
+Each seed produces four tokens: `<role>`, `on-<role>`, `<role>-container`, `on-<role>-container`.
+
 ### Palette from an Image
 
 Extract a dominant color from an image and generate a palette:
@@ -346,7 +416,7 @@ const palette = await generatePaletteFromImage(img)
 applyPalette(palette)
 ```
 
-The image must be same-origin or served with CORS headers (`Access-Control-Allow-Origin`). Cross-origin images without CORS will throw a tainted canvas error.
+The image must be same-origin or served with CORS headers (`Access-Control-Allow-Origin`). Cross-origin images without CORS will throw a tainted canvas error. All `PaletteOptions` are supported.
 
 ### Resetting to Default
 
@@ -372,7 +442,15 @@ onBeforeUnmount(() => {
 import { getDefaultPaletteConfig } from '@anoyomoose/q2-fresh-paint-md3e/palette'
 
 const config = getDefaultPaletteConfig()
-// { sourceColor: '#6750a4', scheme: 'tonalSpot', contrastLevel: 0 }
+// {
+//   sourceColor: '#6750a4',
+//   scheme: 'tonalSpot',
+//   contrastLevel: 0,
+//   oklab: false,
+//   positiveColor: '#21BA45',
+//   infoColor: '#31CCEC',
+//   warningColor: '#F2C037',
+// }
 ```
 
 `getDefaultPalette()` returns the full `PaletteTokens` for the build-time config (cached on first call).

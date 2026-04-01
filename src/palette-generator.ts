@@ -45,8 +45,8 @@ export interface PaletteTokens {
 
 export interface GenerateOptions {
   sourceColor?: string
-  /** Color scheme variant. Default: 'tonalSpot' */
-  scheme?: ColorScheme
+  /** Color scheme variant or custom OkLAB SchemeConfig. Default: 'tonalSpot' */
+  scheme?: ColorScheme | SchemeConfig
   /** Contrast adjustment from -1 (reduced) to 1 (high). Default: 0 */
   contrastLevel?: number
   /** Use OkLCH/OkHSL-based palette generation instead of Google's HCT. Default: false */
@@ -344,7 +344,7 @@ export function generatePalette(
 ): PaletteTokens {
   const sourceColor = hex.startsWith('#') ? hex : `#${hex}`
   const scheme = options?.scheme ?? 'tonalSpot'
-  const schemeName: ColorScheme = typeof scheme === 'string' ? scheme : 'tonalSpot'
+  const schemeName: ColorScheme = (typeof scheme === 'string' && scheme in schemeConstructors) ? scheme : 'tonalSpot'
   const contrastLevel = options?.contrastLevel ?? 0
   const positiveHex = options?.positiveColor ?? DEFAULT_POSITIVE
   const infoHex = options?.infoColor ?? DEFAULT_INFO
@@ -375,7 +375,7 @@ export function generatePalette(
  */
 export function generateMd3eVariables(options: GenerateOptions): string {
   const sourceColor = options.sourceColor ?? '#6750a4'
-  const schemeName = options.scheme ?? 'tonalSpot'
+  const scheme = options.scheme ?? 'tonalSpot'
   const contrastLevel = options.contrastLevel ?? 0
   const oklab = options.oklab ?? false
   const positiveColor = options.positiveColor ?? DEFAULT_POSITIVE
@@ -383,8 +383,13 @@ export function generateMd3eVariables(options: GenerateOptions): string {
   const warningColor = options.warningColor ?? DEFAULT_WARNING
   const specVersion = oklab ? 'oklab' : '2026'
 
+  // Serialize scheme as JSON string — Sass needs it quoted to avoid parsing { as a block
+  // For strings: bare value (tonalSpot). For objects: quoted JSON string for Sass.
+  const schemeJson = typeof scheme === 'string' ? scheme : `'${JSON.stringify(scheme).replace(/'/g, "\\'")}'`
+  const schemeLabel = typeof scheme === 'string' ? scheme : (scheme.name ?? 'custom')
+
   const { light, dark } = generatePalette(sourceColor, {
-    scheme: schemeName,
+    scheme,
     contrastLevel,
     oklab,
     positiveColor,
@@ -394,12 +399,12 @@ export function generateMd3eVariables(options: GenerateOptions): string {
 
   const lines: string[] = [
     `// Auto-generated MD3 Expressive palette from source color: ${sourceColor}`,
-    `// Scheme: ${schemeName}, contrastLevel: ${contrastLevel}, specVersion: ${specVersion}`,
+    `// Scheme: ${schemeLabel}, contrastLevel: ${contrastLevel}, specVersion: ${specVersion}`,
     '// Do not edit — regenerated on every dev server start.',
     '',
     '// Palette metadata',
     `$md3-palette-source-color: ${sourceColor} !default;`,
-    `$md3-palette-scheme: ${schemeName} !default;`,
+    `$md3-palette-scheme: ${schemeJson} !default;`,
     `$md3-palette-contrast-level: ${contrastLevel} !default;`,
     `$md3-palette-spec-version: ${specVersion} !default;`,
     `$md3-palette-oklab: ${oklab} !default;`,
