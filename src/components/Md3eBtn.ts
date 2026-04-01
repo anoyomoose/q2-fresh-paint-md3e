@@ -129,6 +129,9 @@ export const Md3eBtn = defineComponent({
       if (c === 'accent') return 'tertiary'
       if (c === 'error') return 'error'
       if (c === 'negative') return 'error'
+      if (c === 'positive') return 'positive'
+      if (c === 'info') return 'info'
+      if (c === 'warning') return 'warning'
 
       // Boolean props
       if (props.primary) return 'primary'

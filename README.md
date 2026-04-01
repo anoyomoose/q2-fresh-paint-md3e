@@ -382,7 +382,7 @@ MD3E FAB Menus are much more restricted than all the options Quasar provides. Im
 Using `QFab`:
 
 ```vue
-<q-fab color="secondary" icon="sym_r_edit" label="Edit" label-position="left" vertical-actions-align="left" direction="up">
+<q-fab secondary icon="sym_r_edit" label="Edit" label-position="left" vertical-actions-align="left" direction="up">
   <q-fab-action icon="sym_r_mail" label="Mail" label-position="left" />
   <q-fab-action icon="sym_r_alarm" label="Alarm" label-position="left"/>
 </q-fab>

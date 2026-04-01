@@ -13,7 +13,7 @@ A drop-in replacement for Quasar's `QBtn` that adds MD3 Expressive toggle/select
 
 All QBtn props and attributes pass through unchanged. The CSS classes that drive the toggle appearance can also be applied manually to a plain `QBtn` without using this wrapper at all.
 
-**Important**: Due to MD3E's design principles, not all variants support arbitrary colors. `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors! 
+**Important**: Due to MD3E's design principles, not all variants support arbitrary colors. `elevated` and `tonal` variants, as well as all `toggle` buttons, support only `primary`, `secondary`, `tertiary`, and `error` colors! `positive`, `info` and `warning` also work, but keep in mind these are not truly theme-generated.
 
 ## Props Reference
 
@@ -118,8 +118,8 @@ Initialize a single-select model with `null` (not `undefined`) if you want the b
 The component resolves colors in this order of priority:
 
 1. `allowColor` is set → passes the `color` attr through as-is (use for Quasar color names like `"deep-orange"`)
-2. `color="primary"`, `color="secondary"`, or `color="tertiary"` attr → resolved directly (`tertiary` maps to `"accent"`)
-3. `primary`, `secondary`, or `tertiary` boolean prop → sets corresponding color
+2. `color="..."`, attr → resolved directly for `primary`, `secondary`, `tertiary` / `accent`, `error` / `negative`, `positive`, `info`, `warning`
+3. `primary`, `secondary`, `tertiary`, `error` boolean prop → sets corresponding color
 4. Default fallback: `tonal` (or `glossy`) buttons get `"secondary"`; all others get `"primary"`
 
 ### Using Color Props

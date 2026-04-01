@@ -48,6 +48,9 @@
 .q-chip.bg-secondary { color: var(--md3-on-secondary) !important; }
 .q-chip.bg-accent, .q-chip.bg-tertiary { color: var(--md3-on-tertiary) !important; }
 .q-chip.bg-negative, .q-chip.bg-error { color: var(--md3-on-error) !important; }
+.q-chip.bg-positive { color: var(--md3-on-positive) !important; }
+.q-chip.bg-info { color: var(--md3-on-info) !important; }
+.q-chip.bg-warning { color: var(--md3-on-warning) !important; }
 
 // Colored chips (user-applied textColor prop) inherit icon color
 .q-chip--colored .q-chip__icon,

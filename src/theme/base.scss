@@ -297,6 +297,18 @@ body.body--light .q-dark {
 .bg-error.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
   color: var(--md3-on-error) !important;
 }
+.bg-positive.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-positive.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
+  color: var(--md3-on-positive) !important;
+}
+.bg-info.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-info.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
+  color: var(--md3-on-info) !important;
+}
+.bg-warning.text-white:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected),
+.bg-warning.text-black:not(.q-btn--standard):not(.glossy):not(.disabled):not(.q-btn--selected) {
+  color: var(--md3-on-warning) !important;
+}
 
 // === State Layer Opacity Override ===
 // MD3E state layers: hover 8%, focus 12%, pressed 12%, dragged 16%
@@ -694,8 +706,6 @@ body.desktop {
 
 // --- Inverse ---
 .bg-inverse-surface { background-color: var(--md3-inverse-surface) !important; color: var(--md3-inverse-on-surface) !important; }
-.bg-inverse-on-surface { background-color: var(--md3-inverse-on-surface) !important; color: var(--md3-inverse-surface) !important; }
-.bg-inverse-primary { background-color: var(--md3-inverse-primary) !important; color: var(--md3-on-primary) !important; }
 
 // --- Utility ---
 .bg-shadow { background-color: var(--md3-shadow) !important; }
@@ -764,5 +774,11 @@ body.desktop {
 .text-inverse-surface { color: var(--md3-inverse-surface) !important; }
 .text-inverse-on-surface { color: var(--md3-inverse-on-surface) !important; }
 .text-inverse-primary { color: var(--md3-inverse-primary) !important; }
+.text-inverse-secondary { color: var(--md3-inverse-secondary) !important; }
+.text-inverse-tertiary { color: var(--md3-inverse-tertiary) !important; }
+.text-inverse-error { color: var(--md3-inverse-error) !important; }
+.text-inverse-positive { color: var(--md3-inverse-positive) !important; }
+.text-inverse-info { color: var(--md3-inverse-info) !important; }
+.text-inverse-warning { color: var(--md3-inverse-warning) !important; }
 .text-shadow { color: var(--md3-shadow) !important; }
 .text-scrim { color: var(--md3-scrim) !important; }

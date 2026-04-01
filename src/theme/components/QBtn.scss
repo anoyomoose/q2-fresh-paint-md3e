@@ -312,6 +312,9 @@ body.desktop {
   &.bg-secondary { color: var(--md3-secondary) !important; }
   &.bg-accent, &.bg-tertiary { color: var(--md3-tertiary) !important; }
   &.bg-negative, &.bg-error { color: var(--md3-error) !important; }
+  &.bg-positive { color: var(--md3-positive) !important; }
+  &.bg-info { color: var(--md3-info) !important; }
+  &.bg-warning { color: var(--md3-warning) !important; }
 
   &.q-btn--actionable {
     // Level 1 resting shadow with spring transition
@@ -382,6 +385,24 @@ body.desktop {
     background-color: var(--md3-error-container) !important;
     color: var(--md3-on-error-container) !important;
   }
+
+  // Positive tonal
+  &.bg-positive {
+    background-color: var(--md3-positive-container) !important;
+    color: var(--md3-on-positive-container) !important;
+  }
+
+  // Info tonal
+  &.bg-info {
+    background-color: var(--md3-info-container) !important;
+    color: var(--md3-on-info-container) !important;
+  }
+
+  // Warning tonal
+  &.bg-warning {
+    background-color: var(--md3-warning-container) !important;
+    color: var(--md3-on-warning-container) !important;
+  }
 }
 
 // =============================================================================
@@ -442,6 +463,9 @@ body.desktop {
   &.bg-secondary { color: var(--md3-secondary) !important; }
   &.bg-accent, &.bg-tertiary { color: var(--md3-tertiary) !important; }
   &.bg-negative, &.bg-error { color: var(--md3-error) !important; }
+  &.bg-positive { color: var(--md3-positive) !important; }
+  &.bg-info { color: var(--md3-info) !important; }
+  &.bg-warning { color: var(--md3-warning) !important; }
 }
 
 // --- Toggle Unselected: Outlined variant ---
@@ -477,6 +501,21 @@ body.desktop {
     background-color: var(--md3-error) !important;
     color: var(--md3-on-error) !important;
   }
+
+  &.bg-positive {
+    background-color: var(--md3-positive) !important;
+    color: var(--md3-on-positive) !important;
+  }
+
+  &.bg-info {
+    background-color: var(--md3-info) !important;
+    color: var(--md3-on-info) !important;
+  }
+
+  &.bg-warning {
+    background-color: var(--md3-warning) !important;
+    color: var(--md3-on-warning) !important;
+  }
 }
 
 // --- Toggle Selected: Elevated (standard) variant ---
@@ -498,6 +537,21 @@ body.desktop {
   &.bg-negative, &.bg-error {
     background-color: var(--md3-error) !important;
     color: var(--md3-on-error) !important;
+  }
+
+  &.bg-positive {
+    background-color: var(--md3-positive) !important;
+    color: var(--md3-on-positive) !important;
+  }
+
+  &.bg-info {
+    background-color: var(--md3-info) !important;
+    color: var(--md3-on-info) !important;
+  }
+
+  &.bg-warning {
+    background-color: var(--md3-warning) !important;
+    color: var(--md3-on-warning) !important;
   }
 }
 
@@ -527,6 +581,21 @@ body.desktop {
     background-color: var(--md3-error) !important;
     color: var(--md3-on-error) !important;
   }
+
+  &.bg-positive {
+    background-color: var(--md3-positive) !important;
+    color: var(--md3-on-positive) !important;
+  }
+
+  &.bg-info {
+    background-color: var(--md3-info) !important;
+    color: var(--md3-on-info) !important;
+  }
+
+  &.bg-warning {
+    background-color: var(--md3-warning) !important;
+    color: var(--md3-on-warning) !important;
+  }
 }
 
 // --- Toggle Selected: Outlined variant ---
@@ -547,6 +616,18 @@ body.desktop {
 
   &.text-negative, &.text-error {
     color: var(--md3-inverse-error) !important;
+  }
+
+  &.text-positive {
+    color: var(--md3-inverse-positive) !important;
+  }
+
+  &.text-info {
+    color: var(--md3-inverse-info) !important;
+  }
+
+  &.text-warning {
+    color: var(--md3-inverse-warning) !important;
   }
 
   // Remove the outline border when filled
