@@ -161,7 +161,7 @@ Default: `false`
 
 When enabled, the `scheme` option accepts either a preset name (same list as above) or a custom `SchemeConfig` object for fine-grained control over hue offsets and saturation for each palette role. 
 
-See [`ok-material-colors` SchemeConfig](https://github.com/anoyomoose/ok-material-colors#schemeconfig) for the full type definition.
+See [docs/colors.md](docs/colors.md) for more information.
 
 The [Palette Demonstration](https://anoyomoose.github.io/q2-fresh-paint-md3e/components/md3e-palette-test) page includes an interactive OkLAB scheme editor with a copy button that exports your chosen configuration to the clipboard.
 

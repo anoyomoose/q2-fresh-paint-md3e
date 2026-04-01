@@ -387,6 +387,8 @@ applyPalette(generatePaletteFromHex('#6750a4', {
     neutralVariantSaturation: 0.11,
     errorHue: 25,
     errorSaturation: 0.64,
+    darkSurfaceScale: 0.85,
+    darkLowestIsBlack: true,
   },
 }))
 ```
