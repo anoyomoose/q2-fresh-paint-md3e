@@ -19,7 +19,7 @@ This is an attempt to (partially) provide a Material Design 3 Expressive theme t
 - **Button groups**: similarly redesigned, standard and connected variants; gap-based layouts with button morphing per MD3E specification
 - **Segmented buttons**: officially deprecated, but QBtnToggle in standard mode has been redesigned to copy MD3 (non-Expressive) behavior. Note that virtually all imaginable cases where you previously used QBtnToggle are better served (both by look and feel and per MD3E specification) with a standard or connected button group utilizing `Md3eBtn`'s toggle modes instead.
 - **Toggle switches**: completely redesigned to follow MD3E specification with expanding handles
-- **Sliders**: similarly updated - **NOTE**: I am not quite happy with them, might change/revert
+- **Sliders**: updated as best as possible, uses MD2 sizes by default, see `Md3eSlider`
 - **Outlined inputs**: labels now animated and positioned to intersect the border as per MD3E specification
 - **FABs**: adjusted to MD3E standards, see the `Md3eBtn` section for (extended) FABs, and `Md3eFab` section for FAB menus
 - **Toolbars, headers and footers**: Now use MD3E specification mandated palette entries
@@ -400,6 +400,27 @@ Using `Md3eFab` / `Md3eFabAction`:
   <md3e-fab-action icon="sym_r_alarm" label="Alarm" />
 </md3e-fab>
 ```
+
+### `Md3eSlider`
+
+A `QSlider` wrapper with MD3E `size` shortcuts and `icon` capability.
+
+These sizes correspond to the MD3E specification, not to Quasar sizes of the same name. `sm` is the default. Mappings:
+
+| size | track-size | thumb-size | icon-size | corner size |
+|:----:|:----------:|:----------:|:---------:|:-----------:|
+|  xs  |    16px    |    32px    |   12px    |     8px     |
+|  sm  |    24px    |    44px    |   16px    |     8px     |
+|  md  |    40px    |    52px    |   24px    |    12px     |
+|  lg  |    56px    |    68px    |   28px    |    16px     |
+|  xl  |    96px    |   108px    |   32px    |    28px     |
+
+Implemented as a wrapper as the MD2 slider default sizes are quite different, and `icon` support had to be bolted on. 
+Using a `QSlider` with this theme gives you the same style but a thin track. You can replicate `Md3eSlider` behavior
+with a `QSlider` by passing the `track-size` and `thumb-size` values from this map, and setting the `q-slider--{size}`
+class.
+
+`icon-size` (CSS units) and `icon-color` (palette) attributes are also available.
 
 ## Boot File
 

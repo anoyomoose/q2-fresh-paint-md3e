@@ -5,6 +5,7 @@ import {
   QBtn,
   QBtnDropdown,
   QChip,
+  QSlider,
   QTabs,
 } from 'quasar'
 
@@ -162,18 +163,6 @@ function setupOutlinedNotch () {
 }
 
 export default boot(() => {
-  // === Buttons ===
-  // MD3E pill shape is handled via CSS ($button-border-radius: $md3-corner-full)
-  // so no rounded prop override needed — default rectangle class gets the same radius.
-  //
-  // MD3E button variant mapping:
-  //   Filled (default)  — unelevated (set below), primary bg, no shadow
-  //   Elevated           — :unelevated="false", surface-container-low bg, Level 1 shadow
-  //   Tonal              — glossy prop (remapped in CSS), secondary-container bg
-  //   Outlined           — outline prop (unchanged)
-  //   Text               — flat prop (unchanged)
-  //   Square shape       — square prop (12dp corners, MD3E "square" option)
-
   // MD3E buttons use sentence case (no uppercase)
   QBtn.props.noCaps = { type: Boolean, default: true }
   QBtnDropdown.props.noCaps = { type: Boolean, default: true }

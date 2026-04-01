@@ -27,20 +27,25 @@
 // TRACK
 // ============================================================
 
-// Track container: provide space for 44dp handle around 16dp track
-.q-slider__track-container--h {
-  padding: 14px 0; // (44 - 16) / 2 = 14dp
-}
-
-.q-slider__track-container--v {
-  padding: 0 14px;
-}
-
-// Track and inner: 16dp tall with pill-shaped ends
+// Track: transparent container
 .q-slider__track {
-  background: transparent; // Track itself is just a container now
+  background: transparent;
   border-radius: $md3-corner-small;
-  height: 16px;
+}
+
+// Size-based track border-radius
+.q-slider--xs .q-slider__track,
+.q-slider--sm .q-slider__track {
+  border-radius: $md3-corner-small;
+}
+.q-slider--md .q-slider__track {
+  border-radius: $md3-corner-medium;
+}
+.q-slider--lg .q-slider__track {
+  border-radius: $md3-corner-large;
+}
+.q-slider--xl .q-slider__track {
+  border-radius: $md3-corner-extra-large;
 }
 
 // Inactive track: secondary-container
@@ -50,27 +55,49 @@
   height: 100%;
 }
 
-// Active track selection: primary (via currentColor which is var(--q-primary))
-.q-slider__selection {
-  border-radius: inherit;
+// Active track selection: flatten corners on the handle side.
+// Selection inherits border-radius from track; we only zero the handle-side corners.
+
+// Horizontal normal: handle at right edge
+.q-slider__track:has(.q-slider__thumb--h-ltr) > .q-slider__selection {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+// Horizontal reversed: handle at left edge
+.q-slider__track:has(.q-slider__thumb--h-rtl) > .q-slider__selection {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+// Vertical normal: handle at bottom edge
+.q-slider__track:has(.q-slider__thumb--v-ltr) > .q-slider__selection {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+// Vertical reversed: handle at top edge
+.q-slider__track:has(.q-slider__thumb--v-rtl) > .q-slider__selection {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 // ============================================================
 // HANDLE — thin vertical bar replacing circular SVG thumb
 // ============================================================
+// Only apply MD3E bar handle when the user hasn't overridden thumb-path.
+// Detection: check if the SVG <path d="..."> matches Quasar's default circle.
 
-// Hide the SVG circular thumb shape
-.q-slider__thumb-shape {
-  display: none;
-}
+$_default-thumb-path: 'M 4, 10 a 6,6 0 1,0 12,0 a 6,6 0 1,0 -12,0';
 
-// Hide the old focus ring (handle width changes serve as focus indicator)
-.q-slider__focus-ring {
-  display: none;
+// --- MD3E bar handle (default thumb path) ---
+
+// Hide SVG thumb when using our bar handle
+.q-slider__thumb:has(.q-slider__thumb-shape path[d="#{$_default-thumb-path}"]) {
+  .q-slider__thumb-shape {
+    display: none;
+  }
 }
 
 // Style thumb container as a vertical bar
-.q-slider__thumb {
+.q-slider__thumb:has(path[d="#{$_default-thumb-path}"]) {
   color: var(--q-primary);
   transition: transform $md3-spring-effects-default-duration $md3-easing-emphasized;
 
@@ -78,70 +105,71 @@
   &:before {
     content: '';
     position: absolute;
-    width: 4px;
-    height: 44px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 100%;
+    inset: 0;
+    margin: auto;
     background: currentColor;
-    border-radius: 2px;
+    border: 2px solid var(--md3-background);
+    border-radius: 4px;
     transition: width $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
                 height $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
   }
 }
 
+.q-slider--v .q-slider__thumb:has(path[d="#{$_default-thumb-path}"]):before {
+  width: 100%;
+  height: 8px;
+}
+
 // Focus/pressed: handle becomes thinner (2dp wide)
-.q-slider--focus .q-slider__thumb:before {
-  width: 2px;
+// Note: .q-slider--focus is on the thumb itself, not an ancestor
+.q-slider__thumb.q-slider--focus:has(path[d="#{$_default-thumb-path}"]):before {
+  width: 6px;
 }
 
 // Active (dragging): handle thinner
-.q-slider--active .q-slider__thumb:before {
-  width: 2px;
+.q-slider--active .q-slider__thumb:has(path[d="#{$_default-thumb-path}"]):before {
+  width: 6px;
 }
 
-// Override Quasar's 1.5x scale on active thumb-shape (already hidden, but be safe)
-.q-slider--active .q-slider__thumb-shape {
-  transform: scale(1);
-}
-
-// Override focus-ring based hover effects — we handle this differently now
-.q-slider--focus .q-slider__focus-ring,
-body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__focus-ring {
-  display: none;
+.q-slider--v.q-slider--focus .q-slider__thumb:has(path[d="#{$_default-thumb-path}"]):before,
+.q-slider--v.q-slider--active .q-slider__thumb:has(path[d="#{$_default-thumb-path}"]):before {
+  width: 100%;
+  height: 6px;
 }
 
 // ============================================================
-// STATE LAYER ON HANDLE
+// STATE LAYER — repurpose Quasar's focus-ring element
 // ============================================================
-// Use an :after pseudo on the thumb for the state layer
+// Override Quasar's timing/opacity to match MD3E state layer spec.
 
-.q-slider__thumb:after {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale3d(0, 0, 1);
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0;
+.q-slider__focus-ring {
   transition: transform $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
               opacity $md3-spring-effects-default-duration $md3-spring-expressive-effects-default;
-  pointer-events: none;
+  transition-delay: 0s;
 }
 
-// Hover: 8% state layer
-.q-slider--focus .q-slider__thumb:after,
-body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__thumb:after {
-  transform: translate(-50%, -50%) scale3d(1, 1, 1);
+// Hover: state layer
+.q-slider__thumb.q-slider--focus .q-slider__focus-ring,
+body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-slider__focus-ring {
   opacity: $md3-state-hover-opacity;
 }
 
-// Focus: 12% state layer
-.q-slider--focus .q-slider__thumb:after {
+// Focus: stronger state layer
+.q-slider__thumb.q-slider--focus .q-slider__focus-ring {
   opacity: $md3-state-focus-opacity;
+}
+
+// --- Custom thumb path: restore SVG, hide bar ---
+
+.q-slider__thumb:has(.q-slider__thumb-shape path:not([d="#{$_default-thumb-path}"])) {
+  &:before {
+    display: none;
+  }
+  .q-slider__thumb-shape {
+    display: block;
+  }
 }
 
 // ============================================================
@@ -151,13 +179,54 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
 // perfect reproduction (spacing is dynamic), but we can improve
 // the visual appearance.
 
+// Override Quasar's rgba(0,0,0,.3) — inherit primary from .q-slider__track
 .q-slider__markers {
-  color: var(--md3-on-secondary-container); // replaces stock rgba(0,0,0,.3)
+  color: inherit;
+  mix-blend-mode: difference;
+}
+
+// Markers: 4×4 stop indicators, centered on the track
+.q-slider__markers--h {
+  height: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-image: repeating-linear-gradient(to right, currentColor, currentColor 4px, transparent 0, transparent);
+  &:after {
+    width: 4px;
+  }
+}
+.q-slider__markers--v {
+  width: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: repeating-linear-gradient(to bottom, currentColor, currentColor 4px, transparent 0, transparent);
+  &:after {
+    height: 4px;
+  }
 }
 
 // ============================================================
 // VALUE INDICATOR (Pin/Popup)
 // ============================================================
+
+// Hide Quasar's arrow triangle between pin and handle
+.q-slider__pin:before {
+  display: none;
+}
+
+// Close the gap left by the removed triangle (was 7px to clear the arrow)
+.q-slider__label--h-standard {
+  bottom: 2px;
+}
+.q-slider__label--h-switched {
+  top: 2px;
+}
+.q-slider__label--v-standard {
+  left: 2px;
+}
+.q-slider__label--v-switched {
+  right: 2px;
+}
 
 .q-slider__text-container {
   background: var(--md3-inverse-surface);
@@ -214,50 +283,70 @@ body.desktop .q-slider.q-slider--editable .q-slider__track-container:hover .q-sl
   background: var(--md3-secondary-container);
 }
 
-// Dark mode markers — QSlider doesn't add .q-dark.
+// Dark mode markers — keep inherit to match mix-blend-mode: difference approach
 .q-slider--dark .q-slider__markers {
-  color: var(--md3-on-secondary-container);
+  color: inherit;
 }
 
 // ============================================================
-// DENSE MODE
+// Z-INDEX LAYERING
 // ============================================================
+// Explicit z-index on every track layer so the Md3eSlider icon
+// overlay (z-index: 4) can sit between track content and thumb.
+// None of .q-slider, .q-slider__track-container, or .q-slider__track
+// create a stacking context, so all z-indices participate in the
+// wrapper's stacking context.
 
-.q-slider--dense .q-slider__track-container--h {
-  padding: 8px 0; // Tighter vertical space
-}
-
-.q-slider--dense .q-slider__track-container--v {
-  padding: 0 8px;
-}
-
-// Dense handle: slightly shorter
-.q-slider--dense .q-slider__thumb:before {
-  height: 32px;
-  width: 4px;
-}
+.q-slider__inner { z-index: 1; }
+.q-slider__selection { z-index: 2; }
+.q-slider__markers { z-index: 3; }
+.q-slider__thumb { z-index: 5; }
 
 // ============================================================
-// VERTICAL SLIDER ADJUSTMENTS
+// ICON OVERLAY (Md3eSlider wrapper)
 // ============================================================
 
-.q-slider--v .q-slider__track {
-  width: 16px;
-  height: inherit;
+.q-slider__icon-wrapper {
+  display: grid;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+
+  &:has(.q-slider--v) {
+    display: inline-grid;
+  }
 }
 
-.q-slider--v .q-slider__inner {
-  width: 100%;
+.q-slider__icon {
+  position: relative;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
 }
 
-// Vertical handle: rotated bar (horizontal instead of vertical)
-.q-slider--v .q-slider__thumb:before {
-  width: 44px;
-  height: 4px;
+// Horizontal: centered vertically, 4px from start edge
+.q-slider__icon--h {
+  align-items: center;
+}
+.q-slider__icon--h-ltr {
+  justify-content: flex-start;
+  padding-left: 4px;
+}
+.q-slider__icon--h-rtl {
+  justify-content: flex-end;
+  padding-right: 4px;
 }
 
-.q-slider--v.q-slider--focus .q-slider__thumb:before,
-.q-slider--v.q-slider--active .q-slider__thumb:before {
-  height: 2px;
-  width: 44px;
+// Vertical: centered horizontally, 4px from start edge
+.q-slider__icon--v {
+  justify-content: center;
+}
+.q-slider__icon--v-ltr {
+  align-items: flex-start;
+  padding-top: 4px;
+}
+.q-slider__icon--v-rtl {
+  align-items: flex-end;
+  padding-bottom: 4px;
 }
