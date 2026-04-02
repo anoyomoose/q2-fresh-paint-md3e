@@ -1,78 +1,114 @@
 // MD3 Expressive QMenu Overrides
 // Appended after Quasar's QMenu.sass — source order wins.
 //
-// MD3E menus: 4dp corner radius, surface-container bg, level 2 elevation.
-// $generic-border-radius is 12px globally, so we must override the menu
-// back to 4dp (extra-small). Background is already set via $menu-background
-// in variables.scss.
+// MD3E menus: 16dp corner radius, surface-container bg, level 2 elevation.
 
-// === Shape ===
-// MD3E menu: corner-extra-small (4dp) — override generic 12px
+// === Shape, Color, Elevation ===
 .q-menu {
-  border-radius: $md3-corner-extra-small;
-  background: var(--md3-surface-container); // reinforce for dark mode switching
-}
-
-// === Elevation: MD3E Level 2 ===
-.q-menu {
+  border-radius: $md3-corner-large;
+  background: var(--md3-surface-container-low);
+  color: var(--md3-on-surface);
   box-shadow: $md3-elevation-2;
+  padding: 4px;
 }
 
 // === Square Menu ===
-// Keep Quasar's --square at 0 radius
+// MD3E: uniform corners regardless of field variant
 .q-menu--square {
-  border-radius: 0;
+  border-radius: $md3-corner-large;
 }
 
 // === Dark Mode ===
-// Same surface-container, same shadow
 .q-menu--dark {
-  background: var(--md3-surface-container);
+  background: var(--md3-surface-container-low);
   box-shadow: $md3-elevation-2;
 }
 
+// === Menu List ===
+// Gap between items
+.q-menu > .q-list {
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
 // === Menu Items ===
-// Menu items are QItems; override their sizing for menu context.
-// MD3E menu items: 48dp height, 12dp horizontal padding (not list's 56dp/16dp)
+// MD3E menu items: 48dp height, 12dp horizontal padding
 .q-menu .q-item {
   min-height: 48px;
   padding: 0 12px;
+  border-radius: $md3-corner-medium;
 }
 
 // === Menu Item Typography ===
-// MD3E menu labels: label-large (14px, weight 500, 20px lh, 0.1pt tracking)
+// MD3E menu labels: label-large (0.875rem/14px, weight 500, 1.25rem/20px lh)
 .q-menu .q-item__label {
-  font-size: $md3-type-label-large-size;   // 14px
-  font-weight: $md3-type-label-large-weight;       // label-large weight
-  line-height: $md3-type-label-large-line-height;   // 20px
-  letter-spacing: 0.00714em; // 0.1pt / 14sp
+  font-size: $md3-type-label-large-size;
+  font-weight: $md3-type-label-large-weight;
+  line-height: $md3-type-label-large-line-height !important; // beats Quasar's 1.2em !important
+  letter-spacing: 0.00714em;
 }
 
-// === Menu Item Colors ===
-// color: on .q-item removed — inherits from QLayout (on-surface), no stock override to replace
+// Caption: body-small (0.75rem/12px)
+.q-menu .q-item__label--caption {
+  font-size: $md3-type-body-small-size;
+  font-weight: $md3-type-body-small-weight;
+  line-height: $md3-type-body-small-line-height !important;
+}
 
-// Leading/trailing icons: on-surface-variant
+// Remove gap between stacked labels
+.q-menu .q-item__label + .q-item__label {
+  margin-top: 0;
+}
+
+// === Menu Item Icons ===
 .q-menu .q-item__section--side {
-  color: var(--md3-on-surface-variant); // replaces stock rgba(0,0,0,.54) on QItem side sections
+  color: var(--md3-on-surface-variant);
+  // Leading icon: reduce gap from 16px to 8px
+  padding-right: 8px;
+
+  .q-icon {
+    font-size: 20px;
+  }
 }
 
-// === Selected Menu Item ===
-// MD3E: secondary-container bg, on-secondary-container text
+// Trailing icon (after --main): reduce gap from 16px to 8px
+.q-menu .q-item__section--main ~ .q-item__section--side {
+  padding-left: 8px;
+  padding-right: 0;
+}
+
+// Avatar section in menus: remove the 56px min-width
+.q-menu .q-item__section--avatar {
+  min-width: 0;
+}
+
+// === Hover State Layer ===
+// 12% opacity — more visible than the global 8%, needed on colored surfaces.
+body.desktop .q-menu .q-item.q-hoverable:hover > .q-focus-helper,
+body.desktop .q-menu .q-item.q-focusable:focus > .q-focus-helper {
+  opacity: 0.12 !important;
+}
+
+// === Active/Selected Menu Item ===
+// MD3E: tertiary-container bg, on-tertiary-container text + icon
 .q-menu .q-item--active,
 .q-menu .q-item.q-router-link--active {
-  background: var(--md3-secondary-container);
-  color: var(--md3-on-secondary-container); // replaces stock var(--q-primary) on active items
+  background: var(--md3-tertiary-container);
+  color: var(--md3-on-tertiary-container);
 }
 
 .q-menu .q-item--active .q-item__section--side,
-.q-menu .q-item.q-router-link--active .q-item__section--side {
-  color: var(--md3-on-secondary-container); // replaces stock primary color on active side sections
+.q-menu .q-item.q-router-link--active .q-item__section--side,
+.q-menu .q-item--active .q-item__label--caption,
+.q-menu .q-item.q-router-link--active .q-item__label--caption {
+  color: var(--md3-on-tertiary-container);
 }
 
 // === Disabled Menu Items ===
 // MD3E: on-surface at 38% opacity for disabled content
 .q-menu .q-item.disabled {
-  opacity: 1; // override Quasar's blanket opacity
+  opacity: 1;
 
   .q-item__label,
   .q-item__section--side {
@@ -88,8 +124,50 @@
 }
 
 // === Dense Menu Items ===
-// Keep compact option but apply MD3E minimum touch target
 .q-menu .q-item--dense {
   min-height: 36px;
   padding: 0 12px;
+}
+
+// ============================================================
+// VIBRANT VARIANT (.q-menu--vibrant)
+// ============================================================
+// Tertiary-container based menu for higher visual emphasis.
+
+.q-menu--vibrant {
+  background: var(--md3-tertiary-container);
+  color: var(--md3-on-tertiary-container);
+}
+
+.q-menu--vibrant .q-item__section--side,
+.q-menu--vibrant .q-item__label--caption {
+  color: var(--md3-on-tertiary-container);
+}
+
+// Active item: tertiary bg
+.q-menu--vibrant .q-item--active,
+.q-menu--vibrant .q-item.q-router-link--active {
+  background: var(--md3-tertiary);
+  color: var(--md3-on-tertiary);
+}
+
+.q-menu--vibrant .q-item--active .q-item__section--side,
+.q-menu--vibrant .q-item.q-router-link--active .q-item__section--side,
+.q-menu--vibrant .q-item--active .q-item__label--caption,
+.q-menu--vibrant .q-item.q-router-link--active .q-item__label--caption {
+  color: var(--md3-on-tertiary);
+}
+
+// Disabled: on-tertiary-container at 38%
+.q-menu--vibrant .q-item.disabled {
+  .q-item__label,
+  .q-item__section--side {
+    color: var(--md3-on-tertiary-container);
+    opacity: $md3-disabled-content-opacity;
+  }
+}
+
+// Divider
+.q-menu--vibrant .q-separator {
+  background: var(--md3-on-tertiary-container);
 }

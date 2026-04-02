@@ -432,6 +432,21 @@ class.
 
 `icon-size` (CSS units) and `icon-color` (palette) attributes are also available.
 
+### `QMenu`
+
+There is no wrapper for `QMenu`. Vibrant menus can be created by using the `q-menu--vibrant` class:
+
+```vue
+<q-menu anchor="top right" self="bottom right" class="q-menu--vibrant">
+  <!-- ... -->
+</q-menu>
+
+<q-select
+  popup-content-class="q-menu--vibrant"
+  <!-- ... -->
+/>
+```
+
 ## Boot File
 
 The boot file (`~@anoyomoose/q2-fresh-paint-md3e/boot`) must be registered in the `boot` array of `quasar.config.js`. It runs at app startup and does two things:
