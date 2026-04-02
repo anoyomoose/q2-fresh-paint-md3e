@@ -18,7 +18,8 @@
 
 // === Dialog Background ===
 // MD3E surface-container-high for select dialog
-.q-select__dialog {
+// Must use .q-dialog__inner > to beat the generic dialog rule
+.q-dialog__inner > .q-select__dialog {
   background: var(--md3-surface-container-high);
-  border-radius: $md3-corner-extra-large;
+  border-radius: $md3-corner-large;
 }

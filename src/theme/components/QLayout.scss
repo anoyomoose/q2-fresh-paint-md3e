@@ -39,22 +39,25 @@
   background: var(--md3-surface-container-low);
 }
 
-// === Modal Drawer (mobile / overlay) ===
+// === Overlay Drawer (mobile + desktop overlay) ===
 // MD3E modal side sheet: surface-container-low background
-.q-drawer--mobile {
+.q-drawer--mobile,
+.q-drawer--on-top {
   background: var(--md3-surface-container-low);
 }
 
-// === Modal Drawer Corner Radius ===
+// === Overlay Drawer Corner Radius ===
 // MD3E modal side sheet: 16dp corners on the non-attached (free) edge
 // Left drawer: right edge is free → round top-right and bottom-right
-.q-drawer--left.q-drawer--mobile {
+.q-drawer--left.q-drawer--mobile,
+.q-drawer--left.q-drawer--on-top {
   border-top-right-radius: $md3-corner-large;
   border-bottom-right-radius: $md3-corner-large;
 }
 
 // Right drawer: left edge is free → round top-left and bottom-left
-.q-drawer--right.q-drawer--mobile {
+.q-drawer--right.q-drawer--mobile,
+.q-drawer--right.q-drawer--on-top {
   border-top-left-radius: $md3-corner-large;
   border-bottom-left-radius: $md3-corner-large;
 }
