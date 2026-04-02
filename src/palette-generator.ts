@@ -350,16 +350,27 @@ export function generatePalette(
   const infoHex = options?.infoColor ?? DEFAULT_INFO
   const warningHex = options?.warningColor ?? DEFAULT_WARNING
 
+  let palette: PaletteTokens
+
   if (options?.oklab) {
     const rawConfig = typeof scheme === 'object' ? scheme : undefined
-    return generatePaletteOklab(sourceColor, schemeName, contrastLevel, positiveHex, infoHex, warningHex, rawConfig)
+    palette = generatePaletteOklab(sourceColor, schemeName, contrastLevel, positiveHex, infoHex, warningHex, rawConfig)
   } else {
     const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
-    return {
+    palette = {
       light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
       dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
     }
   }
+
+  // Use the opposite theme's surface/on-surface as inverse tokens instead
+  // of the theme-generated ones. Android does this too, and it looks better.
+  palette.light['inverse-surface'] = palette.dark['surface']
+  palette.light['inverse-on-surface'] = palette.dark['on-surface']
+  palette.dark['inverse-surface'] = palette.light['surface']
+  palette.dark['inverse-on-surface'] = palette.light['on-surface']
+
+  return palette
 }
 
 /**

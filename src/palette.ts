@@ -216,8 +216,6 @@ function buildModeBlock(tokens: Record<string, string>, mode: 'light' | 'dark'):
   return css
 }
 
-
-
 /**
  * Apply a palette by injecting/replacing a <style> element.
  * Overrides both light and dark mode tokens, plus the per-component dark fix rule.
