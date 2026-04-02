@@ -146,38 +146,77 @@ function hexToRgb(hex: string): string {
   return `${r}, ${g}, ${b}`
 }
 
-function buildTokenBlock(tokens: Record<string, string>, inverseTokens?: Record<string, string>): string {
+const RGB_TOKENS = ['primary', 'on-surface', 'on-primary', 'error', 'shadow'] as const
+const INVERSE_BRAND_TOKENS = ['secondary', 'tertiary', 'error', 'positive', 'info', 'warning'] as const
+
+/**
+ * Build the light block: --light/--dark constants, switching aliases,
+ * RGB triplets, inverse brand colors, and Quasar brand mappings.
+ */
+function buildLightBlock(light: Record<string, string>, dark: Record<string, string>): string {
   let css = ''
-  for (const [name, value] of Object.entries(tokens)) {
-    css += `  --md3-${name}: ${value};\n`
+  // Token constants + aliases
+  for (const [name, value] of Object.entries(light)) {
+    css += `  --md3-${name}--light: ${value};\n`
+    css += `  --md3-${name}--dark: ${dark[name]};\n`
+    css += `  --md3-${name}: var(--md3-${name}--light);\n`
   }
-  // RGB triplets
-  css += `  --md3-primary-rgb: ${hexToRgb(tokens.primary)};\n`
-  css += `  --md3-on-surface-rgb: ${hexToRgb(tokens['on-surface'])};\n`
-  css += `  --md3-on-primary-rgb: ${hexToRgb(tokens['on-primary'])};\n`
-  css += `  --md3-error-rgb: ${hexToRgb(tokens.error)};\n`
-  css += `  --md3-shadow-rgb: ${hexToRgb(tokens.shadow)};\n`
-  // Inverse brand colors (opposite mode's values for use on inverse-surface)
-  if (inverseTokens) {
-    css += `  --md3-inverse-secondary: ${inverseTokens.secondary};\n`
-    css += `  --md3-inverse-tertiary: ${inverseTokens.tertiary};\n`
-    css += `  --md3-inverse-error: ${inverseTokens.error};\n`
-    css += `  --md3-inverse-positive: ${inverseTokens.positive};\n`
-    css += `  --md3-inverse-info: ${inverseTokens.info};\n`
-    css += `  --md3-inverse-warning: ${inverseTokens.warning};\n`
+  // RGB triplet constants + aliases
+  for (const name of RGB_TOKENS) {
+    css += `  --md3-${name}-rgb--light: ${hexToRgb(light[name])};\n`
+    css += `  --md3-${name}-rgb--dark: ${hexToRgb(dark[name])};\n`
+    css += `  --md3-${name}-rgb: var(--md3-${name}-rgb--light);\n`
   }
-  // Quasar brand mappings
-  css += `  --q-primary: ${tokens.primary};\n`
-  css += `  --q-secondary: ${tokens.secondary};\n`
-  css += `  --q-accent: ${tokens.tertiary};\n`
-  css += `  --q-negative: ${tokens.error};\n`
-  css += `  --q-positive: ${tokens.positive};\n`
-  css += `  --q-info: ${tokens.info};\n`
-  css += `  --q-warning: ${tokens.warning};\n`
-  css += `  --q-dark-page: ${tokens.background};\n`
-  css += `  --q-dark: ${tokens['surface-container']};\n`
+  // Inverse brand colors (cross-mode: light page shows dark values on inverse-surface)
+  for (const name of INVERSE_BRAND_TOKENS) {
+    css += `  --md3-inverse-${name}: var(--md3-${name}--dark);\n`
+  }
+  // Quasar brand mappings (alias-based — auto-switch via --md3-* aliases)
+  css += '  --q-primary: var(--md3-primary);\n'
+  css += '  --q-secondary: var(--md3-secondary);\n'
+  css += '  --q-accent: var(--md3-tertiary);\n'
+  css += '  --q-negative: var(--md3-error);\n'
+  css += '  --q-positive: var(--md3-positive);\n'
+  css += '  --q-info: var(--md3-info);\n'
+  css += '  --q-warning: var(--md3-warning);\n'
+  css += '  --q-dark-page: var(--md3-background);\n'
+  css += '  --q-dark: var(--md3-surface-container);\n'
   return css
 }
+
+/**
+ * Build the dark block: alias reassignments to --dark constants.
+ * var() in custom properties resolves at the declaring element, so aliases
+ * like --q-primary: var(--md3-primary) on :root bake in the light value.
+ * Must re-declare Quasar brands here.
+ */
+function buildModeBlock(tokens: Record<string, string>, mode: 'light' | 'dark'): string {
+  const opposite = mode === 'light' ? 'dark' : 'light'
+  let css = ''
+  for (const name of Object.keys(tokens)) {
+    css += `  --md3-${name}: var(--md3-${name}--${mode});\n`
+  }
+  for (const name of RGB_TOKENS) {
+    css += `  --md3-${name}-rgb: var(--md3-${name}-rgb--${mode});\n`
+  }
+  // Inverse brand colors use opposite mode
+  for (const name of INVERSE_BRAND_TOKENS) {
+    css += `  --md3-inverse-${name}: var(--md3-${name}--${opposite});\n`
+  }
+  // Quasar brand colors
+  css += `  --q-primary: var(--md3-primary--${mode});\n`
+  css += `  --q-secondary: var(--md3-secondary--${mode});\n`
+  css += `  --q-accent: var(--md3-tertiary--${mode});\n`
+  css += `  --q-negative: var(--md3-error--${mode});\n`
+  css += `  --q-positive: var(--md3-positive--${mode});\n`
+  css += `  --q-info: var(--md3-info--${mode});\n`
+  css += `  --q-warning: var(--md3-warning--${mode});\n`
+  css += `  --q-dark-page: var(--md3-background--${mode});\n`
+  css += `  --q-dark: var(--md3-surface-container--${mode});\n`
+  return css
+}
+
+
 
 /**
  * Apply a palette by injecting/replacing a <style> element.
@@ -196,21 +235,27 @@ export function applyPalette(tokens: PaletteTokens): void {
 
   let css = ''
 
-  // Light mode — matches base.scss `:root, body.body--light`
-  // Inverse tokens use dark mode values (for readability on inverse-surface)
+  // Light block: constants + aliases + RGB + Quasar brands
   css += ':root, body.body--light {\n'
-  css += buildTokenBlock(tokens.light, tokens.dark)
+  css += buildLightBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
-  // Dark mode (global + per-component) — merged selector, same dark tokens
+  // Dark block: alias reassignments only
   css += 'body.body--light .q-dark,\nbody.body--dark {\n'
-  css += buildTokenBlock(tokens.dark, tokens.light)
+  css += buildModeBlock(tokens.dark, 'dark')
   css += '}\n\n'
 
   // Per-component dark mode: fallback background/color for unthemed components
   css += 'body.body--light .q-dark {\n'
   css += '  background: var(--md3-surface);\n'
   css += '  color: var(--md3-on-surface);\n'
+  css += '}\n\n'
+
+  // Light override in dark page (.q-light)
+  css += 'body.body--dark .q-light {\n'
+  css += buildModeBlock(tokens.light, 'light')
+  css += '  background: var(--md3-surface--light);\n'
+  css += '  color: var(--md3-on-surface--light);\n'
   css += '}\n'
 
   styleEl.textContent = css
@@ -248,20 +293,27 @@ function buildScopedCss(className: string, tokens: PaletteTokens): string {
   const sel = `.${className}`
   let css = ''
 
-  // Light mode
+  // Light block: constants + aliases (var() resolves at declaring element, not inherited)
   css += `${sel} {\n`
-  css += buildTokenBlock(tokens.light, tokens.dark)
+  css += buildLightBlock(tokens.light, tokens.dark)
   css += '}\n\n'
 
-  // Dark mode (global + per-component) within scope
+  // Dark block: alias reassignments
   css += `body.body--light ${sel} .q-dark,\nbody.body--dark ${sel} {\n`
-  css += buildTokenBlock(tokens.dark, tokens.light)
+  css += buildModeBlock(tokens.dark, 'dark')
   css += '}\n\n'
 
-  // Per-component dark mode: fallback background/color for unthemed components
+  // Per-component dark mode fallback
   css += `body.body--light ${sel} .q-dark {\n`
   css += '  background: var(--md3-surface);\n'
   css += '  color: var(--md3-on-surface);\n'
+  css += '}\n\n'
+
+  // Light override in dark page (.q-light)
+  css += `body.body--dark ${sel} .q-light {\n`
+  css += buildModeBlock(tokens.light, 'light')
+  css += '  background: var(--md3-surface--light);\n'
+  css += '  color: var(--md3-on-surface--light);\n'
   css += '}\n'
 
   return css

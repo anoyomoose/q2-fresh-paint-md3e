@@ -15,7 +15,7 @@ The MD3E theme generates a full Material Design 3 color palette from a single `s
 
 All tokens are generated in both light and dark variants. The CSS custom properties (`var(--md3-*)`) switch automatically between light and dark based on Quasar's `body.body--light` / `body.body--dark` classes. Use `var(--md3-*)` in both CSS and Sass for runtime-correct values.
 
-Sass variables `$md3-<token>` and `$md3-dark-<token>` exist as compile-time hex values for the generated palette. These are used internally by `base.scss` to set the initial CSS custom property values. **Do not use `$md3-*` or `$md3-dark-*` directly in your component styles** — they are static values that don't respond to runtime palette changes or light/dark switching. Use `var(--md3-*)` instead.
+Sass variables `$md3-<token>--light` and `$md3-<token>--dark` exist as compile-time hex values for the generated palette. These are used internally by `base.scss` to set the initial CSS custom property values. **Do not use `$md3-*--light` or `$md3-*--dark` directly in your component styles** — they are static values that don't respond to runtime palette changes or light/dark switching. Use `var(--md3-*)` instead.
 
 ### Token List
 
@@ -108,6 +108,20 @@ All tokens are available as utility classes for direct use in templates:
 </div>
 ```
 
+`<token>--light` and `<token>--dark` variants are also available to use colors from that mode. Though you should
+generally avoid using them, they have their use cases.
+
+```vue
+<span class="bg-primary--light text-on-primary--light">This looks the same in dark mode as in light mode</span>
+```
+
+Additionally, a `q-light` class is available, analogous to Quasar's `q-dark` class. Note that many components
+have specific dark mode overrides that are incompatible with this, you should test each usage thoroughly.
+
+```vue
+<span class="q-light bg-primary text-on-primary">This looks the same in dark mode as in light mode</span>
+```
+
 ## Using Colors in CSS and Sass
 
 ### CSS Custom Properties (recommended)
@@ -138,11 +152,13 @@ RGB triplets are available for use with `rgba()`:
 
 Available RGB triplets: `--md3-primary-rgb`, `--md3-on-surface-rgb`, `--md3-on-primary-rgb`, `--md3-error-rgb`, `--md3-shadow-rgb`.
 
+`--light` and `--dark` variants are also available, for example `--md3-primary--light` always references the color in light mode.
+
 ### Sass Variables (compile-time only)
 
-The theme generates `$md3-<token>` (light) and `$md3-dark-<token>` (dark) Sass variables as static hex values. These exist primarily for the theme's internal use — `base.scss` uses them to set the initial CSS custom property values.
+The theme generates `$md3-<token>--light` and `$md3-<token>--dark` Sass variables as static hex values. These exist primarily for the theme's internal use — `base.scss` uses them to set the initial CSS custom property values.
 
-**Do not use `$md3-primary`, `$md3-dark-primary`, etc. directly in your component styles.** They are compile-time constants that:
+**Do not use `$md3-primary--light`, `$md3-primary--dark`, etc. directly in your component styles.** They are compile-time constants that:
 - Don't switch between light and dark mode
 - Don't respond to runtime palette changes via `applyPalette()`
 - Will silently show the wrong color in dark mode
@@ -165,7 +181,7 @@ The color system has three layers:
 
 ### 1. Palette Generation (build time)
 
-The `sourceColor` option is fed to `@material/material-color-utilities` which generates the full MD3 palette — all 30+ tokens in both light and dark variants. These are written as Sass variables (`$md3-primary`, `$md3-dark-primary`, etc.) to `.quasar/theme.md3e.scss` on every dev server start or build.
+The `sourceColor` option is fed to `@material/material-color-utilities` which generates the full MD3 palette — all 30+ tokens in both light and dark variants. These are written as Sass variables (`$md3-primary--light`, `$md3-primary--dark`, etc.) to `.quasar/theme.md3e.scss` on every dev server start or build.
 
 ### 2. Variable Mapping (Sass compilation)
 
@@ -185,23 +201,31 @@ When Quasar's Sass compiles, these `var()` strings are passed through to CSS as-
 
 ### 3. CSS Custom Properties (runtime)
 
-The theme's `base.scss` creates CSS custom properties for all tokens, with light values on `:root` / `body.body--light` and dark values on `body.body--dark`:
+The theme's `base.scss` creates CSS custom properties for all tokens. Each token gets three declarations: a `--light` constant, a `--dark` constant, and a switching alias that points to the active mode's constant:
 
 ```scss
 :root, body.body--light {
-  --md3-primary: #{$md3-primary};       // hex value from generated palette
-  --md3-on-primary: #{$md3-on-primary};
+  --md3-primary--light: #{$md3-primary--light};   // always available
+  --md3-primary--dark: #{$md3-primary--dark};     // always available
+  --md3-primary: var(--md3-primary--light);       // switches based on mode
   // ...all 30+ tokens
 }
 
+body.body--light .q-dark,
 body.body--dark {
-  --md3-primary: #{$md3-dark-primary};
-  --md3-on-primary: #{$md3-dark-on-primary};
+  --md3-primary: var(--md3-primary--dark);        // flip alias to dark
+  // ...
+}
+
+body.body--dark .q-light {
+  --md3-primary: var(--md3-primary--light);       // flip alias back to light
   // ...
 }
 ```
 
-This same file defines the `bg-*` and `text-*` utility classes that enable Quasar's `color` prop to work with MD3 tokens.
+The `--light` and `--dark` constants are always accessible regardless of the current mode, for explicit cross-mode access (e.g., `var(--md3-primary--dark)` in a light page). The unsuffixed alias (`var(--md3-primary)`) switches automatically.
+
+This same file defines the `bg-*` and `text-*` utility classes (including `--light` and `--dark` variants) that enable Quasar's `color` prop to work with MD3 tokens.
 
 ### Auto Text Color Pairing
 

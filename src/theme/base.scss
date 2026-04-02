@@ -18,119 +18,136 @@ body, body.body--dark {
   background: var(--md3-background);
 }
 
+// Helper mixin: emit --light constant, --dark constant, and switching alias
+@mixin md3-token($name, $light, $dark) {
+  --md3-#{$name}--light: #{$light};
+  --md3-#{$name}--dark: #{$dark};
+  --md3-#{$name}: var(--md3-#{$name}--light);
+}
+
+// Helper mixin: emit RGB triplet constants + alias
+@mixin md3-rgb-token($name, $light, $dark) {
+  --md3-#{$name}--light: #{hex-to-rgb-values($light)};
+  --md3-#{$name}--dark: #{hex-to-rgb-values($dark)};
+  --md3-#{$name}: var(--md3-#{$name}--light);
+}
+
 :root, body.body--light {
   // Primary
-  --md3-primary: #{$md3-primary};
-  --md3-primary-dim: #{$md3-primary-dim};
-  --md3-on-primary: #{$md3-on-primary};
-  --md3-primary-container: #{$md3-primary-container};
-  --md3-on-primary-container: #{$md3-on-primary-container};
-  --md3-primary-fixed: #{$md3-primary-fixed};
-  --md3-primary-fixed-dim: #{$md3-primary-fixed-dim};
-  --md3-on-primary-fixed: #{$md3-on-primary-fixed};
-  --md3-on-primary-fixed-variant: #{$md3-on-primary-fixed-variant};
+  @include md3-token(primary, $md3-primary--light, $md3-primary--dark);
+  @include md3-token(primary-dim, $md3-primary-dim--light, $md3-primary-dim--dark);
+  @include md3-token(on-primary, $md3-on-primary--light, $md3-on-primary--dark);
+  @include md3-token(primary-container, $md3-primary-container--light, $md3-primary-container--dark);
+  @include md3-token(on-primary-container, $md3-on-primary-container--light, $md3-on-primary-container--dark);
+  @include md3-token(primary-fixed, $md3-primary-fixed--light, $md3-primary-fixed--dark);
+  @include md3-token(primary-fixed-dim, $md3-primary-fixed-dim--light, $md3-primary-fixed-dim--dark);
+  @include md3-token(on-primary-fixed, $md3-on-primary-fixed--light, $md3-on-primary-fixed--dark);
+  @include md3-token(on-primary-fixed-variant, $md3-on-primary-fixed-variant--light, $md3-on-primary-fixed-variant--dark);
 
   // Secondary
-  --md3-secondary: #{$md3-secondary};
-  --md3-secondary-dim: #{$md3-secondary-dim};
-  --md3-on-secondary: #{$md3-on-secondary};
-  --md3-secondary-container: #{$md3-secondary-container};
-  --md3-on-secondary-container: #{$md3-on-secondary-container};
-  --md3-secondary-fixed: #{$md3-secondary-fixed};
-  --md3-secondary-fixed-dim: #{$md3-secondary-fixed-dim};
-  --md3-on-secondary-fixed: #{$md3-on-secondary-fixed};
-  --md3-on-secondary-fixed-variant: #{$md3-on-secondary-fixed-variant};
+  @include md3-token(secondary, $md3-secondary--light, $md3-secondary--dark);
+  @include md3-token(secondary-dim, $md3-secondary-dim--light, $md3-secondary-dim--dark);
+  @include md3-token(on-secondary, $md3-on-secondary--light, $md3-on-secondary--dark);
+  @include md3-token(secondary-container, $md3-secondary-container--light, $md3-secondary-container--dark);
+  @include md3-token(on-secondary-container, $md3-on-secondary-container--light, $md3-on-secondary-container--dark);
+  @include md3-token(secondary-fixed, $md3-secondary-fixed--light, $md3-secondary-fixed--dark);
+  @include md3-token(secondary-fixed-dim, $md3-secondary-fixed-dim--light, $md3-secondary-fixed-dim--dark);
+  @include md3-token(on-secondary-fixed, $md3-on-secondary-fixed--light, $md3-on-secondary-fixed--dark);
+  @include md3-token(on-secondary-fixed-variant, $md3-on-secondary-fixed-variant--light, $md3-on-secondary-fixed-variant--dark);
 
   // Tertiary
-  --md3-tertiary: #{$md3-tertiary};
-  --md3-tertiary-dim: #{$md3-tertiary-dim};
-  --md3-on-tertiary: #{$md3-on-tertiary};
-  --md3-tertiary-container: #{$md3-tertiary-container};
-  --md3-on-tertiary-container: #{$md3-on-tertiary-container};
-  --md3-tertiary-fixed: #{$md3-tertiary-fixed};
-  --md3-tertiary-fixed-dim: #{$md3-tertiary-fixed-dim};
-  --md3-on-tertiary-fixed: #{$md3-on-tertiary-fixed};
-  --md3-on-tertiary-fixed-variant: #{$md3-on-tertiary-fixed-variant};
+  @include md3-token(tertiary, $md3-tertiary--light, $md3-tertiary--dark);
+  @include md3-token(tertiary-dim, $md3-tertiary-dim--light, $md3-tertiary-dim--dark);
+  @include md3-token(on-tertiary, $md3-on-tertiary--light, $md3-on-tertiary--dark);
+  @include md3-token(tertiary-container, $md3-tertiary-container--light, $md3-tertiary-container--dark);
+  @include md3-token(on-tertiary-container, $md3-on-tertiary-container--light, $md3-on-tertiary-container--dark);
+  @include md3-token(tertiary-fixed, $md3-tertiary-fixed--light, $md3-tertiary-fixed--dark);
+  @include md3-token(tertiary-fixed-dim, $md3-tertiary-fixed-dim--light, $md3-tertiary-fixed-dim--dark);
+  @include md3-token(on-tertiary-fixed, $md3-on-tertiary-fixed--light, $md3-on-tertiary-fixed--dark);
+  @include md3-token(on-tertiary-fixed-variant, $md3-on-tertiary-fixed-variant--light, $md3-on-tertiary-fixed-variant--dark);
 
   // Error
-  --md3-error: #{$md3-error};
-  --md3-error-dim: #{$md3-error-dim};
-  --md3-on-error: #{$md3-on-error};
-  --md3-error-container: #{$md3-error-container};
-  --md3-on-error-container: #{$md3-on-error-container};
+  @include md3-token(error, $md3-error--light, $md3-error--dark);
+  @include md3-token(error-dim, $md3-error-dim--light, $md3-error-dim--dark);
+  @include md3-token(on-error, $md3-on-error--light, $md3-on-error--dark);
+  @include md3-token(error-container, $md3-error-container--light, $md3-error-container--dark);
+  @include md3-token(on-error-container, $md3-on-error-container--light, $md3-on-error-container--dark);
 
   // Positive (harmonized)
-  --md3-positive: #{$md3-positive};
-  --md3-on-positive: #{$md3-on-positive};
-  --md3-positive-container: #{$md3-positive-container};
-  --md3-on-positive-container: #{$md3-on-positive-container};
+  @include md3-token(positive, $md3-positive--light, $md3-positive--dark);
+  @include md3-token(on-positive, $md3-on-positive--light, $md3-on-positive--dark);
+  @include md3-token(positive-container, $md3-positive-container--light, $md3-positive-container--dark);
+  @include md3-token(on-positive-container, $md3-on-positive-container--light, $md3-on-positive-container--dark);
 
   // Info (harmonized)
-  --md3-info: #{$md3-info};
-  --md3-on-info: #{$md3-on-info};
-  --md3-info-container: #{$md3-info-container};
-  --md3-on-info-container: #{$md3-on-info-container};
+  @include md3-token(info, $md3-info--light, $md3-info--dark);
+  @include md3-token(on-info, $md3-on-info--light, $md3-on-info--dark);
+  @include md3-token(info-container, $md3-info-container--light, $md3-info-container--dark);
+  @include md3-token(on-info-container, $md3-on-info-container--light, $md3-on-info-container--dark);
 
   // Warning (harmonized)
-  --md3-warning: #{$md3-warning};
-  --md3-on-warning: #{$md3-on-warning};
-  --md3-warning-container: #{$md3-warning-container};
-  --md3-on-warning-container: #{$md3-on-warning-container};
+  @include md3-token(warning, $md3-warning--light, $md3-warning--dark);
+  @include md3-token(on-warning, $md3-on-warning--light, $md3-on-warning--dark);
+  @include md3-token(warning-container, $md3-warning-container--light, $md3-warning-container--dark);
+  @include md3-token(on-warning-container, $md3-on-warning-container--light, $md3-on-warning-container--dark);
 
   // Background
-  --md3-background: #{$md3-background};
-  --md3-on-background: #{$md3-on-background};
+  @include md3-token(background, $md3-background--light, $md3-background--dark);
+  @include md3-token(on-background, $md3-on-background--light, $md3-on-background--dark);
 
   // Surface
-  --md3-surface: #{$md3-surface};
-  --md3-on-surface: #{$md3-on-surface};
-  --md3-surface-variant: #{$md3-surface-variant};
-  --md3-on-surface-variant: #{$md3-on-surface-variant};
-  --md3-surface-tint: #{$md3-surface-tint};
+  @include md3-token(surface, $md3-surface--light, $md3-surface--dark);
+  @include md3-token(on-surface, $md3-on-surface--light, $md3-on-surface--dark);
+  @include md3-token(surface-variant, $md3-surface-variant--light, $md3-surface-variant--dark);
+  @include md3-token(on-surface-variant, $md3-on-surface-variant--light, $md3-on-surface-variant--dark);
+  @include md3-token(surface-tint, $md3-surface-tint--light, $md3-surface-tint--dark);
 
   // Outline
-  --md3-outline: #{$md3-outline};
-  --md3-outline-variant: #{$md3-outline-variant};
+  @include md3-token(outline, $md3-outline--light, $md3-outline--dark);
+  @include md3-token(outline-variant, $md3-outline-variant--light, $md3-outline-variant--dark);
 
   // Utility
-  --md3-shadow: #{$md3-shadow};
-  --md3-scrim: #{$md3-scrim};
+  @include md3-token(shadow, $md3-shadow--light, $md3-shadow--dark);
+  @include md3-token(scrim, $md3-scrim--light, $md3-scrim--dark);
 
-  // Inverse
-  --md3-inverse-surface: #{$md3-inverse-surface};
-  --md3-inverse-on-surface: #{$md3-inverse-on-surface};
-  --md3-inverse-primary: #{$md3-inverse-primary};
-  --md3-inverse-secondary: #{$md3-dark-secondary};
-  --md3-inverse-tertiary: #{$md3-dark-tertiary};
-  --md3-inverse-error: #{$md3-dark-error};
-  --md3-inverse-positive: #{$md3-dark-positive};
-  --md3-inverse-info: #{$md3-dark-info};
-  --md3-inverse-warning: #{$md3-dark-warning};
+  // Inverse (standard tokens from palette generator)
+  @include md3-token(inverse-surface, $md3-inverse-surface--light, $md3-inverse-surface--dark);
+  @include md3-token(inverse-on-surface, $md3-inverse-on-surface--light, $md3-inverse-on-surface--dark);
+  @include md3-token(inverse-primary, $md3-inverse-primary--light, $md3-inverse-primary--dark);
+  // Inverse brand colors (synthetic: cross-mode references)
+  --md3-inverse-secondary: var(--md3-secondary--dark);
+  --md3-inverse-tertiary: var(--md3-tertiary--dark);
+  --md3-inverse-error: var(--md3-error--dark);
+  --md3-inverse-positive: var(--md3-positive--dark);
+  --md3-inverse-info: var(--md3-info--dark);
+  --md3-inverse-warning: var(--md3-warning--dark);
 
   // Surface containers
-  --md3-surface-dim: #{$md3-surface-dim};
-  --md3-surface-bright: #{$md3-surface-bright};
-  --md3-surface-container-lowest: #{$md3-surface-container-lowest};
-  --md3-surface-container-low: #{$md3-surface-container-low};
-  --md3-surface-container: #{$md3-surface-container};
-  --md3-surface-container-high: #{$md3-surface-container-high};
-  --md3-surface-container-highest: #{$md3-surface-container-highest};
+  @include md3-token(surface-dim, $md3-surface-dim--light, $md3-surface-dim--dark);
+  @include md3-token(surface-bright, $md3-surface-bright--light, $md3-surface-bright--dark);
+  @include md3-token(surface-container-lowest, $md3-surface-container-lowest--light, $md3-surface-container-lowest--dark);
+  @include md3-token(surface-container-low, $md3-surface-container-low--light, $md3-surface-container-low--dark);
+  @include md3-token(surface-container, $md3-surface-container--light, $md3-surface-container--dark);
+  @include md3-token(surface-container-high, $md3-surface-container-high--light, $md3-surface-container-high--dark);
+  @include md3-token(surface-container-highest, $md3-surface-container-highest--light, $md3-surface-container-highest--dark);
 
   // RGB triplets for rgba() usage in state layers, disabled states, and shadows
-  --md3-primary-rgb: #{hex-to-rgb-values($md3-primary)};
-  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-on-surface)};
-  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-on-primary)};
-  --md3-error-rgb: #{hex-to-rgb-values($md3-error)};
-  --md3-shadow-rgb: #{hex-to-rgb-values($md3-shadow)};
+  @include md3-rgb-token(primary-rgb, $md3-primary--light, $md3-primary--dark);
+  @include md3-rgb-token(on-surface-rgb, $md3-on-surface--light, $md3-on-surface--dark);
+  @include md3-rgb-token(on-primary-rgb, $md3-on-primary--light, $md3-on-primary--dark);
+  @include md3-rgb-token(error-rgb, $md3-error--light, $md3-error--dark);
+  @include md3-rgb-token(shadow-rgb, $md3-shadow--light, $md3-shadow--dark);
 
-  // Quasar brand colors (light scheme)
-  --q-primary: #{$md3-primary};
-  --q-secondary: #{$md3-secondary};
-  --q-accent: #{$md3-tertiary};
-  --q-negative: #{$md3-error};
-  --q-positive: #{$md3-positive};
-  --q-info: #{$md3-info};
-  --q-warning: #{$md3-warning};
+  // Quasar brand colors (alias-based — auto-switch via --md3-* aliases)
+  --q-primary: var(--md3-primary);
+  --q-secondary: var(--md3-secondary);
+  --q-accent: var(--md3-tertiary);
+  --q-negative: var(--md3-error);
+  --q-positive: var(--md3-positive);
+  --q-info: var(--md3-info);
+  --q-warning: var(--md3-warning);
+  --q-dark-page: var(--md3-background);
+  --q-dark: var(--md3-surface-container);
 
   // Palette metadata (for runtime palette API)
   --md3-palette-source-color: #{$md3-palette-source-color};
@@ -152,116 +169,105 @@ body, body.body--dark {
 }
 
 // === Dark Mode ===
-// Global dark mode (body.body--dark) and per-component dark mode (.q-dark in a
-// light page) share the same dark token block.
+// Only alias reassignments — the --light/--dark constants are inherited from :root.
+// Quasar brand colors (--q-*) follow automatically via their var(--md3-*) aliases.
 //
 // Per-component: Quasar's base .q-dark rule (background: var(--q-dark); color: #fff)
 // is stripped via stripRules in index.ts. The body.body--light .q-dark selector below
-// replaces it with correct MD3E tokens. Themed components (QCard, QDrawer, etc.)
-// override the fallback background via their own rules which load later in source order.
+// replaces it with correct MD3E tokens.
 body.body--light .q-dark,
 body.body--dark {
-  // Primary
-  --md3-primary: #{$md3-dark-primary};
-  --md3-primary-dim: #{$md3-dark-primary-dim};
-  --md3-on-primary: #{$md3-dark-on-primary};
-  --md3-primary-container: #{$md3-dark-primary-container};
-  --md3-on-primary-container: #{$md3-dark-on-primary-container};
-  --md3-primary-fixed: #{$md3-dark-primary-fixed};
-  --md3-primary-fixed-dim: #{$md3-dark-primary-fixed-dim};
-  --md3-on-primary-fixed: #{$md3-dark-on-primary-fixed};
-  --md3-on-primary-fixed-variant: #{$md3-dark-on-primary-fixed-variant};
-  // Secondary
-  --md3-secondary: #{$md3-dark-secondary};
-  --md3-secondary-dim: #{$md3-dark-secondary-dim};
-  --md3-on-secondary: #{$md3-dark-on-secondary};
-  --md3-secondary-container: #{$md3-dark-secondary-container};
-  --md3-on-secondary-container: #{$md3-dark-on-secondary-container};
-  --md3-secondary-fixed: #{$md3-dark-secondary-fixed};
-  --md3-secondary-fixed-dim: #{$md3-dark-secondary-fixed-dim};
-  --md3-on-secondary-fixed: #{$md3-dark-on-secondary-fixed};
-  --md3-on-secondary-fixed-variant: #{$md3-dark-on-secondary-fixed-variant};
-  // Tertiary
-  --md3-tertiary: #{$md3-dark-tertiary};
-  --md3-tertiary-dim: #{$md3-dark-tertiary-dim};
-  --md3-on-tertiary: #{$md3-dark-on-tertiary};
-  --md3-tertiary-container: #{$md3-dark-tertiary-container};
-  --md3-on-tertiary-container: #{$md3-dark-on-tertiary-container};
-  --md3-tertiary-fixed: #{$md3-dark-tertiary-fixed};
-  --md3-tertiary-fixed-dim: #{$md3-dark-tertiary-fixed-dim};
-  --md3-on-tertiary-fixed: #{$md3-dark-on-tertiary-fixed};
-  --md3-on-tertiary-fixed-variant: #{$md3-dark-on-tertiary-fixed-variant};
-  // Error
-  --md3-error: #{$md3-dark-error};
-  --md3-error-dim: #{$md3-dark-error-dim};
-  --md3-on-error: #{$md3-dark-on-error};
-  --md3-error-container: #{$md3-dark-error-container};
-  --md3-on-error-container: #{$md3-dark-on-error-container};
-  // Positive (harmonized)
-  --md3-positive: #{$md3-dark-positive};
-  --md3-on-positive: #{$md3-dark-on-positive};
-  --md3-positive-container: #{$md3-dark-positive-container};
-  --md3-on-positive-container: #{$md3-dark-on-positive-container};
-  // Info (harmonized)
-  --md3-info: #{$md3-dark-info};
-  --md3-on-info: #{$md3-dark-on-info};
-  --md3-info-container: #{$md3-dark-info-container};
-  --md3-on-info-container: #{$md3-dark-on-info-container};
-  // Warning (harmonized)
-  --md3-warning: #{$md3-dark-warning};
-  --md3-on-warning: #{$md3-dark-on-warning};
-  --md3-warning-container: #{$md3-dark-warning-container};
-  --md3-on-warning-container: #{$md3-dark-on-warning-container};
-  // Background
-  --md3-background: #{$md3-dark-background};
-  --md3-on-background: #{$md3-dark-on-background};
-  // Surface
-  --md3-surface: #{$md3-dark-surface};
-  --md3-on-surface: #{$md3-dark-on-surface};
-  --md3-surface-variant: #{$md3-dark-surface-variant};
-  --md3-on-surface-variant: #{$md3-dark-on-surface-variant};
-  --md3-surface-tint: #{$md3-dark-surface-tint};
-  // Outline
-  --md3-outline: #{$md3-dark-outline};
-  --md3-outline-variant: #{$md3-dark-outline-variant};
-  // Utility
-  --md3-shadow: #{$md3-dark-shadow};
-  --md3-scrim: #{$md3-dark-scrim};
-  // Inverse
-  --md3-inverse-surface: #{$md3-dark-inverse-surface};
-  --md3-inverse-on-surface: #{$md3-dark-inverse-on-surface};
-  --md3-inverse-primary: #{$md3-dark-inverse-primary};
-  // Inverse brand colors (light-scheme values, for use on inverse-surface in dark context)
-  --md3-inverse-secondary: #{$md3-secondary};
-  --md3-inverse-tertiary: #{$md3-tertiary};
-  --md3-inverse-error: #{$md3-error};
-  --md3-inverse-positive: #{$md3-positive};
-  --md3-inverse-info: #{$md3-info};
-  --md3-inverse-warning: #{$md3-warning};
-  // Surface containers
-  --md3-surface-dim: #{$md3-dark-surface-dim};
-  --md3-surface-bright: #{$md3-dark-surface-bright};
-  --md3-surface-container-lowest: #{$md3-dark-surface-container-lowest};
-  --md3-surface-container-low: #{$md3-dark-surface-container-low};
-  --md3-surface-container: #{$md3-dark-surface-container};
-  --md3-surface-container-high: #{$md3-dark-surface-container-high};
-  --md3-surface-container-highest: #{$md3-dark-surface-container-highest};
-  // RGB triplets
-  --md3-primary-rgb: #{hex-to-rgb-values($md3-dark-primary)};
-  --md3-on-surface-rgb: #{hex-to-rgb-values($md3-dark-on-surface)};
-  --md3-on-primary-rgb: #{hex-to-rgb-values($md3-dark-on-primary)};
-  --md3-error-rgb: #{hex-to-rgb-values($md3-dark-error)};
-  --md3-shadow-rgb: #{hex-to-rgb-values($md3-dark-shadow)};
-  // Quasar brand
-  --q-primary: #{$md3-dark-primary};
-  --q-secondary: #{$md3-dark-secondary};
-  --q-accent: #{$md3-dark-tertiary};
-  --q-negative: #{$md3-dark-error};
-  --q-positive: #{$md3-dark-positive};
-  --q-info: #{$md3-dark-info};
-  --q-warning: #{$md3-dark-warning};
-  --q-dark-page: #{$md3-dark-background};
-  --q-dark: #{$md3-dark-surface-container};
+  // Flip all aliases to dark constants
+  --md3-primary: var(--md3-primary--dark);
+  --md3-primary-dim: var(--md3-primary-dim--dark);
+  --md3-on-primary: var(--md3-on-primary--dark);
+  --md3-primary-container: var(--md3-primary-container--dark);
+  --md3-on-primary-container: var(--md3-on-primary-container--dark);
+  --md3-primary-fixed: var(--md3-primary-fixed--dark);
+  --md3-primary-fixed-dim: var(--md3-primary-fixed-dim--dark);
+  --md3-on-primary-fixed: var(--md3-on-primary-fixed--dark);
+  --md3-on-primary-fixed-variant: var(--md3-on-primary-fixed-variant--dark);
+  --md3-secondary: var(--md3-secondary--dark);
+  --md3-secondary-dim: var(--md3-secondary-dim--dark);
+  --md3-on-secondary: var(--md3-on-secondary--dark);
+  --md3-secondary-container: var(--md3-secondary-container--dark);
+  --md3-on-secondary-container: var(--md3-on-secondary-container--dark);
+  --md3-secondary-fixed: var(--md3-secondary-fixed--dark);
+  --md3-secondary-fixed-dim: var(--md3-secondary-fixed-dim--dark);
+  --md3-on-secondary-fixed: var(--md3-on-secondary-fixed--dark);
+  --md3-on-secondary-fixed-variant: var(--md3-on-secondary-fixed-variant--dark);
+  --md3-tertiary: var(--md3-tertiary--dark);
+  --md3-tertiary-dim: var(--md3-tertiary-dim--dark);
+  --md3-on-tertiary: var(--md3-on-tertiary--dark);
+  --md3-tertiary-container: var(--md3-tertiary-container--dark);
+  --md3-on-tertiary-container: var(--md3-on-tertiary-container--dark);
+  --md3-tertiary-fixed: var(--md3-tertiary-fixed--dark);
+  --md3-tertiary-fixed-dim: var(--md3-tertiary-fixed-dim--dark);
+  --md3-on-tertiary-fixed: var(--md3-on-tertiary-fixed--dark);
+  --md3-on-tertiary-fixed-variant: var(--md3-on-tertiary-fixed-variant--dark);
+  --md3-error: var(--md3-error--dark);
+  --md3-error-dim: var(--md3-error-dim--dark);
+  --md3-on-error: var(--md3-on-error--dark);
+  --md3-error-container: var(--md3-error-container--dark);
+  --md3-on-error-container: var(--md3-on-error-container--dark);
+  --md3-positive: var(--md3-positive--dark);
+  --md3-on-positive: var(--md3-on-positive--dark);
+  --md3-positive-container: var(--md3-positive-container--dark);
+  --md3-on-positive-container: var(--md3-on-positive-container--dark);
+  --md3-info: var(--md3-info--dark);
+  --md3-on-info: var(--md3-on-info--dark);
+  --md3-info-container: var(--md3-info-container--dark);
+  --md3-on-info-container: var(--md3-on-info-container--dark);
+  --md3-warning: var(--md3-warning--dark);
+  --md3-on-warning: var(--md3-on-warning--dark);
+  --md3-warning-container: var(--md3-warning-container--dark);
+  --md3-on-warning-container: var(--md3-on-warning-container--dark);
+  --md3-background: var(--md3-background--dark);
+  --md3-on-background: var(--md3-on-background--dark);
+  --md3-surface: var(--md3-surface--dark);
+  --md3-on-surface: var(--md3-on-surface--dark);
+  --md3-surface-variant: var(--md3-surface-variant--dark);
+  --md3-on-surface-variant: var(--md3-on-surface-variant--dark);
+  --md3-surface-tint: var(--md3-surface-tint--dark);
+  --md3-outline: var(--md3-outline--dark);
+  --md3-outline-variant: var(--md3-outline-variant--dark);
+  --md3-shadow: var(--md3-shadow--dark);
+  --md3-scrim: var(--md3-scrim--dark);
+  --md3-inverse-surface: var(--md3-inverse-surface--dark);
+  --md3-inverse-on-surface: var(--md3-inverse-on-surface--dark);
+  --md3-inverse-primary: var(--md3-inverse-primary--dark);
+  // Inverse brand colors (light-scheme values for use on inverse-surface in dark)
+  --md3-inverse-secondary: var(--md3-secondary--light);
+  --md3-inverse-tertiary: var(--md3-tertiary--light);
+  --md3-inverse-error: var(--md3-error--light);
+  --md3-inverse-positive: var(--md3-positive--light);
+  --md3-inverse-info: var(--md3-info--light);
+  --md3-inverse-warning: var(--md3-warning--light);
+  --md3-surface-dim: var(--md3-surface-dim--dark);
+  --md3-surface-bright: var(--md3-surface-bright--dark);
+  --md3-surface-container-lowest: var(--md3-surface-container-lowest--dark);
+  --md3-surface-container-low: var(--md3-surface-container-low--dark);
+  --md3-surface-container: var(--md3-surface-container--dark);
+  --md3-surface-container-high: var(--md3-surface-container-high--dark);
+  --md3-surface-container-highest: var(--md3-surface-container-highest--dark);
+  // RGB alias flips
+  --md3-primary-rgb: var(--md3-primary-rgb--dark);
+  --md3-on-surface-rgb: var(--md3-on-surface-rgb--dark);
+  --md3-on-primary-rgb: var(--md3-on-primary-rgb--dark);
+  --md3-error-rgb: var(--md3-error-rgb--dark);
+  --md3-shadow-rgb: var(--md3-shadow-rgb--dark);
+  // Quasar brand colors — var() in custom properties resolves at the declaring
+  // element, so --q-primary: var(--md3-primary) on :root bakes in the light value.
+  // Must re-declare here for dark mode.
+  --q-primary: var(--md3-primary--dark);
+  --q-secondary: var(--md3-secondary--dark);
+  --q-accent: var(--md3-tertiary--dark);
+  --q-negative: var(--md3-error--dark);
+  --q-positive: var(--md3-positive--dark);
+  --q-info: var(--md3-info--dark);
+  --q-warning: var(--md3-warning--dark);
+  --q-dark-page: var(--md3-background--dark);
+  --q-dark: var(--md3-surface-container--dark);
 }
 
 // Per-component dark mode: fallback background/color for unthemed components.
@@ -269,6 +275,98 @@ body.body--dark {
 body.body--light .q-dark {
   background: var(--md3-surface);
   color: var(--md3-on-surface);
+}
+
+// === Light Mode Override (.q-light in dark page) ===
+// Flip all aliases back to --light constants. Mirror of the dark block above.
+body.body--dark .q-light {
+  --md3-primary: var(--md3-primary--light);
+  --md3-primary-dim: var(--md3-primary-dim--light);
+  --md3-on-primary: var(--md3-on-primary--light);
+  --md3-primary-container: var(--md3-primary-container--light);
+  --md3-on-primary-container: var(--md3-on-primary-container--light);
+  --md3-primary-fixed: var(--md3-primary-fixed--light);
+  --md3-primary-fixed-dim: var(--md3-primary-fixed-dim--light);
+  --md3-on-primary-fixed: var(--md3-on-primary-fixed--light);
+  --md3-on-primary-fixed-variant: var(--md3-on-primary-fixed-variant--light);
+  --md3-secondary: var(--md3-secondary--light);
+  --md3-secondary-dim: var(--md3-secondary-dim--light);
+  --md3-on-secondary: var(--md3-on-secondary--light);
+  --md3-secondary-container: var(--md3-secondary-container--light);
+  --md3-on-secondary-container: var(--md3-on-secondary-container--light);
+  --md3-secondary-fixed: var(--md3-secondary-fixed--light);
+  --md3-secondary-fixed-dim: var(--md3-secondary-fixed-dim--light);
+  --md3-on-secondary-fixed: var(--md3-on-secondary-fixed--light);
+  --md3-on-secondary-fixed-variant: var(--md3-on-secondary-fixed-variant--light);
+  --md3-tertiary: var(--md3-tertiary--light);
+  --md3-tertiary-dim: var(--md3-tertiary-dim--light);
+  --md3-on-tertiary: var(--md3-on-tertiary--light);
+  --md3-tertiary-container: var(--md3-tertiary-container--light);
+  --md3-on-tertiary-container: var(--md3-on-tertiary-container--light);
+  --md3-tertiary-fixed: var(--md3-tertiary-fixed--light);
+  --md3-tertiary-fixed-dim: var(--md3-tertiary-fixed-dim--light);
+  --md3-on-tertiary-fixed: var(--md3-on-tertiary-fixed--light);
+  --md3-on-tertiary-fixed-variant: var(--md3-on-tertiary-fixed-variant--light);
+  --md3-error: var(--md3-error--light);
+  --md3-error-dim: var(--md3-error-dim--light);
+  --md3-on-error: var(--md3-on-error--light);
+  --md3-error-container: var(--md3-error-container--light);
+  --md3-on-error-container: var(--md3-on-error-container--light);
+  --md3-positive: var(--md3-positive--light);
+  --md3-on-positive: var(--md3-on-positive--light);
+  --md3-positive-container: var(--md3-positive-container--light);
+  --md3-on-positive-container: var(--md3-on-positive-container--light);
+  --md3-info: var(--md3-info--light);
+  --md3-on-info: var(--md3-on-info--light);
+  --md3-info-container: var(--md3-info-container--light);
+  --md3-on-info-container: var(--md3-on-info-container--light);
+  --md3-warning: var(--md3-warning--light);
+  --md3-on-warning: var(--md3-on-warning--light);
+  --md3-warning-container: var(--md3-warning-container--light);
+  --md3-on-warning-container: var(--md3-on-warning-container--light);
+  --md3-background: var(--md3-background--light);
+  --md3-on-background: var(--md3-on-background--light);
+  --md3-surface: var(--md3-surface--light);
+  --md3-on-surface: var(--md3-on-surface--light);
+  --md3-surface-variant: var(--md3-surface-variant--light);
+  --md3-on-surface-variant: var(--md3-on-surface-variant--light);
+  --md3-surface-tint: var(--md3-surface-tint--light);
+  --md3-outline: var(--md3-outline--light);
+  --md3-outline-variant: var(--md3-outline-variant--light);
+  --md3-shadow: var(--md3-shadow--light);
+  --md3-scrim: var(--md3-scrim--light);
+  --md3-inverse-surface: var(--md3-inverse-surface--light);
+  --md3-inverse-on-surface: var(--md3-inverse-on-surface--light);
+  --md3-inverse-primary: var(--md3-inverse-primary--light);
+  --md3-inverse-secondary: var(--md3-secondary--dark);
+  --md3-inverse-tertiary: var(--md3-tertiary--dark);
+  --md3-inverse-error: var(--md3-error--dark);
+  --md3-inverse-positive: var(--md3-positive--dark);
+  --md3-inverse-info: var(--md3-info--dark);
+  --md3-inverse-warning: var(--md3-warning--dark);
+  --md3-surface-dim: var(--md3-surface-dim--light);
+  --md3-surface-bright: var(--md3-surface-bright--light);
+  --md3-surface-container-lowest: var(--md3-surface-container-lowest--light);
+  --md3-surface-container-low: var(--md3-surface-container-low--light);
+  --md3-surface-container: var(--md3-surface-container--light);
+  --md3-surface-container-high: var(--md3-surface-container-high--light);
+  --md3-surface-container-highest: var(--md3-surface-container-highest--light);
+  --md3-primary-rgb: var(--md3-primary-rgb--light);
+  --md3-on-surface-rgb: var(--md3-on-surface-rgb--light);
+  --md3-on-primary-rgb: var(--md3-on-primary-rgb--light);
+  --md3-error-rgb: var(--md3-error-rgb--light);
+  --md3-shadow-rgb: var(--md3-shadow-rgb--light);
+  --q-primary: var(--md3-primary--light);
+  --q-secondary: var(--md3-secondary--light);
+  --q-accent: var(--md3-tertiary--light);
+  --q-negative: var(--md3-error--light);
+  --q-positive: var(--md3-positive--light);
+  --q-info: var(--md3-info--light);
+  --q-warning: var(--md3-warning--light);
+  --q-dark-page: var(--md3-background--light);
+  --q-dark: var(--md3-surface-container--light);
+  background: var(--md3-surface--light);
+  color: var(--md3-on-surface--light);
 }
 
 // === Brand Color Text Fix ===
@@ -782,3 +880,265 @@ body.desktop {
 .text-inverse-warning { color: var(--md3-inverse-warning) !important; }
 .text-shadow { color: var(--md3-shadow) !important; }
 .text-scrim { color: var(--md3-scrim) !important; }
+
+// === Explicit Light/Dark Mode Variant Classes ===
+// Always use the specified mode's value regardless of current dark/light state.
+// Both bg- and text- variants provided for all tokens.
+// Brand colors (primary, secondary, positive, info, warning) are included here
+// even though their default bg-/text- classes are handled by Quasar's --q-* system.
+
+// --- bg- --light variants ---
+.bg-primary--light { background-color: var(--md3-primary--light) !important; color: var(--md3-on-primary--light) !important; }
+.bg-on-primary--light { background-color: var(--md3-on-primary--light) !important; color: var(--md3-primary--light) !important; }
+.bg-primary-container--light { background-color: var(--md3-primary-container--light) !important; color: var(--md3-on-primary-container--light) !important; }
+.bg-on-primary-container--light { background-color: var(--md3-on-primary-container--light) !important; color: var(--md3-primary-container--light) !important; }
+.bg-primary-fixed--light { background-color: var(--md3-primary-fixed--light) !important; color: var(--md3-on-primary-fixed--light) !important; }
+.bg-primary-fixed-dim--light { background-color: var(--md3-primary-fixed-dim--light) !important; color: var(--md3-on-primary-fixed--light) !important; }
+.bg-on-primary-fixed--light { background-color: var(--md3-on-primary-fixed--light) !important; color: var(--md3-primary-fixed--light) !important; }
+.bg-on-primary-fixed-variant--light { background-color: var(--md3-on-primary-fixed-variant--light) !important; color: var(--md3-primary-fixed--light) !important; }
+.bg-secondary--light { background-color: var(--md3-secondary--light) !important; color: var(--md3-on-secondary--light) !important; }
+.bg-on-secondary--light { background-color: var(--md3-on-secondary--light) !important; color: var(--md3-secondary--light) !important; }
+.bg-secondary-container--light { background-color: var(--md3-secondary-container--light) !important; color: var(--md3-on-secondary-container--light) !important; }
+.bg-on-secondary-container--light { background-color: var(--md3-on-secondary-container--light) !important; color: var(--md3-secondary-container--light) !important; }
+.bg-secondary-fixed--light { background-color: var(--md3-secondary-fixed--light) !important; color: var(--md3-on-secondary-fixed--light) !important; }
+.bg-secondary-fixed-dim--light { background-color: var(--md3-secondary-fixed-dim--light) !important; color: var(--md3-on-secondary-fixed--light) !important; }
+.bg-on-secondary-fixed--light { background-color: var(--md3-on-secondary-fixed--light) !important; color: var(--md3-secondary-fixed--light) !important; }
+.bg-on-secondary-fixed-variant--light { background-color: var(--md3-on-secondary-fixed-variant--light) !important; color: var(--md3-secondary-fixed--light) !important; }
+.bg-tertiary--light { background-color: var(--md3-tertiary--light) !important; color: var(--md3-on-tertiary--light) !important; }
+.bg-on-tertiary--light { background-color: var(--md3-on-tertiary--light) !important; color: var(--md3-tertiary--light) !important; }
+.bg-tertiary-container--light { background-color: var(--md3-tertiary-container--light) !important; color: var(--md3-on-tertiary-container--light) !important; }
+.bg-on-tertiary-container--light { background-color: var(--md3-on-tertiary-container--light) !important; color: var(--md3-tertiary-container--light) !important; }
+.bg-tertiary-fixed--light { background-color: var(--md3-tertiary-fixed--light) !important; color: var(--md3-on-tertiary-fixed--light) !important; }
+.bg-tertiary-fixed-dim--light { background-color: var(--md3-tertiary-fixed-dim--light) !important; color: var(--md3-on-tertiary-fixed--light) !important; }
+.bg-on-tertiary-fixed--light { background-color: var(--md3-on-tertiary-fixed--light) !important; color: var(--md3-tertiary-fixed--light) !important; }
+.bg-on-tertiary-fixed-variant--light { background-color: var(--md3-on-tertiary-fixed-variant--light) !important; color: var(--md3-tertiary-fixed--light) !important; }
+.bg-error--light { background-color: var(--md3-error--light) !important; color: var(--md3-on-error--light) !important; }
+.bg-on-error--light { background-color: var(--md3-on-error--light) !important; color: var(--md3-error--light) !important; }
+.bg-error-container--light { background-color: var(--md3-error-container--light) !important; color: var(--md3-on-error-container--light) !important; }
+.bg-on-error-container--light { background-color: var(--md3-on-error-container--light) !important; color: var(--md3-error-container--light) !important; }
+.bg-positive--light { background-color: var(--md3-positive--light) !important; color: var(--md3-on-positive--light) !important; }
+.bg-on-positive--light { background-color: var(--md3-on-positive--light) !important; color: var(--md3-positive--light) !important; }
+.bg-positive-container--light { background-color: var(--md3-positive-container--light) !important; color: var(--md3-on-positive-container--light) !important; }
+.bg-on-positive-container--light { background-color: var(--md3-on-positive-container--light) !important; color: var(--md3-positive-container--light) !important; }
+.bg-info--light { background-color: var(--md3-info--light) !important; color: var(--md3-on-info--light) !important; }
+.bg-on-info--light { background-color: var(--md3-on-info--light) !important; color: var(--md3-info--light) !important; }
+.bg-info-container--light { background-color: var(--md3-info-container--light) !important; color: var(--md3-on-info-container--light) !important; }
+.bg-on-info-container--light { background-color: var(--md3-on-info-container--light) !important; color: var(--md3-info-container--light) !important; }
+.bg-warning--light { background-color: var(--md3-warning--light) !important; color: var(--md3-on-warning--light) !important; }
+.bg-on-warning--light { background-color: var(--md3-on-warning--light) !important; color: var(--md3-warning--light) !important; }
+.bg-warning-container--light { background-color: var(--md3-warning-container--light) !important; color: var(--md3-on-warning-container--light) !important; }
+.bg-on-warning-container--light { background-color: var(--md3-on-warning-container--light) !important; color: var(--md3-warning-container--light) !important; }
+.bg-background--light { background-color: var(--md3-background--light) !important; color: var(--md3-on-background--light) !important; }
+.bg-on-background--light { background-color: var(--md3-on-background--light) !important; color: var(--md3-background--light) !important; }
+.bg-surface--light { background-color: var(--md3-surface--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-on-surface--light { background-color: var(--md3-on-surface--light) !important; color: var(--md3-surface--light) !important; }
+.bg-surface-variant--light { background-color: var(--md3-surface-variant--light) !important; color: var(--md3-on-surface-variant--light) !important; }
+.bg-on-surface-variant--light { background-color: var(--md3-on-surface-variant--light) !important; color: var(--md3-surface-variant--light) !important; }
+.bg-surface-dim--light { background-color: var(--md3-surface-dim--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-bright--light { background-color: var(--md3-surface-bright--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-container-lowest--light { background-color: var(--md3-surface-container-lowest--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-container-low--light { background-color: var(--md3-surface-container-low--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-container--light { background-color: var(--md3-surface-container--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-container-high--light { background-color: var(--md3-surface-container-high--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-container-highest--light { background-color: var(--md3-surface-container-highest--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-surface-tint--light { background-color: var(--md3-surface-tint--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-outline--light { background-color: var(--md3-outline--light) !important; color: var(--md3-surface--light) !important; }
+.bg-outline-variant--light { background-color: var(--md3-outline-variant--light) !important; color: var(--md3-on-surface--light) !important; }
+.bg-inverse-surface--light { background-color: var(--md3-inverse-surface--light) !important; color: var(--md3-inverse-on-surface--light) !important; }
+.bg-shadow--light { background-color: var(--md3-shadow--light) !important; }
+.bg-scrim--light { background-color: var(--md3-scrim--light) !important; }
+
+// --- bg- --dark variants ---
+.bg-primary--dark { background-color: var(--md3-primary--dark) !important; color: var(--md3-on-primary--dark) !important; }
+.bg-on-primary--dark { background-color: var(--md3-on-primary--dark) !important; color: var(--md3-primary--dark) !important; }
+.bg-primary-container--dark { background-color: var(--md3-primary-container--dark) !important; color: var(--md3-on-primary-container--dark) !important; }
+.bg-on-primary-container--dark { background-color: var(--md3-on-primary-container--dark) !important; color: var(--md3-primary-container--dark) !important; }
+.bg-primary-fixed--dark { background-color: var(--md3-primary-fixed--dark) !important; color: var(--md3-on-primary-fixed--dark) !important; }
+.bg-primary-fixed-dim--dark { background-color: var(--md3-primary-fixed-dim--dark) !important; color: var(--md3-on-primary-fixed--dark) !important; }
+.bg-on-primary-fixed--dark { background-color: var(--md3-on-primary-fixed--dark) !important; color: var(--md3-primary-fixed--dark) !important; }
+.bg-on-primary-fixed-variant--dark { background-color: var(--md3-on-primary-fixed-variant--dark) !important; color: var(--md3-primary-fixed--dark) !important; }
+.bg-secondary--dark { background-color: var(--md3-secondary--dark) !important; color: var(--md3-on-secondary--dark) !important; }
+.bg-on-secondary--dark { background-color: var(--md3-on-secondary--dark) !important; color: var(--md3-secondary--dark) !important; }
+.bg-secondary-container--dark { background-color: var(--md3-secondary-container--dark) !important; color: var(--md3-on-secondary-container--dark) !important; }
+.bg-on-secondary-container--dark { background-color: var(--md3-on-secondary-container--dark) !important; color: var(--md3-secondary-container--dark) !important; }
+.bg-secondary-fixed--dark { background-color: var(--md3-secondary-fixed--dark) !important; color: var(--md3-on-secondary-fixed--dark) !important; }
+.bg-secondary-fixed-dim--dark { background-color: var(--md3-secondary-fixed-dim--dark) !important; color: var(--md3-on-secondary-fixed--dark) !important; }
+.bg-on-secondary-fixed--dark { background-color: var(--md3-on-secondary-fixed--dark) !important; color: var(--md3-secondary-fixed--dark) !important; }
+.bg-on-secondary-fixed-variant--dark { background-color: var(--md3-on-secondary-fixed-variant--dark) !important; color: var(--md3-secondary-fixed--dark) !important; }
+.bg-tertiary--dark { background-color: var(--md3-tertiary--dark) !important; color: var(--md3-on-tertiary--dark) !important; }
+.bg-on-tertiary--dark { background-color: var(--md3-on-tertiary--dark) !important; color: var(--md3-tertiary--dark) !important; }
+.bg-tertiary-container--dark { background-color: var(--md3-tertiary-container--dark) !important; color: var(--md3-on-tertiary-container--dark) !important; }
+.bg-on-tertiary-container--dark { background-color: var(--md3-on-tertiary-container--dark) !important; color: var(--md3-tertiary-container--dark) !important; }
+.bg-tertiary-fixed--dark { background-color: var(--md3-tertiary-fixed--dark) !important; color: var(--md3-on-tertiary-fixed--dark) !important; }
+.bg-tertiary-fixed-dim--dark { background-color: var(--md3-tertiary-fixed-dim--dark) !important; color: var(--md3-on-tertiary-fixed--dark) !important; }
+.bg-on-tertiary-fixed--dark { background-color: var(--md3-on-tertiary-fixed--dark) !important; color: var(--md3-tertiary-fixed--dark) !important; }
+.bg-on-tertiary-fixed-variant--dark { background-color: var(--md3-on-tertiary-fixed-variant--dark) !important; color: var(--md3-tertiary-fixed--dark) !important; }
+.bg-error--dark { background-color: var(--md3-error--dark) !important; color: var(--md3-on-error--dark) !important; }
+.bg-on-error--dark { background-color: var(--md3-on-error--dark) !important; color: var(--md3-error--dark) !important; }
+.bg-error-container--dark { background-color: var(--md3-error-container--dark) !important; color: var(--md3-on-error-container--dark) !important; }
+.bg-on-error-container--dark { background-color: var(--md3-on-error-container--dark) !important; color: var(--md3-error-container--dark) !important; }
+.bg-positive--dark { background-color: var(--md3-positive--dark) !important; color: var(--md3-on-positive--dark) !important; }
+.bg-on-positive--dark { background-color: var(--md3-on-positive--dark) !important; color: var(--md3-positive--dark) !important; }
+.bg-positive-container--dark { background-color: var(--md3-positive-container--dark) !important; color: var(--md3-on-positive-container--dark) !important; }
+.bg-on-positive-container--dark { background-color: var(--md3-on-positive-container--dark) !important; color: var(--md3-positive-container--dark) !important; }
+.bg-info--dark { background-color: var(--md3-info--dark) !important; color: var(--md3-on-info--dark) !important; }
+.bg-on-info--dark { background-color: var(--md3-on-info--dark) !important; color: var(--md3-info--dark) !important; }
+.bg-info-container--dark { background-color: var(--md3-info-container--dark) !important; color: var(--md3-on-info-container--dark) !important; }
+.bg-on-info-container--dark { background-color: var(--md3-on-info-container--dark) !important; color: var(--md3-info-container--dark) !important; }
+.bg-warning--dark { background-color: var(--md3-warning--dark) !important; color: var(--md3-on-warning--dark) !important; }
+.bg-on-warning--dark { background-color: var(--md3-on-warning--dark) !important; color: var(--md3-warning--dark) !important; }
+.bg-warning-container--dark { background-color: var(--md3-warning-container--dark) !important; color: var(--md3-on-warning-container--dark) !important; }
+.bg-on-warning-container--dark { background-color: var(--md3-on-warning-container--dark) !important; color: var(--md3-warning-container--dark) !important; }
+.bg-background--dark { background-color: var(--md3-background--dark) !important; color: var(--md3-on-background--dark) !important; }
+.bg-on-background--dark { background-color: var(--md3-on-background--dark) !important; color: var(--md3-background--dark) !important; }
+.bg-surface--dark { background-color: var(--md3-surface--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-on-surface--dark { background-color: var(--md3-on-surface--dark) !important; color: var(--md3-surface--dark) !important; }
+.bg-surface-variant--dark { background-color: var(--md3-surface-variant--dark) !important; color: var(--md3-on-surface-variant--dark) !important; }
+.bg-on-surface-variant--dark { background-color: var(--md3-on-surface-variant--dark) !important; color: var(--md3-surface-variant--dark) !important; }
+.bg-surface-dim--dark { background-color: var(--md3-surface-dim--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-bright--dark { background-color: var(--md3-surface-bright--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-container-lowest--dark { background-color: var(--md3-surface-container-lowest--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-container-low--dark { background-color: var(--md3-surface-container-low--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-container--dark { background-color: var(--md3-surface-container--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-container-high--dark { background-color: var(--md3-surface-container-high--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-container-highest--dark { background-color: var(--md3-surface-container-highest--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-surface-tint--dark { background-color: var(--md3-surface-tint--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-outline--dark { background-color: var(--md3-outline--dark) !important; color: var(--md3-surface--dark) !important; }
+.bg-outline-variant--dark { background-color: var(--md3-outline-variant--dark) !important; color: var(--md3-on-surface--dark) !important; }
+.bg-inverse-surface--dark { background-color: var(--md3-inverse-surface--dark) !important; color: var(--md3-inverse-on-surface--dark) !important; }
+.bg-shadow--dark { background-color: var(--md3-shadow--dark) !important; }
+.bg-scrim--dark { background-color: var(--md3-scrim--dark) !important; }
+
+// --- text- --light variants ---
+.text-primary--light { color: var(--md3-primary--light) !important; }
+.text-primary-dim--light { color: var(--md3-primary-dim--light) !important; }
+.text-on-primary--light { color: var(--md3-on-primary--light) !important; }
+.text-primary-container--light { color: var(--md3-primary-container--light) !important; }
+.text-on-primary-container--light { color: var(--md3-on-primary-container--light) !important; }
+.text-primary-fixed--light { color: var(--md3-primary-fixed--light) !important; }
+.text-primary-fixed-dim--light { color: var(--md3-primary-fixed-dim--light) !important; }
+.text-on-primary-fixed--light { color: var(--md3-on-primary-fixed--light) !important; }
+.text-on-primary-fixed-variant--light { color: var(--md3-on-primary-fixed-variant--light) !important; }
+.text-secondary--light { color: var(--md3-secondary--light) !important; }
+.text-secondary-dim--light { color: var(--md3-secondary-dim--light) !important; }
+.text-on-secondary--light { color: var(--md3-on-secondary--light) !important; }
+.text-secondary-container--light { color: var(--md3-secondary-container--light) !important; }
+.text-on-secondary-container--light { color: var(--md3-on-secondary-container--light) !important; }
+.text-secondary-fixed--light { color: var(--md3-secondary-fixed--light) !important; }
+.text-secondary-fixed-dim--light { color: var(--md3-secondary-fixed-dim--light) !important; }
+.text-on-secondary-fixed--light { color: var(--md3-on-secondary-fixed--light) !important; }
+.text-on-secondary-fixed-variant--light { color: var(--md3-on-secondary-fixed-variant--light) !important; }
+.text-tertiary--light { color: var(--md3-tertiary--light) !important; }
+.text-tertiary-dim--light { color: var(--md3-tertiary-dim--light) !important; }
+.text-on-tertiary--light { color: var(--md3-on-tertiary--light) !important; }
+.text-tertiary-container--light { color: var(--md3-tertiary-container--light) !important; }
+.text-on-tertiary-container--light { color: var(--md3-on-tertiary-container--light) !important; }
+.text-tertiary-fixed--light { color: var(--md3-tertiary-fixed--light) !important; }
+.text-tertiary-fixed-dim--light { color: var(--md3-tertiary-fixed-dim--light) !important; }
+.text-on-tertiary-fixed--light { color: var(--md3-on-tertiary-fixed--light) !important; }
+.text-on-tertiary-fixed-variant--light { color: var(--md3-on-tertiary-fixed-variant--light) !important; }
+.text-error--light { color: var(--md3-error--light) !important; }
+.text-error-dim--light { color: var(--md3-error-dim--light) !important; }
+.text-on-error--light { color: var(--md3-on-error--light) !important; }
+.text-error-container--light { color: var(--md3-error-container--light) !important; }
+.text-on-error-container--light { color: var(--md3-on-error-container--light) !important; }
+.text-positive--light { color: var(--md3-positive--light) !important; }
+.text-on-positive--light { color: var(--md3-on-positive--light) !important; }
+.text-positive-container--light { color: var(--md3-positive-container--light) !important; }
+.text-on-positive-container--light { color: var(--md3-on-positive-container--light) !important; }
+.text-info--light { color: var(--md3-info--light) !important; }
+.text-on-info--light { color: var(--md3-on-info--light) !important; }
+.text-info-container--light { color: var(--md3-info-container--light) !important; }
+.text-on-info-container--light { color: var(--md3-on-info-container--light) !important; }
+.text-warning--light { color: var(--md3-warning--light) !important; }
+.text-on-warning--light { color: var(--md3-on-warning--light) !important; }
+.text-warning-container--light { color: var(--md3-warning-container--light) !important; }
+.text-on-warning-container--light { color: var(--md3-on-warning-container--light) !important; }
+.text-background--light { color: var(--md3-background--light) !important; }
+.text-on-background--light { color: var(--md3-on-background--light) !important; }
+.text-surface--light { color: var(--md3-surface--light) !important; }
+.text-on-surface--light { color: var(--md3-on-surface--light) !important; }
+.text-surface-variant--light { color: var(--md3-surface-variant--light) !important; }
+.text-on-surface-variant--light { color: var(--md3-on-surface-variant--light) !important; }
+.text-surface-dim--light { color: var(--md3-surface-dim--light) !important; }
+.text-surface-bright--light { color: var(--md3-surface-bright--light) !important; }
+.text-surface-container-lowest--light { color: var(--md3-surface-container-lowest--light) !important; }
+.text-surface-container-low--light { color: var(--md3-surface-container-low--light) !important; }
+.text-surface-container--light { color: var(--md3-surface-container--light) !important; }
+.text-surface-container-high--light { color: var(--md3-surface-container-high--light) !important; }
+.text-surface-container-highest--light { color: var(--md3-surface-container-highest--light) !important; }
+.text-surface-tint--light { color: var(--md3-surface-tint--light) !important; }
+.text-outline--light { color: var(--md3-outline--light) !important; }
+.text-outline-variant--light { color: var(--md3-outline-variant--light) !important; }
+.text-inverse-surface--light { color: var(--md3-inverse-surface--light) !important; }
+.text-inverse-on-surface--light { color: var(--md3-inverse-on-surface--light) !important; }
+.text-inverse-primary--light { color: var(--md3-inverse-primary--light) !important; }
+.text-shadow--light { color: var(--md3-shadow--light) !important; }
+.text-scrim--light { color: var(--md3-scrim--light) !important; }
+
+// --- text- --dark variants ---
+.text-primary--dark { color: var(--md3-primary--dark) !important; }
+.text-primary-dim--dark { color: var(--md3-primary-dim--dark) !important; }
+.text-on-primary--dark { color: var(--md3-on-primary--dark) !important; }
+.text-primary-container--dark { color: var(--md3-primary-container--dark) !important; }
+.text-on-primary-container--dark { color: var(--md3-on-primary-container--dark) !important; }
+.text-primary-fixed--dark { color: var(--md3-primary-fixed--dark) !important; }
+.text-primary-fixed-dim--dark { color: var(--md3-primary-fixed-dim--dark) !important; }
+.text-on-primary-fixed--dark { color: var(--md3-on-primary-fixed--dark) !important; }
+.text-on-primary-fixed-variant--dark { color: var(--md3-on-primary-fixed-variant--dark) !important; }
+.text-secondary--dark { color: var(--md3-secondary--dark) !important; }
+.text-secondary-dim--dark { color: var(--md3-secondary-dim--dark) !important; }
+.text-on-secondary--dark { color: var(--md3-on-secondary--dark) !important; }
+.text-secondary-container--dark { color: var(--md3-secondary-container--dark) !important; }
+.text-on-secondary-container--dark { color: var(--md3-on-secondary-container--dark) !important; }
+.text-secondary-fixed--dark { color: var(--md3-secondary-fixed--dark) !important; }
+.text-secondary-fixed-dim--dark { color: var(--md3-secondary-fixed-dim--dark) !important; }
+.text-on-secondary-fixed--dark { color: var(--md3-on-secondary-fixed--dark) !important; }
+.text-on-secondary-fixed-variant--dark { color: var(--md3-on-secondary-fixed-variant--dark) !important; }
+.text-tertiary--dark { color: var(--md3-tertiary--dark) !important; }
+.text-tertiary-dim--dark { color: var(--md3-tertiary-dim--dark) !important; }
+.text-on-tertiary--dark { color: var(--md3-on-tertiary--dark) !important; }
+.text-tertiary-container--dark { color: var(--md3-tertiary-container--dark) !important; }
+.text-on-tertiary-container--dark { color: var(--md3-on-tertiary-container--dark) !important; }
+.text-tertiary-fixed--dark { color: var(--md3-tertiary-fixed--dark) !important; }
+.text-tertiary-fixed-dim--dark { color: var(--md3-tertiary-fixed-dim--dark) !important; }
+.text-on-tertiary-fixed--dark { color: var(--md3-on-tertiary-fixed--dark) !important; }
+.text-on-tertiary-fixed-variant--dark { color: var(--md3-on-tertiary-fixed-variant--dark) !important; }
+.text-error--dark { color: var(--md3-error--dark) !important; }
+.text-error-dim--dark { color: var(--md3-error-dim--dark) !important; }
+.text-on-error--dark { color: var(--md3-on-error--dark) !important; }
+.text-error-container--dark { color: var(--md3-error-container--dark) !important; }
+.text-on-error-container--dark { color: var(--md3-on-error-container--dark) !important; }
+.text-positive--dark { color: var(--md3-positive--dark) !important; }
+.text-on-positive--dark { color: var(--md3-on-positive--dark) !important; }
+.text-positive-container--dark { color: var(--md3-positive-container--dark) !important; }
+.text-on-positive-container--dark { color: var(--md3-on-positive-container--dark) !important; }
+.text-info--dark { color: var(--md3-info--dark) !important; }
+.text-on-info--dark { color: var(--md3-on-info--dark) !important; }
+.text-info-container--dark { color: var(--md3-info-container--dark) !important; }
+.text-on-info-container--dark { color: var(--md3-on-info-container--dark) !important; }
+.text-warning--dark { color: var(--md3-warning--dark) !important; }
+.text-on-warning--dark { color: var(--md3-on-warning--dark) !important; }
+.text-warning-container--dark { color: var(--md3-warning-container--dark) !important; }
+.text-on-warning-container--dark { color: var(--md3-on-warning-container--dark) !important; }
+.text-background--dark { color: var(--md3-background--dark) !important; }
+.text-on-background--dark { color: var(--md3-on-background--dark) !important; }
+.text-surface--dark { color: var(--md3-surface--dark) !important; }
+.text-on-surface--dark { color: var(--md3-on-surface--dark) !important; }
+.text-surface-variant--dark { color: var(--md3-surface-variant--dark) !important; }
+.text-on-surface-variant--dark { color: var(--md3-on-surface-variant--dark) !important; }
+.text-surface-dim--dark { color: var(--md3-surface-dim--dark) !important; }
+.text-surface-bright--dark { color: var(--md3-surface-bright--dark) !important; }
+.text-surface-container-lowest--dark { color: var(--md3-surface-container-lowest--dark) !important; }
+.text-surface-container-low--dark { color: var(--md3-surface-container-low--dark) !important; }
+.text-surface-container--dark { color: var(--md3-surface-container--dark) !important; }
+.text-surface-container-high--dark { color: var(--md3-surface-container-high--dark) !important; }
+.text-surface-container-highest--dark { color: var(--md3-surface-container-highest--dark) !important; }
+.text-surface-tint--dark { color: var(--md3-surface-tint--dark) !important; }
+.text-outline--dark { color: var(--md3-outline--dark) !important; }
+.text-outline-variant--dark { color: var(--md3-outline-variant--dark) !important; }
+.text-inverse-surface--dark { color: var(--md3-inverse-surface--dark) !important; }
+.text-inverse-on-surface--dark { color: var(--md3-inverse-on-surface--dark) !important; }
+.text-inverse-primary--dark { color: var(--md3-inverse-primary--dark) !important; }
+.text-shadow--dark { color: var(--md3-shadow--dark) !important; }
+.text-scrim--dark { color: var(--md3-scrim--dark) !important; }

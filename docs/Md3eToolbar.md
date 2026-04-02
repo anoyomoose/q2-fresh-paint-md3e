@@ -8,7 +8,7 @@ All styling is handled by CSS classes (`.q-toolbar--floating`, `.q-toolbar--floa
 
 MD3E toolbars differ from Quasar's MD2 defaults in several ways:
 
-- **Background**: toolbars use `surface-container` (not `primary`). Remove `bg-primary`, `text-white`, and similar color classes from your toolbars, headers, and footers. The theme manages colors automatically.
+- **Background**: toolbars use `surface-container` (not `primary`). Remove `bg-primary`, `text-white`, and similar color classes from your toolbars, headers, and footers. The theme manages colors automatically. If you want to keep using your primary, use `class="bg-primary--light text-on-primary--light"` on headers, footers, and toolbars explicitly.
 - **Height**: toolbars are 64dp (Quasar default is 50dp). Remove `dense` from icon buttons and `stretch` from buttons — these no longer look correct at the larger size.
 - **Square**: add `square` to all toolbar buttons
 - **Button colors**: `color` should usually not be used on buttons inside toolbars. The theme handles button colors based on variant (`text`, `tonal`, filled). Remove the `color` from the buttons, are restrict to `primary`, `secondary`, `tertiary`, and `error`.

@@ -353,12 +353,12 @@ export function generatePalette(
   if (options?.oklab) {
     const rawConfig = typeof scheme === 'object' ? scheme : undefined
     return generatePaletteOklab(sourceColor, schemeName, contrastLevel, positiveHex, infoHex, warningHex, rawConfig)
-  }
-
-  const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
-  return {
-    light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
-    dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
+  } else {
+    const sourceHct = Hct.fromInt(argbFromHex(sourceColor))
+    return {
+      light: extractDynamicScheme(sourceHct, false, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
+      dark: extractDynamicScheme(sourceHct, true, schemeName, contrastLevel, positiveHex, infoHex, warningHex),
+    }
   }
 }
 
@@ -416,12 +416,12 @@ export function generateMd3eVariables(options: GenerateOptions): string {
   ]
 
   for (const [key, value] of Object.entries(light)) {
-    lines.push(`$md3-${key}: ${value} !default;`)
+    lines.push(`$md3-${key}--light: ${value} !default;`)
   }
 
   lines.push('', '// Dark scheme')
   for (const [key, value] of Object.entries(dark)) {
-    lines.push(`$md3-dark-${key}: ${value} !default;`)
+    lines.push(`$md3-${key}--dark: ${value} !default;`)
   }
 
   return lines.join('\n')

@@ -108,9 +108,17 @@ MD3E uses `surface-container`-colored app bars - not `primary`. The theme enforc
   </q-toolbar>
 </q-header>
 
-<!-- After (MD3E — no color classes needed, theme handles it) -->
+<!-- After (MD3E default colors) -->
 <q-header>
   <q-toolbar>
+    <q-toolbar-title>My App</q-toolbar-title>
+  </q-toolbar>
+</q-header>
+
+<!-- After (force your primary, counter defaults) -->
+<!-- Using the --light variant usually looks better in dark mode -->
+<q-header class="bg-primary--light text-on-primary--light">
+  <q-toolbar class="bg-primary--light text-on-primary--light">
     <q-toolbar-title>My App</q-toolbar-title>
   </q-toolbar>
 </q-header>
@@ -149,7 +157,7 @@ Controls how the palette is derived from the source color. Each variant produces
 | `'fruitSalad'` | Playful, high variety |
 | `'cmf'` | Color, Material, Finish — hardware-oriented, uses 2026 spec exclusively |
 
-Both light and dark scheme tokens are generated from every variant (as `$md3-<token>` and `$md3-dark-<token>` Sass variables). The SCSS layer then maps these to Quasar brand colors and CSS custom properties for light/dark switching.
+Both light and dark scheme tokens are generated from every variant (as `$md3-<token>--light` and `$md3-<token>--dark` Sass variables). The SCSS layer then maps these to CSS custom properties with `--light`/`--dark` constants and switching aliases for light/dark mode.
 
 When `oklab` is enabled, `scheme` can also be a `SchemeConfig` object for full control over palette generation — see below.
 
@@ -214,6 +222,8 @@ The theme generates 30+ MD3 color tokens from your `sourceColor` and makes them 
 ```
 
 Quasar's brand colors (`primary`, `secondary`, `accent`, `negative`) are mapped to MD3 roles and work as usual. The theme also patches Quasar's hardcoded `text-white` fallback so that brand-colored and token-colored elements get the correct `on-*` text color automatically.
+
+Generally speaking, you can just search your code-base for `text-white` and `text-black` and either remove those classes or use the correct `on-*` variant.
 
 For the full token list, dark mode details, and how the system works under the hood, see [docs/colors.md](docs/colors.md).
 
@@ -352,7 +362,7 @@ A `QToolbar` wrapper with MD3E variant shortcuts for docked and floating toolbar
 
 Must-know in short:
 - Toolbars are slightly larger now: Quasar's examples use `dense` icons and `stretch` buttons - remove both attributes from your existing code for a better look
-- Your toolbar probably uses something like `class="bg-primary text-white"` - this should likewise be removed as it fights the theme
+- Your toolbar probably uses something like `class="bg-primary text-white"` - for MD3E look remove them, or change to `class="bg-primary text-on-primary"` to force your primary
 - Avoid setting toolbar color and/or button colors
 - Toolbars now use `gap` (8px), so all your `q-m...` classes inside it are wrong, and should probably just be removed. Use `no-gap` to disable.
 - For docked toolbars (including the app bar), buttons should be `round square` or `square`, and optionally `flat`, or `tonal` for toggle buttons
@@ -478,5 +488,5 @@ See the [core package documentation](https://github.com/anoyomoose/q2-fresh-pain
 - **Dense variants** of QToggle and QSlider are proportionally scaled approximations
 - **QCarousel** is fundamentally different from MD3E carousel and not themed
 - **QToggle three-state animation** When transitioning from indeterminate (middle) to ON, the thumb briefly snaps to the OFF position before animating to ON. This is caused by Quasar's JS removing the `--indet` class (resetting `left` to the base OFF value) before adding `--truthy` in the same frame. The CSS transition then animates from OFF to ON instead of middle to ON. This is a Quasar core behavior that cannot be fixed via CSS theming alone.
-- **Per-component dark mode** Quasar's base `.q-dark` rule is stripped via `stripRules`. The theme replaces it with `body.body--light .q-dark` which sets all dark `--md3-*` tokens on the element, plus a fallback `background: var(--md3-surface)` and `color: var(--md3-on-surface)` for unthemed components. Themed components override the fallback background via source order. This shares the same token block as `body.body--dark` via a merged CSS selector.
+- **Per-component dark mode** Quasar's base `.q-dark` rule is stripped via `stripRules`. The theme replaces it with `body.body--light .q-dark` which flips all `--md3-*` aliases to their `--dark` constants, plus a fallback `background: var(--md3-surface)` and `color: var(--md3-on-surface)` for unthemed components. Themed components override the fallback background via source order. A corresponding `body.body--dark .q-light` rule flips aliases back to `--light` constants for light-mode overrides within a dark page.
 - **Claude** has been a massive help getting all of this done
