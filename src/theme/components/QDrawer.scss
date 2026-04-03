@@ -1,0 +1,513 @@
+// MD3 Expressive QDrawer List Overrides
+// Two list variants:
+//   .q-list--drawer  — standard navigation drawer (labels hide in mini mode)
+//   .q-list--rail    — navigation rail (labels reposition below icon in mini mode)
+
+// ============================================================
+// SHARED: Base List Layout
+// ============================================================
+
+.q-list.q-list--drawer,
+.q-list.q-list--rail {
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  color: var(--md3-on-surface-variant);
+  font-size: $md3-type-title-medium-size;
+  font-weight: $md3-type-title-medium-weight;
+  letter-spacing: 0.00714em;
+}
+
+.q-list.q-list--rail:not(.q-list--rail--narrow) {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+// Animate border-radius during mini open/close
+.q-body--layout-animate .q-drawer:has(.q-list--drawer, .q-list--rail) {
+  transition: transform 0.3s $md3-easing-emphasized, width 0.14s $md3-easing-emphasized,
+              border-radius 0.14s $md3-easing-emphasized,
+              top 0.12s, bottom 0.12s !important;
+}
+
+// FABs inside drawers: no shadow
+.q-drawer [class*="q-btn--fab"]:before {
+  box-shadow: none !important;
+}
+
+// Keep medium FAB square
+.q-list.q-list--drawer .q-btn,
+.q-list.q-list--rail .q-btn {
+  min-width: 56px;
+  min-height: 56px;
+}
+
+// ============================================================
+// SHARED: Items
+// ============================================================
+
+.q-list.q-list--drawer .q-item,
+.q-list.q-list--rail .q-item {
+  min-height: 56px;
+  border-radius: $md3-corner-full;
+  justify-content: flex-start !important;
+}
+
+.q-drawer--right .q-list.q-list--drawer .q-item:has(.q-btn),
+.q-drawer--right .q-list.q-list--drawer .q-item:has(.q-fab),
+.q-drawer--right .q-list.q-list--rail .q-item:has(.q-btn),
+.q-drawer--right .q-list.q-list--rail .q-item:has(.q-fab) {
+  align-self: flex-end;
+}
+
+.q-list.q-list--drawer .q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pl-"]),
+.q-list.q-list--rail .q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pl-"]) {
+  padding-left: 16px;
+}
+
+.q-list.q-list--drawer .q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pr-"]),
+.q-list.q-list--rail .q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pr-"]) {
+  padding-right: 16px;
+}
+
+.q-list.q-list--drawer .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pt-"]),
+.q-list.q-list--rail .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pt-"]) {
+  padding-top: 0;
+}
+
+.q-list.q-list--drawer .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pb-"]),
+.q-list.q-list--rail .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pb-"]) {
+  padding-bottom: 0;
+}
+
+// ============================================================
+// SHARED: Item Typography
+// ============================================================
+
+.q-list.q-list--drawer .q-item__label,
+.q-list.q-list--rail .q-item__label {
+  font-size: $md3-type-title-medium-size;
+  font-weight: $md3-type-title-medium-weight;
+  line-height: $md3-type-label-large-line-height !important;
+  letter-spacing: 0.00714em;
+}
+
+.q-list.q-list--drawer .q-item__label--caption,
+.q-list.q-list--rail .q-item__label--caption {
+  font-size: $md3-type-body-medium-size;
+  font-weight: $md3-type-body-medium-weight;
+  line-height: $md3-type-body-small-line-height !important;
+}
+
+.q-list.q-list--drawer .q-item__label + .q-item__label,
+.q-list.q-list--rail .q-item__label + .q-item__label {
+  margin-top: 0;
+}
+
+// ============================================================
+// SHARED: Item Icons
+// ============================================================
+
+.q-list.q-list--drawer .q-item__section--side ~ .q-item__section--side,
+.q-list.q-list--rail .q-item__section--side ~ .q-item__section--side {
+  color: var(--md3-on-surface-variant);
+  padding-right: 12px;
+
+  .q-icon {
+    font-size: 24px;
+  }
+}
+
+.q-list.q-list--drawer .q-item__section--main ~ .q-item__section--side,
+.q-list.q-list--rail .q-item__section--main ~ .q-item__section--side {
+  padding-left: 12px;
+  padding-right: 0;
+}
+
+.q-list.q-list--drawer .q-item__section--avatar,
+.q-list.q-list--rail .q-item__section--avatar {
+  min-width: 0;
+}
+
+// ============================================================
+// SHARED: Hover State Layer
+// ============================================================
+
+body.desktop .q-list.q-list--drawer .q-item.q-hoverable:hover > .q-focus-helper,
+body.desktop .q-list.q-list--drawer .q-item.q-focusable:focus > .q-focus-helper,
+body.desktop .q-list.q-list--rail .q-item.q-hoverable:hover > .q-focus-helper,
+body.desktop .q-list.q-list--rail .q-item.q-focusable:focus > .q-focus-helper {
+  opacity: 0.12 !important;
+}
+
+// Rail: animate focus helper between full-size and icon-only pill
+.q-list.q-list--rail .q-item > .q-focus-helper {
+  transition: height 0.14s ease-out, top 0.14s ease-out, border-radius 0.14s ease-out;
+}
+
+// Rail mini: shrink focus helper to icon area
+.q-drawer--mini .q-list.q-list--rail .q-item > .q-focus-helper {
+  height: 50%;
+  top: 4px;
+  bottom: auto;
+  border-radius: $md3-corner-full;
+}
+
+// ============================================================
+// SHARED: Active/Selected
+// ============================================================
+
+.q-list.q-list--drawer .q-item--active,
+.q-list.q-list--drawer .q-item.q-router-link--active {
+  background: var(--md3-secondary-container);
+  color: var(--md3-on-secondary-container);
+}
+
+// Rail: always use ::before for active highlight (animatable between states)
+.q-list.q-list--rail .q-item--active,
+.q-list.q-list--rail .q-item.q-router-link--active {
+  background: transparent;
+  color: var(--md3-on-secondary-container);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: var(--md3-secondary-container);
+    border-radius: $md3-corner-full;
+    z-index: -1;
+    transition: height 0.14s ease-out, top 0.14s ease-out;
+  }
+}
+
+.q-list.q-list--drawer .q-item--active .q-item__section--side,
+.q-list.q-list--drawer .q-item.q-router-link--active .q-item__section--side,
+.q-list.q-list--drawer .q-item--active .q-item__label--caption,
+.q-list.q-list--drawer .q-item.q-router-link--active .q-item__label--caption,
+.q-list.q-list--rail .q-item--active .q-item__section--side,
+.q-list.q-list--rail .q-item.q-router-link--active .q-item__section--side,
+.q-list.q-list--rail .q-item--active .q-item__label--caption,
+.q-list.q-list--rail .q-item.q-router-link--active .q-item__label--caption {
+  color: var(--md3-on-secondary-container);
+}
+
+// ============================================================
+// SHARED: Disabled
+// ============================================================
+
+.q-list.q-list--drawer .q-item.disabled,
+.q-list.q-list--rail .q-item.disabled {
+  opacity: 1;
+
+  .q-item__label,
+  .q-item__section--side {
+    opacity: $md3-disabled-content-opacity;
+  }
+}
+
+// ============================================================
+// SHARED: Divider
+// ============================================================
+
+.q-list.q-list--drawer .q-separator,
+.q-list.q-list--rail .q-separator {
+  background: var(--md3-on-surface-variant);
+  margin: 4px 16px;
+}
+
+// ============================================================
+// SHARED: Dense
+// ============================================================
+
+.q-list.q-list--drawer.q-list--dense > .q-item,
+.q-list.q-list--drawer .q-item--dense,
+.q-list.q-list--rail.q-list--dense > .q-item,
+.q-list.q-list--rail .q-item--dense {
+  min-height: 44px;
+}
+
+// ============================================================
+// SHARED: Mini Transition — FAB
+// ============================================================
+
+// Fix jumpy text
+.q-list.q-list--drawer .q-btn__content,
+.q-list.q-list--rail .q-btn__content {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+// Fade labels/main content during mini open/close
+.q-list.q-list--drawer .block,
+.q-list.q-list--drawer .q-fab__label,
+.q-list.q-list--rail .block,
+.q-list.q-list--rail .q-fab__label {
+  transition: opacity 0.14s ease-out, max-width 0.14s ease-out;
+}
+
+// Icon-to-text gap: transition margin so it collapses with the label
+.q-list.q-list--drawer .on-left,
+.q-list.q-list--drawer .q-fab__icon-holder,
+.q-list.q-list--rail .on-left,
+.q-list.q-list--rail .q-fab__icon-holder {
+  transition: margin 0.14s ease-out;
+}
+
+// Mini mode (not animating): hide btn/fab labels + collapse icon gap
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--drawer .block,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--drawer .q-fab__label,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .block,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-fab__label {
+  display: none !important;
+}
+
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--drawer .on-left,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--drawer .q-fab__icon-holder,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .on-left,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-fab__icon-holder {
+  margin-right: 0;
+}
+
+// Closing: fade out btn/fab labels, collapse width + icon gap
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .block,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .q-fab__label,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .block,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-fab__label {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+}
+
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .on-left,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .q-fab__icon-holder,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .on-left,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-fab__icon-holder {
+  margin-right: 0;
+}
+
+// Opening: fade in btn/fab labels
+@keyframes q-drawer-btn-label-fade-in {
+  from { opacity: 0; max-width: 0; overflow: hidden; }
+  to { opacity: 1; max-width: 300px; }
+}
+
+// Opening: fade in during animation
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--drawer .block,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--drawer .q-fab__label,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .block,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-fab__label {
+  animation: q-drawer-btn-label-fade-in 0.14s ease-out;
+}
+
+// ============================================================
+// DRAWER-ONLY: Mini Transition — q-item
+// ============================================================
+
+// Overflow hidden clips text during width transition
+.q-list.q-list--drawer .q-item:not(:has(.q-btn)):not(:has(.q-fab)) {
+  overflow: hidden;
+}
+
+// Fade labels/main content during mini open/close
+.q-list.q-list--drawer .q-item__label,
+.q-list.q-list--drawer .q-item__section--main,
+.q-list.q-list--drawer .q-item__section--side ~ .q-item__section--side {
+  transition: opacity 0.14s ease-out;
+}
+
+// Closing: fade out labels/main, immediately hide trailing sections
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .q-item__label,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .q-item__section--main {
+  opacity: 0;
+}
+
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--drawer .q-item__section--side ~ .q-item__section--side {
+  display: none !important;
+}
+
+// Opening: hide during animation, fade in after
+@keyframes q-drawer-label-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--drawer .q-item__label,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--drawer .q-item__section--main,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--drawer .q-item__section--side ~ .q-item__section--side {
+  display: none !important;
+}
+
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--drawer .q-item__label,
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--drawer .q-item__section--main,
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--drawer .q-item__section--side ~ .q-item__section--side {
+  animation: q-drawer-label-fade-in 0.14s ease-out;
+}
+
+// ============================================================
+// RAIL-ONLY: Mini Transition — q-item
+// Constrain ripple to icon pill area in mini mode (item is overflow:visible for label)
+.q-drawer--mini .q-list.q-list--rail .q-item .q-ripple {
+  height: 50%;
+  top: 4px;
+  bottom: auto;
+  border-radius: $md3-corner-full;
+  overflow: hidden;
+}
+
+// ============================================================
+// In mini mode, icon shifts up and label repositions below the icon.
+// Closing: label fades out → icon shifts up → label appears below with fade-in
+// Opening: label below fades out → icon shifts down → label beside fades in
+
+// Items overflow visible so label can extend beyond item bounds
+.q-list.q-list--rail .q-item:not(:has(.q-btn)):not(:has(.q-fab)) {
+  overflow: visible;
+}
+
+// Rail items need relative positioning for absolute label in mini mode
+.q-list.q-list--rail .q-item {
+  position: relative;
+}
+
+// Avatar section: animate vertical shift (only in plain items, not btn/fab items)
+.q-list.q-list--rail .q-item:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar {
+  transition: transform 0.14s ease-out;
+}
+
+// Label/main/trailing: transition for fade-out during close
+.q-list.q-list--rail .q-item__label,
+.q-list.q-list--rail .q-item__section--main,
+.q-list.q-list--rail .q-item__section--side ~ .q-item__section--side {
+  transition: opacity 0.14s ease-out;
+}
+
+// --- Closing to mini ---
+
+// Fade out labels/main, immediately hide trailing sections
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-item__label,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-item__section--main {
+  opacity: 0;
+}
+
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-item__section--side ~ .q-item__section--side {
+  display: none !important;
+}
+
+// Shift icon up during close animation
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-item:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar {
+  transform: translateY(-10px);
+}
+
+// --- Steady mini state ---
+
+// Constrain item width, allow label overflow
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item {
+  max-width: 56px !important;
+}
+
+// Icon stays shifted up
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar {
+  transform: translateY(-10px);
+}
+
+// Label: repositioned below icon, centered, small text
+// Override Quasar's display:none with block, fade in at new position
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item__section--main {
+  display: block !important;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  font-size: 12px;
+  animation: q-drawer-label-fade-in 0.14s ease-out;
+}
+
+// First label in mini: override display:none, use label-medium typography
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item__label:first-child {
+  display: block !important;
+  font-size: $md3-type-label-medium-size;
+  font-weight: $md3-type-label-medium-weight;
+  line-height: $md3-type-label-medium-line-height !important;
+  letter-spacing: $md3-type-label-medium-letter-spacing;
+}
+
+// Caption labels hidden in mini
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item__label--caption {
+  display: none !important;
+}
+
+// --- Dense rail mini overrides ---
+
+// Dense: smaller icon shift
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail .q-item--dense:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar,
+.q-drawer--mini.q-drawer--mini-animate .q-list.q-list--rail.q-list--dense > .q-item:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar {
+  transform: translateY(-6px);
+}
+
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item--dense:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail.q-list--dense > .q-item:not(:has(.q-btn)):not(:has(.q-fab)) .q-item__section--avatar {
+  transform: translateY(-6px);
+}
+
+// Dense: label closer to bottom
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail .q-item--dense .q-item__section--main,
+.q-drawer-container:not(.q-drawer--mini-animate) .q-drawer--mini .q-list.q-list--rail.q-list--dense > .q-item .q-item__section--main {
+  bottom: 2px;
+}
+
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-item--dense .q-item__section--main,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail.q-list--dense > .q-item .q-item__section--main {
+  bottom: 2px;
+}
+
+// Active highlight: shrink ::before to icon-only pill in mini mode
+.q-drawer--mini .q-list.q-list--rail .q-item--active::before,
+.q-drawer--mini .q-list.q-list--rail .q-item.q-router-link--active::before {
+  height: 50%;
+  top: 4px;
+}
+
+// --- Opening from mini ---
+
+// Keep label at mini position but snap invisible immediately.
+// No transition — avoids conflict with child label animations.
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-item__section--main {
+  display: block !important;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0;
+}
+
+// Icon: no translateY override here — the avatar transitions from -12px
+// (steady mini) to 0 (default) when --standard replaces --mini.
+
+// Suppress label/section during opening animation for rail.
+// display:none keeps them out of layout so they don't push content around.
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-item__label,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-item__section--main,
+.q-drawer--standard.q-drawer--mini-animate .q-list.q-list--rail .q-item__section--side ~ .q-item__section--side {
+  display: none !important;
+}
+
+// After opening animation ends (--mini-animate removed):
+// Label returns to normal flow, avatar transitions -12px → 0.
+// Everything fades in together.
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--rail .q-item__label,
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--rail .q-item__section--main,
+.q-drawer--standard:not(.q-drawer--mini-animate) .q-list.q-list--rail .q-item__section--side ~ .q-item__section--side {
+  animation: q-drawer-label-fade-in 0.14s ease-out;
+}

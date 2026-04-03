@@ -8,7 +8,23 @@
 // MD3E one-line list item: 56dp (Quasar default: 48px)
 .q-item {
   min-height: 56px;
-  padding: 10px 16px; // MD3E: 10dp top/bottom, 16dp left/right
+}
+
+// padding: 10px 16px
+.q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pl-"]) {
+  padding-left: 16px;
+}
+
+.q-item:not([class*="q-pa-"]):not([class*="q-px-"]):not([class*="q-pr-"]) {
+  padding-right: 16px;
+}
+
+.q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pt-"]) {
+  padding-top: 10px;
+}
+
+.q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pb-"]) {
+  padding-bottom: 10px;
 }
 
 // === Colors ===
@@ -118,7 +134,17 @@
 .q-list--dense > .q-item,
 .q-item--dense {
   min-height: 40px; // slightly larger than Quasar's 32px default
-  padding: 4px 16px;
+}
+
+// padding-y: 4px
+.q-list--dense > .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pt-"]),
+.q-item--dense:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pt-"]) {
+  padding-top: 4px;
+}
+
+.q-list--dense > .q-item:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pb-"]),
+.q-item--dense:not([class*="q-pa-"]):not([class*="q-py-"]):not([class*="q-pb-"]) {
+  padding-bottom: 4px;
 }
 
 // === List Bordered ===

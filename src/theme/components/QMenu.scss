@@ -3,13 +3,17 @@
 //
 // MD3E menus: 16dp corner radius, surface-container bg, level 2 elevation.
 
-// === Shape, Color, Elevation ===
+// === Base ===
+// MD3E typography: label-large (0.875rem/14px, weight 500, 1.25rem/20px lh)
 .q-menu {
   border-radius: $md3-corner-large;
   background: var(--md3-surface-container-low);
   color: var(--md3-on-surface);
   box-shadow: $md3-elevation-2;
   padding: 4px;
+  font-size: $md3-type-label-large-size;
+  font-weight: $md3-type-label-large-weight;
+  letter-spacing: 0.00714em;
 }
 
 // === Square Menu ===
@@ -41,7 +45,7 @@
 }
 
 // === Menu Item Typography ===
-// MD3E menu labels: label-large (0.875rem/14px, weight 500, 1.25rem/20px lh)
+// Label: label-large (0.875rem/14px)
 .q-menu .q-item__label {
   font-size: $md3-type-label-large-size;
   font-weight: $md3-type-label-large-weight;
@@ -117,10 +121,10 @@ body.desktop .q-menu .q-item.q-focusable:focus > .q-focus-helper {
 }
 
 // === Menu Divider ===
-// MD3E: surface-variant color, 8dp top/bottom padding
+// MD3E: surface-variant color, 4dp vertical margin, 12dp horizontal margin
 .q-menu .q-separator {
-  background: var(--md3-surface-variant);
-  margin: 8px 0;
+  background: var(--md3-on-surface-variant);
+  margin: 4px 12px;
 }
 
 // === Dense Menu Items ===

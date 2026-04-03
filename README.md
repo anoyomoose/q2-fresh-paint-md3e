@@ -435,7 +435,7 @@ class.
 
 ### `QMenu`
 
-There is no wrapper for `QMenu`. Vibrant menus can be created by using the `q-menu--vibrant` class:
+There is no specific wrapper for `QMenu`, vibrant color scheme menus can be created by using the `q-menu--vibrant` class:
 
 ```vue
 <q-menu anchor="top right" self="bottom right" class="q-menu--vibrant">
@@ -446,6 +446,68 @@ There is no wrapper for `QMenu`. Vibrant menus can be created by using the `q-me
   popup-content-class="q-menu--vibrant"
   <!-- ... -->
 />
+```
+
+### `QDrawer`
+
+There is no specific wrapper for `QDrawer`. MD3E styles for collapsed navigation drawers and navigation rails can be
+achieved with `QList` helper classes, which also feature new animations (not setting any class will keep original
+Quasar behavior). These are made specifically for `mini` mode, desktop mode needs to be forced, and `mini-width`
+needs to be set correctly. Avatars are supposed to be icons.
+
+**`q-list--drawer`**
+
+Standard `q-list` inside `q-drawer`, with updated styles and animations, MD3 (non-Expressive). `mini-width` needs to be
+set to `80`.
+
+**`q-list--rail`**
+
+Updated *rail* style, MD3**E**. The item label appears below the icon in collapsed state, and active/focused indicator
+is a smaller pill around the icon and excludes the label. `mini-width` needs to be set to `96`. Padding is slightly
+wider on the rail to allow for longer labels in collapsed state.
+
+**`q-list--rail q-list--rail--narrow`**
+
+If your item labels are small enough, you can use the narrow variant of the rail (you need to set both classes), it
+keeps the old drawer-style paddings rather than the new rail-style paddings. `mini-width` needs to be set to `80`.
+
+**Recipe:**
+
+```vue
+<!-- use the correct mini-width! -->
+<q-drawer v-model="drawerLeftOpen" :width="300" :mini-width="96" mini behavior="desktop" bordered>
+  
+  <!-- pick your style -->
+  <q-list class="q-list--rail">
+    
+    <!-- Top FABs are supported, but you need to set q-pa-none on q-item -->
+    <q-item class="q-pa-none q-mb-lg">
+      <!-- You must use the medium size FAB, label optional -->
+      <m-btn fab-medium icon="sym_r_edit" label="Fab" />
+    </q-item>
+    
+    <!-- standard home item, two icons, simple label -->
+    <q-item clickable v-ripple :active="activeNav === 'home'" @click="activeNav = 'home'">
+      <q-item-section avatar><q-icon name="sym_r_home" /></q-item-section>
+      <q-item-section>Home</q-item-section>
+      <q-item-section avatar><q-icon name="sym_r_home" /></q-item-section>
+    </q-item>
+    
+    <!-- complex inbox item, an icon, label with sub-caption, and right-side badge -->
+    <q-item clickable v-ripple :active="activeNav === 'inbox'" @click="activeNav = 'inbox'">
+      <q-item-section avatar>
+        <q-icon name="sym_r_inbox"><q-badge color="error" floating></q-badge></q-icon>
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>Inbox</q-item-label>
+        <q-item-label caption>You're so behind!</q-item-label>
+      </q-item-section>
+      <q-item-section side>
+        <q-badge color="error">123</q-badge>
+      </q-item-section>
+    </q-item>
+  </q-list>
+</q-drawer>
 ```
 
 ## Boot File
