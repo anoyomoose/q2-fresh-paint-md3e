@@ -295,7 +295,7 @@ Must-know in short:
 - You can use `glossy` and `:unelevated=false` directly on any QBtn for the same effect
 - Toggle modes are CSS-driven; while a standard QBtn does not have a `v-model`, the same look can be achieved by adding `q-btn--toggle` and `q-btn--selected` classes.
 - Morph transition can be disabled with `no-morph` attribute or class
-- FABs: `fab-mini` = `md`, `fab` = `lg` in `size`; shape is `square`; only default and `tonal` variants should be used
+- FABs: `fab-mini` = `md` size, `fab-medium` = ~48px/~24px icon (Md3eBtn only), `fab` = `lg` size; shape is `square`; only default and `tonal` variants should be used
 
 For full documentation including all props, selection modes, color system, variant shortcuts, and migration guide, see [docs/Md3eBtn.md](docs/Md3eBtn.md).
 
@@ -403,6 +403,7 @@ Using `Md3eFab` / `Md3eFabAction`:
 - `label-position`, `vertical-actions-align`, `direction` automatically set if `left` attribute is used
 - `left` attribute automatically propagates to children
 - `mini` supported (`q-fab--mini`) - note this only changes the size of the FAB, not of the popups
+- `medium` supported (`q-fab--medium`) - ~48px square, ~24px icon; same note about popups
 
 ```vue
 <md3e-fab secondary left icon="sym_r_edit" label="Edit">

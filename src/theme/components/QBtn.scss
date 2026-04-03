@@ -32,7 +32,7 @@
 
 // Standard (non-dense, non-fab) buttons: MD3E height is 40px at default (14px) size.
 // Uses em so Quasar's font-size-based size system (xs=8px, sm=10px, etc.) still scales properly.
-.q-btn:not(.q-btn--dense):not(.q-btn--fab):not(.q-btn--fab-mini) {
+.q-btn:not(.q-btn--dense):not([class*="q-btn--fab"]) {
   min-height: $md3-button-min-height; // 40px / 14px = 2.857em
 }
 
@@ -81,7 +81,7 @@
 // buttons get proportionally smaller pressed corners.
 //
 // Excludes buttons inside button groups (they have group-controlled radii).
-.q-btn--rounded:not(.q-btn--fab):not(.q-btn--fab-mini):not(.q-btn-group .q-btn) {
+.q-btn--rounded:not([class*="q-btn--fab"]):not(.q-btn-group .q-btn) {
   border-radius: $md3-button-pill-radius; // ~21px at 14px, ~12px at 8px — always a pill
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
@@ -94,7 +94,7 @@
 }
 
 // Rectangle buttons (non-rounded, non-square) also morph (outside groups).
-.q-btn--rectangle:not(.q-btn--rounded):not(.q-btn--square):not(.q-btn-group .q-btn) {
+.q-btn--rectangle:not(.q-btn--rounded):not(.q-btn--square):not([class*="q-btn--fab"]):not(.q-btn-group .q-btn) {
   border-radius: $md3-button-pill-radius;
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve;
 
@@ -160,7 +160,8 @@
 
 // Shared FAB styling: square shape, morph, shadow transition
 .q-btn--fab,
-.q-btn--fab-mini {
+.q-btn--fab-mini,
+.q-btn--fab-medium {
   padding: $md3-button-round-padding; // equal padding = square base for circular appearance
   min-height: $md3-button-min-height; // standard button height in em
   min-width: $md3-button-min-height;
@@ -183,13 +184,20 @@
   font-size: $md3-fab-font-size;
 }
 
+// FAB medium: 17px font-size (~49px square, ~24px icon)
+.q-btn--fab-medium {
+  font-size: 17px;
+}
+
 // Extended FAB: when a visible label is present, use wider horizontal padding.
 // Applies regardless of whether icon is present or not.
 // QBtn uses .block; QFab uses .q-fab__label.
 .q-btn--fab:has(.block),
 .q-btn--fab:has(.q-fab__label:not(.q-fab__label--internal-hidden)),
 .q-btn--fab-mini:has(.block),
-.q-btn--fab-mini:has(.q-fab__label:not(.q-fab__label--internal-hidden)) {
+.q-btn--fab-mini:has(.q-fab__label:not(.q-fab__label--internal-hidden)),
+.q-btn--fab-medium:has(.block),
+.q-btn--fab-medium:has(.q-fab__label:not(.q-fab__label--internal-hidden)) {
   padding: $md3-button-round-padding calc(#{$md3-button-round-padding} + #{$md3-button-icon-gap});
 }
 
@@ -202,14 +210,16 @@
 // QFab.scss has additional rules for the QFab context; these cover standalone usage.
 
 .q-btn--fab:before,
-.q-btn--fab-mini:before {
+.q-btn--fab-mini:before,
+.q-btn--fab-medium:before {
   box-shadow: $md3-elevation-3;
   transition: box-shadow $md3-spring-spatial-fast-duration $md3-spring-expressive-spatial-fast;
 }
 
 body.desktop {
   .q-btn--fab.q-btn--actionable:hover:before,
-  .q-btn--fab-mini.q-btn--actionable:hover:before {
+  .q-btn--fab-mini.q-btn--actionable:hover:before,
+  .q-btn--fab-medium.q-btn--actionable:hover:before {
     box-shadow: $md3-elevation-4;
   }
 }
@@ -217,12 +227,15 @@ body.desktop {
 .q-btn--fab.q-btn--actionable:active:before,
 .q-btn--fab.q-btn--actionable.q-btn--active:before,
 .q-btn--fab-mini.q-btn--actionable:active:before,
-.q-btn--fab-mini.q-btn--actionable.q-btn--active:before {
+.q-btn--fab-mini.q-btn--actionable.q-btn--active:before,
+.q-btn--fab-medium.q-btn--actionable:active:before,
+.q-btn--fab-medium.q-btn--actionable.q-btn--active:before {
   box-shadow: $md3-elevation-3;
 }
 
 .q-btn--fab.disabled:before,
-.q-btn--fab-mini.disabled:before {
+.q-btn--fab-mini.disabled:before,
+.q-btn--fab-medium.disabled:before {
   box-shadow: none !important;
 }
 
@@ -264,7 +277,8 @@ body.desktop {
 
   // Remove any shadow from disabled FABs (Level 0)
   &.q-btn--fab:before,
-  &.q-btn--fab-mini:before {
+  &.q-btn--fab-mini:before,
+  &.q-btn--fab-medium:before {
     box-shadow: none !important;
   }
 
@@ -272,7 +286,8 @@ body.desktop {
   &.q-btn--rounded,
   &.q-btn--rectangle,
   &.q-btn--fab,
-  &.q-btn--fab-mini {
+  &.q-btn--fab-mini,
+  &.q-btn--fab-medium {
     transition: none;
   }
 }
@@ -304,7 +319,7 @@ body.desktop {
 // In Quasar, setting :unelevated="false" gives q-btn--standard (the non-unelevated state).
 // We restyle to match MD3E elevated spec.
 // Exclude FABs — they have their own elevation rules in QFab.scss
-.q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini) {
+.q-btn--standard:not(.q-btn--push):not([class*="q-btn--fab"]) {
   background-color: var(--md3-surface-container-low) !important;
   color: var(--md3-primary) !important;
 
@@ -332,14 +347,14 @@ body.desktop {
 }
 
 body.desktop {
-  .q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini).q-btn--actionable:hover:before {
+  .q-btn--standard:not(.q-btn--push):not([class*="q-btn--fab"]).q-btn--actionable:hover:before {
     // Level 2 hover shadow for elevated buttons
     box-shadow: $md3-elevation-2;
   }
 }
 
 // Disabled elevated buttons: no shadow, standard disabled colors
-.q-btn--standard:not(.q-btn--push):not(.q-btn--fab):not(.q-btn--fab-mini).disabled:before {
+.q-btn--standard:not(.q-btn--push):not([class*="q-btn--fab"]).disabled:before {
   box-shadow: none !important;
 }
 

@@ -21,7 +21,9 @@
 .q-fab > .q-btn--fab.q-fab--form-rounded,
 .q-fab > .q-btn--fab.q-fab--form-square,
 .q-fab > .q-btn--fab-mini.q-fab--form-rounded,
-.q-fab > .q-btn--fab-mini.q-fab--form-square {
+.q-fab > .q-btn--fab-medium.q-fab--form-rounded,
+.q-fab > .q-btn--fab-mini.q-fab--form-square,
+.q-fab > .q-btn--fab-medium.q-fab--form-square {
   border-radius: $md3-corner-medium; // match standalone FAB square shape
 }
 
@@ -33,7 +35,8 @@
 // Default color is primary-container (tonal) when no color prop is set.
 
 .q-fab > .q-btn--fab,
-.q-fab > .q-btn--fab-mini {
+.q-fab > .q-btn--fab-mini,
+.q-fab > .q-btn--fab-medium {
   // Transition for open/close morph
   transition: border-radius $md3-shape-morph-duration $md3-shape-morph-curve,
               background-color $md3-spring-effects-default-duration $md3-spring-expressive-effects-default,
@@ -45,10 +48,13 @@
 // Default (no color or primary)
 .q-fab:not(.q-fab--opened) > .q-btn--fab:not([class*="bg-"]),
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini:not([class*="bg-"]),
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium:not([class*="bg-"]),
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-primary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-primary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-primary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-primary-container,
-.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-primary-container {
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-primary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-primary-container {
   background-color: var(--md3-primary-container) !important;
   color: var(--md3-on-primary-container) !important;
 }
@@ -56,8 +62,10 @@
 // Closed: secondary → tonal
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-secondary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-secondary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-secondary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-secondary-container,
-.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-secondary-container {
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-secondary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-secondary-container {
   background-color: var(--md3-secondary-container) !important;
   color: var(--md3-on-secondary-container) !important;
 }
@@ -65,10 +73,13 @@
 // Closed: tertiary → tonal
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-tertiary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-tertiary,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-tertiary,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-tertiary-container,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-tertiary-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-tertiary-container,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-accent,
-.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-accent {
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-accent,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-accent {
   background-color: var(--md3-tertiary-container) !important;
   color: var(--md3-on-tertiary-container) !important;
 }
@@ -76,10 +87,13 @@
 // Closed: error → tonal
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-negative,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-negative,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-negative,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-error,
 .q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-error,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-error,
 .q-fab:not(.q-fab--opened) > .q-btn--fab.bg-error-container,
-.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-error-container {
+.q-fab:not(.q-fab--opened) > .q-btn--fab-mini.bg-error-container,
+.q-fab:not(.q-fab--opened) > .q-btn--fab-medium.bg-error-container {
   background-color: var(--md3-error-container) !important;
   color: var(--md3-on-error-container) !important;
 }
@@ -90,20 +104,23 @@
 // Shape morphs to pill. Color shifts from tonal to filled for brand colors.
 
 .q-fab--opened > .q-btn--fab,
-.q-fab--opened > .q-btn--fab-mini {
+.q-fab--opened > .q-btn--fab-mini,
+.q-fab--opened > .q-btn--fab-medium {
   border-radius: $md3-button-pill-radius !important;
 }
 
 // Default: no explicit color → primary filled
 .q-fab--opened > .q-btn--fab:not([class*="bg-"]),
-.q-fab--opened > .q-btn--fab-mini:not([class*="bg-"]) {
+.q-fab--opened > .q-btn--fab-mini:not([class*="bg-"]),
+.q-fab--opened > .q-btn--fab-medium:not([class*="bg-"]) {
   background-color: var(--md3-primary) !important;
   color: var(--md3-on-primary) !important;
 }
 
 // Primary tonal → primary filled
 .q-fab--opened > .q-btn--fab.bg-primary-container,
-.q-fab--opened > .q-btn--fab-mini.bg-primary-container {
+.q-fab--opened > .q-btn--fab-mini.bg-primary-container,
+.q-fab--opened > .q-btn--fab-medium.bg-primary-container {
   background-color: var(--md3-primary) !important;
   color: var(--md3-on-primary) !important;
 }
@@ -111,8 +128,10 @@
 // Secondary (tonal or filled) → secondary filled
 .q-fab--opened > .q-btn--fab.bg-secondary-container,
 .q-fab--opened > .q-btn--fab-mini.bg-secondary-container,
+.q-fab--opened > .q-btn--fab-medium.bg-secondary-container,
 .q-fab--opened > .q-btn--fab.bg-secondary,
-.q-fab--opened > .q-btn--fab-mini.bg-secondary {
+.q-fab--opened > .q-btn--fab-mini.bg-secondary,
+.q-fab--opened > .q-btn--fab-medium.bg-secondary {
   background-color: var(--md3-secondary) !important;
   color: var(--md3-on-secondary) !important;
 }
@@ -120,10 +139,13 @@
 // Tertiary (tonal or filled) → tertiary filled
 .q-fab--opened > .q-btn--fab.bg-tertiary-container,
 .q-fab--opened > .q-btn--fab-mini.bg-tertiary-container,
+.q-fab--opened > .q-btn--fab-medium.bg-tertiary-container,
 .q-fab--opened > .q-btn--fab.bg-tertiary,
 .q-fab--opened > .q-btn--fab-mini.bg-tertiary,
+.q-fab--opened > .q-btn--fab-medium.bg-tertiary,
 .q-fab--opened > .q-btn--fab.bg-accent,
-.q-fab--opened > .q-btn--fab-mini.bg-accent {
+.q-fab--opened > .q-btn--fab-mini.bg-accent,
+.q-fab--opened > .q-btn--fab-medium.bg-accent {
   background-color: var(--md3-tertiary) !important;
   color: var(--md3-on-tertiary) !important;
 }
@@ -131,10 +153,13 @@
 // Error (tonal or filled) → error filled
 .q-fab--opened > .q-btn--fab.bg-error-container,
 .q-fab--opened > .q-btn--fab-mini.bg-error-container,
+.q-fab--opened > .q-btn--fab-medium.bg-error-container,
 .q-fab--opened > .q-btn--fab.bg-error,
 .q-fab--opened > .q-btn--fab-mini.bg-error,
+.q-fab--opened > .q-btn--fab-medium.bg-error,
 .q-fab--opened > .q-btn--fab.bg-negative,
-.q-fab--opened > .q-btn--fab-mini.bg-negative {
+.q-fab--opened > .q-btn--fab-mini.bg-negative,
+.q-fab--opened > .q-btn--fab-medium.bg-negative {
   background-color: var(--md3-error) !important;
   color: var(--md3-on-error) !important;
 }
@@ -331,13 +356,19 @@
   font-size: 14px;
 }
 
+// Medium: 17px font-size (~49px square, ~24px icon)
+.q-fab.q-fab--medium > .q-btn--fab {
+  font-size: 17px;
+}
+
 // =============================================================================
 // 10. DISABLED STATE
 // =============================================================================
 
 .q-fab > .q-btn.disabled {
   &.q-btn--fab:before,
-  &.q-btn--fab-mini:before {
+  &.q-btn--fab-mini:before,
+  &.q-btn--fab-medium:before {
     box-shadow: none !important;
   }
 

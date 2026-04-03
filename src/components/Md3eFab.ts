@@ -41,6 +41,9 @@ export const Md3eFab = defineComponent({
     /** Mini FAB (smaller size, matches fab-mini/md button size). */
     mini: Boolean,
 
+    /** Medium FAB (~48px square, ~24px icon). */
+    medium: Boolean,
+
     /** Place labels on the left side (also aligns actions left). */
     left: Boolean,
 
@@ -103,6 +106,7 @@ export const Md3eFab = defineComponent({
         class: [
           attrClass,
           props.mini ? 'q-fab--mini' : null,
+          props.medium ? 'q-fab--medium' : null,
         ].filter(Boolean),
         color: computedColor.value,
         icon: resolvedIcon.value,

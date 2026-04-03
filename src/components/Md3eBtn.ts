@@ -91,6 +91,9 @@ export const Md3eBtn = defineComponent({
     /** MD3E text variant (sets flat on QBtn) */
     text: Boolean,
 
+    /** MD3E medium FAB variant (between fab-mini and fab) */
+    fabMedium: Boolean,
+
     /** Disable shape morphing on press */
     noMorph: Boolean,
 
@@ -220,6 +223,7 @@ export const Md3eBtn = defineComponent({
           attrClass,
           isToggle.value ? 'q-btn--toggle' : null,
           isSelected.value ? 'q-btn--selected' : null,
+          props.fabMedium ? 'q-btn--fab-medium' : null,
           props.noMorph ? 'no-morph' : null,
         ].filter(Boolean),
 
