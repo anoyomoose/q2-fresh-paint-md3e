@@ -18,6 +18,8 @@
   background: var(--md3-surface-container-high);
   border-radius: $md3-corner-extra-large;
   box-shadow: none; // picker is used inside a dialog that supplies elevation
+  width: 328px;      // 7×40px cells + 2×16px view padding overflow the stock 290px
+  min-width: 328px;
 }
 
 // === Header ===
