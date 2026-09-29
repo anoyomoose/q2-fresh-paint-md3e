@@ -14,6 +14,13 @@
   box-shadow: $md3-elevation-3;
 }
 
+// Notify defaults `textColor` to 'white', and `.text-white` is !important, so
+// the rule above never applies. Typed notifications (`bg-*`) are remapped in
+// base.scss; plain ones need the inverse-on-surface role here.
+.q-notification.text-white:not([class*='bg-']) {
+  color: var(--md3-inverse-on-surface) !important;
+}
+
 // === Enter / Exit Animation ===
 // MD3E: Enter 400ms emphasized-decelerate, Exit 200ms emphasized-accelerate.
 // Quasar default is 1s for both — significantly too slow.
